@@ -1,7 +1,8 @@
 import React, { useEffect, useRef } from "react";
 import { Stack, Box, Typography, Divider } from "@mui/material";
-import { hours } from "../../types/base/hours.types";
+// import { hours } from "../../types/base/hours.types";
 import moment from "moment";
+import { generateTimeSlots } from "../../types/base/hours.types";
 
 interface WeekLayoutProps {
   children?: React.ReactNode;
@@ -113,7 +114,6 @@ const WeekLayout: React.FC<WeekLayoutProps> = ({
                   fontSize: "16px",
                   color: isToday ? "primary.main" : "text.primary",
                   bgcolor: isToday ? "primary.main" : "transparent",
-                  color: isToday ? "primary.contrastText" : undefined,
                   borderRadius: isToday ? "50%" : 0,
                   width: isToday ? "28px" : "auto",
                   height: isToday ? "28px" : "auto",
@@ -133,8 +133,8 @@ const WeekLayout: React.FC<WeekLayoutProps> = ({
 
       {/* Time grid with week columns */}
       <Stack sx={{ flex: 1 }}>
-        {hours.map((hour, hourIndex) => {
-          const isNineAm = hour === "9 AM";
+        {generateTimeSlots().map((timeSlot, hourIndex) => {
+          const isNineAm = timeSlot?.label === "9 AM";
 
           return (
             <Stack
@@ -172,7 +172,7 @@ const WeekLayout: React.FC<WeekLayoutProps> = ({
                     mt: -0.5,
                   }}
                 >
-                  {hour}
+                  {timeSlot?.label}
                 </Typography>
               </Box>
 
@@ -182,16 +182,16 @@ const WeekLayout: React.FC<WeekLayoutProps> = ({
 
                 return (
                   <Box
-                    key={`${day.format('YYYY-MM-DD')}-${hour}`}
+                    key={`${day.format('YYYY-MM-DD')}-${timeSlot?.label}`}
                     onClick={(event) => {
                       const target = event.currentTarget;
                       const rect = target.getBoundingClientRect();
                       const yPosition = event.clientY - rect.top;
-                      let hourInt = parseInt(hour.split(" ")[0], 10);
+                      let hourInt = parseInt(timeSlot?.label.split(" ")[0], 10);
 
-                      if (hour.split(" ")[1].toLowerCase() === "pm" && hourInt !== 12) {
+                      if (timeSlot?.label?.split(" ")[1].toLowerCase() === "pm" && hourInt !== 12) {
                         hourInt += 12;
-                      } else if (hour.split(" ")[1].toLowerCase() === "am" && hourInt === 12) {
+                      } else if (timeSlot?.label?.split(" ")[1].toLowerCase() === "am" && hourInt === 12) {
                         hourInt = 0;
                       }
 

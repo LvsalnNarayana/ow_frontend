@@ -11,8 +11,9 @@ const TextInput = ({
   helperText = "",
   error = false,
   disabled = false,
-  fontSize = "15px",
+  fontSize = "14px",
   helperFontSize = "12px",
+  type = "text",
 }: TextInputProps): JSX.Element => {
   const [value, setValue] = useState(initialValue);
 
@@ -30,7 +31,7 @@ const TextInput = ({
         id={`label_${name}`}
         htmlFor={`input_${name}`}
         sx={{
-          mx: 1,
+          mx: 0,
         }}
       >
         {label}
@@ -41,7 +42,7 @@ const TextInput = ({
         id={`input_${name}`}
         value={value}
         onChange={handleChange}
-        type="text"
+        type={type}
         placeholder={placeholder}
         helperText={helperText}
         error={error}

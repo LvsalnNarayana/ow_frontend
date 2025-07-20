@@ -27,9 +27,9 @@ import {
   PIXEL_RATIO_CONSTANTS,
 } from "../../types/base/hours.types";
 
-const mockTodayEvents: Event[] = Array.from({ length: 5 }, generateEvent);
+const mockTodayEvents: Event[] = Array.from({ length: 2 }, generateEvent);
 
-const mockUpcomingEvents: Event[] = Array.from({ length: 5 }, generateEvent);
+const mockUpcomingEvents: Event[] = Array.from({ length: 2 }, generateEvent);
 
 const CalendarDashboard: React.FC = () => {
   const theme = useTheme();
@@ -45,7 +45,6 @@ const CalendarDashboard: React.FC = () => {
     return () => clearInterval(timer);
   }, []);
   const getCurrentTimePosition = () => {
-    const currentTime = new Date();
     const threeHoursAgo = new Date(currentTime.getTime() - 3 * 60 * 60 * 1000);
 
     const hoursDiff = currentTime.getHours() - threeHoursAgo.getHours();
@@ -58,8 +57,6 @@ const CalendarDashboard: React.FC = () => {
 
     return PIXEL_RATIO_CONSTANTS.RATIOS["15min"].pixelsPerMinute * totalMinutes;
   };
-
-  console.log(getCurrentTimePosition());
 
   const timelinePosition = getCurrentTimePosition();
 
@@ -86,7 +83,8 @@ const CalendarDashboard: React.FC = () => {
         <DayHoursLayout
           slots={generateTimeSlots({
             startHour: new Date().getHours() - 3,
-            endHour: new Date().getHours() + 3,
+            endHour:
+              new Date().getHours() > 20 ? 24 : new Date().getHours() + 3,
             interval: 15,
           })}
         />
@@ -123,6 +121,7 @@ const CalendarDashboard: React.FC = () => {
     <Stack
       direction="column"
       spacing={3}
+      flexGrow={1}
       sx={{
         width: "100%",
         height: "100%",

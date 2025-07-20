@@ -10,3 +10,11 @@ export type FriendshipStatus =
   | typeof REQUEST_RECEIVED
   | typeof BLOCKED
   | typeof NONE;
+
+export const FRIENDSHIP_STATUS_OPTIONS = [
+  { value: FRIENDS, label: "Friends" },
+  { value: PENDING, label: "Pending" },
+  { value: REQUEST_RECEIVED, label: "Request Received" },
+  { value: BLOCKED, label: "Blocked" },
+  { value: NONE, label: "None" },
+];

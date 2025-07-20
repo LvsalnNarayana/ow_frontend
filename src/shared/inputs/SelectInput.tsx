@@ -19,7 +19,7 @@ const SelectInput: React.FC<SelectInputProps> = ({
   helperText = "",
   error = false,
   disabled = false,
-  fontSize = "15px",
+  fontSize = "14px",
   helperFontSize = "12px",
   optionFontSize = "14px",
 }) => {
@@ -39,7 +39,7 @@ const SelectInput: React.FC<SelectInputProps> = ({
           fontSize={fontSize}
           id={`label_${name}`}
           htmlFor={`input_${name}`}
-          sx={{ mx: 1 }}
+          // sx={{ mx: 1 }}
         >
           {label}
         </Typography>

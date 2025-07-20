@@ -18,6 +18,8 @@ import { generateEventReminderNotificationSettings } from "../../types/event/eve
 import type { CalendarSettings } from "../../types/calendar/calendarSettings.types";
 import type { CalendarPreferences } from "../../types/calendar/calendarPreference.types";
 import type { DayOfWeek } from "../../types/base/dayOfWeek.types";
+import TextInput from "../../shared/inputs/TextInput";
+import SelectInput from "../../shared/inputs/SelectInput";
 
 // Default values for settings and preferences
 const defaultSettings: CalendarSettings = {
@@ -95,247 +97,220 @@ const CalendarSettings: React.FC = () => {
   };
 
   return (
-    <Stack
-      spacing={4}
-      width={"50%"}
-      alignItems={"center"}
-      height={"100%"}
-      px={3}
-      mx="auto"
-    >
-      <Stack spacing={4} width={"100%"}>
-        <Typography variant="h4" className="font-bold">
-          Calendar Settings
-        </Typography>
+    <Stack spacing={4} width={"50%"} mx="auto">
+      <TextInput
+        name="default_event_duration"
+        label="Default Event Duration (minutes)"
+        type="number"
+        value={settings.defaultEventDuration}
+        onChange={(eventDurationValue) =>
+          handleSettingsChange(
+            "defaultEventDuration",
+            parseInt(eventDurationValue as string)
+          )
+        }
+      />
+      <SelectInput
+        name="default_visibility"
+        label="Default Visibility"
+        options={[
+          { value: "public", label: "Public" },
+          { value: "private", label: "Private" },
+          { value: "confidential", label: "Confidential" },
+        ]}
+        value={settings.defaultVisibility}
+        onChange={(defaultVisibilityValue) =>
+          handleSettingsChange("defaultVisibility", defaultVisibilityValue)
+        }
+      />
 
-        {/* Calendar Settings Section */}
-        <Stack spacing={3}>
-          <Typography variant="h6">Event Settings</Typography>
+      <TextField
+        label="Default Event Color"
+        type="color"
+        value={settings.defaultEventColor}
+        onChange={(e) =>
+          handleSettingsChange("defaultEventColor", e.target.value)
+        }
+        className="w-full"
+      />
 
-          <TextField
-            label="Default Event Duration (minutes)"
-            type="number"
-            value={settings.defaultEventDuration}
+      <TextInput
+        name="default_event_category"
+        label="Default Event Category"
+        value={settings.defaultEventCategory}
+        onChange={(defaultEventCategoryValue) =>
+          handleSettingsChange(
+            "defaultEventCategory",
+            defaultEventCategoryValue
+          )
+        }
+      />
+
+      <FormControlLabel
+        control={
+          <Switch
+            checked={settings.autoAcceptInvites}
             onChange={(e) =>
-              handleSettingsChange(
-                "defaultEventDuration",
-                parseInt(e.target.value)
+              handleSettingsChange("autoAcceptInvites", e.target.checked)
+            }
+          />
+        }
+        label="Auto-accept Invites"
+      />
+
+      <FormControlLabel
+        control={
+          <Switch
+            checked={settings.enableNotifications}
+            onChange={(e) =>
+              handleSettingsChange("enableNotifications", e.target.checked)
+            }
+          />
+        }
+        label="Enable Notifications"
+      />
+
+      <FormControl fullWidth>
+        <InputLabel>Default Timezone</InputLabel>
+        <Select
+          value={preferences.defaultTimezone}
+          onChange={(e) =>
+            handlePreferencesChange("defaultTimezone", e.target.value)
+          }
+        >
+          <MenuItem value="UTC">UTC</MenuItem>
+          <MenuItem value="America/New_York">America/New_York</MenuItem>
+          <MenuItem value="Europe/London">Europe/London</MenuItem>
+          <MenuItem value="Asia/Tokyo">Asia/Tokyo</MenuItem>
+        </Select>
+      </FormControl>
+
+      <FormControl fullWidth>
+        <InputLabel>Week Starts On</InputLabel>
+        <Select
+          value={preferences.weekStartsOn}
+          onChange={(e) =>
+            handlePreferencesChange("weekStartsOn", e.target.value)
+          }
+        >
+          <MenuItem value="SUN">Sunday</MenuItem>
+          <MenuItem value="MON">Monday</MenuItem>
+        </Select>
+      </FormControl>
+
+      <FormControl fullWidth>
+        <InputLabel>Time Format</InputLabel>
+        <Select
+          value={preferences.timeFormat}
+          onChange={(e) =>
+            handlePreferencesChange("timeFormat", e.target.value)
+          }
+        >
+          <MenuItem value="12h">12-hour</MenuItem>
+          <MenuItem value="24h">24-hour</MenuItem>
+        </Select>
+      </FormControl>
+
+      <FormControl fullWidth>
+        <InputLabel>Date Format</InputLabel>
+        <Select
+          value={preferences.dateFormat}
+          onChange={(e) =>
+            handlePreferencesChange("dateFormat", e.target.value)
+          }
+        >
+          <MenuItem value="MM/DD/YYYY">MM/DD/YYYY</MenuItem>
+          <MenuItem value="DD/MM/YYYY">DD/MM/YYYY</MenuItem>
+          <MenuItem value="YYYY-MM-DD">YYYY-MM-DD</MenuItem>
+        </Select>
+      </FormControl>
+
+      <Stack direction="row" spacing={2}>
+        <TextField
+          label="Working Hours Start"
+          type="time"
+          value={preferences.workingHours.start}
+          onChange={(e) => handleWorkingHoursChange("start", e.target.value)}
+          className="w-1/2"
+        />
+        <TextField
+          label="Working Hours End"
+          type="time"
+          value={preferences.workingHours.end}
+          onChange={(e) => handleWorkingHoursChange("end", e.target.value)}
+          className="w-1/2"
+        />
+      </Stack>
+
+      <Box>
+        <Typography variant="subtitle1">Working Days</Typography>
+        <Stack direction="row" spacing={1} className="mt-2">
+          {["MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"].map((day) => (
+            <Chip
+              key={day}
+              label={day}
+              color={
+                preferences.workingHours.days.includes(day as DayOfWeek)
+                  ? "primary"
+                  : "default"
+              }
+              onClick={() => handleWorkingDaysChange(day as DayOfWeek)}
+              clickable
+            />
+          ))}
+        </Stack>
+      </Box>
+
+      <FormControlLabel
+        control={
+          <Switch
+            checked={preferences.showDeclinedEvents}
+            onChange={(e) =>
+              handlePreferencesChange("showDeclinedEvents", e.target.checked)
+            }
+          />
+        }
+        label="Show Declined Events"
+      />
+
+      <FormControlLabel
+        control={
+          <Switch
+            checked={preferences.enableSmartSuggestions}
+            onChange={(e) =>
+              handlePreferencesChange(
+                "enableSmartSuggestions",
+                e.target.checked
               )
             }
-            inputProps={{ min: 1 }}
-            className="w-full"
           />
+        }
+        label="Enable Smart Suggestions"
+      />
 
-          <FormControl fullWidth>
-            <InputLabel>Default Visibility</InputLabel>
-            <Select
-              value={settings.defaultVisibility}
-              onChange={(e) =>
-                handleSettingsChange("defaultVisibility", e.target.value)
-              }
-            >
-              <MenuItem value="public">Public</MenuItem>
-              <MenuItem value="private">Private</MenuItem>
-              <MenuItem value="confidential">Confidential</MenuItem>
-            </Select>
-          </FormControl>
-
-          <TextField
-            label="Default Event Color"
-            type="color"
-            value={settings.defaultEventColor}
+      <FormControlLabel
+        control={
+          <Switch
+            checked={preferences.enableConflictDetection}
             onChange={(e) =>
-              handleSettingsChange("defaultEventColor", e.target.value)
+              handlePreferencesChange(
+                "enableConflictDetection",
+                e.target.checked
+              )
             }
-            className="w-full"
           />
+        }
+        label="Enable Conflict Detection"
+      />
 
-          <TextField
-            label="Default Event Category"
-            value={settings.defaultEventCategory}
-            onChange={(e) =>
-              handleSettingsChange("defaultEventCategory", e.target.value)
-            }
-            className="w-full"
-          />
-
-          <FormControlLabel
-            control={
-              <Switch
-                checked={settings.autoAcceptInvites}
-                onChange={(e) =>
-                  handleSettingsChange("autoAcceptInvites", e.target.checked)
-                }
-              />
-            }
-            label="Auto-accept Invites"
-          />
-
-          <FormControlLabel
-            control={
-              <Switch
-                checked={settings.enableNotifications}
-                onChange={(e) =>
-                  handleSettingsChange("enableNotifications", e.target.checked)
-                }
-              />
-            }
-            label="Enable Notifications"
-          />
-        </Stack>
-
-        {/* Calendar Preferences Section */}
-        <Stack spacing={3}>
-          <Typography variant="h6">Display Preferences</Typography>
-
-          <FormControl fullWidth>
-            <InputLabel>Default Timezone</InputLabel>
-            <Select
-              value={preferences.defaultTimezone}
-              onChange={(e) =>
-                handlePreferencesChange("defaultTimezone", e.target.value)
-              }
-            >
-              <MenuItem value="UTC">UTC</MenuItem>
-              <MenuItem value="America/New_York">America/New_York</MenuItem>
-              <MenuItem value="Europe/London">Europe/London</MenuItem>
-              <MenuItem value="Asia/Tokyo">Asia/Tokyo</MenuItem>
-            </Select>
-          </FormControl>
-
-          <FormControl fullWidth>
-            <InputLabel>Week Starts On</InputLabel>
-            <Select
-              value={preferences.weekStartsOn}
-              onChange={(e) =>
-                handlePreferencesChange("weekStartsOn", e.target.value)
-              }
-            >
-              <MenuItem value="SUN">Sunday</MenuItem>
-              <MenuItem value="MON">Monday</MenuItem>
-            </Select>
-          </FormControl>
-
-          <FormControl fullWidth>
-            <InputLabel>Time Format</InputLabel>
-            <Select
-              value={preferences.timeFormat}
-              onChange={(e) =>
-                handlePreferencesChange("timeFormat", e.target.value)
-              }
-            >
-              <MenuItem value="12h">12-hour</MenuItem>
-              <MenuItem value="24h">24-hour</MenuItem>
-            </Select>
-          </FormControl>
-
-          <FormControl fullWidth>
-            <InputLabel>Date Format</InputLabel>
-            <Select
-              value={preferences.dateFormat}
-              onChange={(e) =>
-                handlePreferencesChange("dateFormat", e.target.value)
-              }
-            >
-              <MenuItem value="MM/DD/YYYY">MM/DD/YYYY</MenuItem>
-              <MenuItem value="DD/MM/YYYY">DD/MM/YYYY</MenuItem>
-              <MenuItem value="YYYY-MM-DD">YYYY-MM-DD</MenuItem>
-            </Select>
-          </FormControl>
-
-          <Stack direction="row" spacing={2}>
-            <TextField
-              label="Working Hours Start"
-              type="time"
-              value={preferences.workingHours.start}
-              onChange={(e) =>
-                handleWorkingHoursChange("start", e.target.value)
-              }
-              className="w-1/2"
-            />
-            <TextField
-              label="Working Hours End"
-              type="time"
-              value={preferences.workingHours.end}
-              onChange={(e) => handleWorkingHoursChange("end", e.target.value)}
-              className="w-1/2"
-            />
-          </Stack>
-
-          <Box>
-            <Typography variant="subtitle1">Working Days</Typography>
-            <Stack direction="row" spacing={1} className="mt-2">
-              {["MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"].map((day) => (
-                <Chip
-                  key={day}
-                  label={day}
-                  color={
-                    preferences.workingHours.days.includes(day as DayOfWeek)
-                      ? "primary"
-                      : "default"
-                  }
-                  onClick={() => handleWorkingDaysChange(day as DayOfWeek)}
-                  clickable
-                />
-              ))}
-            </Stack>
-          </Box>
-
-          <FormControlLabel
-            control={
-              <Switch
-                checked={preferences.showDeclinedEvents}
-                onChange={(e) =>
-                  handlePreferencesChange(
-                    "showDeclinedEvents",
-                    e.target.checked
-                  )
-                }
-              />
-            }
-            label="Show Declined Events"
-          />
-
-          <FormControlLabel
-            control={
-              <Switch
-                checked={preferences.enableSmartSuggestions}
-                onChange={(e) =>
-                  handlePreferencesChange(
-                    "enableSmartSuggestions",
-                    e.target.checked
-                  )
-                }
-              />
-            }
-            label="Enable Smart Suggestions"
-          />
-
-          <FormControlLabel
-            control={
-              <Switch
-                checked={preferences.enableConflictDetection}
-                onChange={(e) =>
-                  handlePreferencesChange(
-                    "enableConflictDetection",
-                    e.target.checked
-                  )
-                }
-              />
-            }
-            label="Enable Conflict Detection"
-          />
-        </Stack>
-
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={handleSubmit}
-          className="mt-4"
-        >
-          Save Settings
-        </Button>
-      </Stack>
+      <Button
+        variant="contained"
+        color="primary"
+        onClick={handleSubmit}
+        className="mt-4"
+      >
+        Save Settings
+      </Button>
     </Stack>
   );
 };
