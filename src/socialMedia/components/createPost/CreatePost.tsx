@@ -39,7 +39,7 @@ const CreatePost = () => {
         sx={{
           p: 3,
           width: "100%",
-          maxWidth: "600px",
+          // maxWidth: "600px",
           borderRadius: 3,
           border: `1px solid ${theme.palette.divider}`,
           backgroundColor: theme?.palette.background.paper,
@@ -58,14 +58,13 @@ const CreatePost = () => {
           <PostInput user={post?.author} />
         </Stack>
         <Divider sx={{ my: 2, width: "100%" }} />
-
         {/* Main Action Buttons */}
         <Stack
           gap={1}
           direction="row"
           justifyContent="space-between"
           alignItems="center"
-          sx={{ width: "100%", mb: 2 }}
+          sx={{ width: "100%" }}
         >
           <Button
             variant="contained"
@@ -105,86 +104,6 @@ const CreatePost = () => {
           >
             <InsertEmoticonIcon sx={{ color: "orange" }} />
             Feeling
-          </Button>
-        </Stack>
-
-        {/* Additional Options */}
-        <Stack
-          gap={1}
-          direction="row"
-          justifyContent="space-between"
-          alignItems="center"
-          sx={{ width: "100%" }}
-        >
-          <Button
-            variant="outlined"
-            size="small"
-            sx={{
-              gap: 0.5,
-              flex: 1,
-              fontSize: "12px",
-              py: 0.5,
-            }}
-            onClick={() => handlePostTypeClick("poll")}
-          >
-            <PollIcon sx={{ fontSize: 16, color: "blue" }} />
-            Poll
-          </Button>
-          <Button
-            variant="outlined"
-            size="small"
-            sx={{
-              gap: 0.5,
-              flex: 1,
-              fontSize: "12px",
-              py: 0.5,
-            }}
-            onClick={() => handlePostTypeClick("event")}
-          >
-            <EventIcon sx={{ fontSize: 16, color: "purple" }} />
-            Event
-          </Button>
-          <Button
-            variant="outlined"
-            size="small"
-            sx={{
-              gap: 0.5,
-              flex: 1,
-              fontSize: "12px",
-              py: 0.5,
-            }}
-            onClick={() => handlePostTypeClick("location")}
-          >
-            <LocationOnIcon sx={{ fontSize: 16, color: "red" }} />
-            Check-in
-          </Button>
-          <Button
-            variant="outlined"
-            size="small"
-            sx={{
-              gap: 0.5,
-              flex: 1,
-              fontSize: "12px",
-              py: 0.5,
-            }}
-            onClick={() => handlePostTypeClick("tags")}
-          >
-            <LocalOfferIcon sx={{ fontSize: 16, color: "green" }} />
-            Tag
-          </Button>
-          <Button
-            variant="outlined"
-            size="small"
-            sx={{
-              gap: 0.5,
-              flex: 1,
-              fontSize: "12px",
-              py: 0.5,
-            }}
-            onClick={() => handlePostTypeClick("gif")}
-          >
-            <GifBoxIcon sx={{ fontSize: 16, color: "pink" }} />
-            GIF
           </Button>
         </Stack>
       </Stack>

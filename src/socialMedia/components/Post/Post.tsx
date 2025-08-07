@@ -24,7 +24,7 @@ const Post = ({ post }: { post: PostInterface }) => {
       sx={{
         p: 2,
         boxShadow: theme.shadows[3],
-        maxWidth: 500,
+        // maxWidth: 500,
         borderRadius: 2,
         backgroundColor: theme.palette.background.paper,
       }}

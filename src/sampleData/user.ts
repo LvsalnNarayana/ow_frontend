@@ -63,6 +63,7 @@ export const user: User = {
       lastName: "Williams",
       mutualFriendsCount: 31,
       friendsSince: "2023-01-23T17:10:40.746Z",
+      
     },
     {
       id: "latvgnhre",

@@ -49,8 +49,6 @@ const CreatePostDialog = ({
         sx: {
           m: 0,
           width: "35vw",
-          height: "90vh",
-          maxHeight: "90vh",
           maxWidth: "90vw !important",
           transition: "all 0.1s ease-in",
         },

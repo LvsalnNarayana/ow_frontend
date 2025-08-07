@@ -23,10 +23,10 @@ const PostInput = ({ user }: { user: PostUserInterface }) => {
         border: "none",
         outline: "none",
         "& .MuiInputBase-root": {
-          fontSize: "14px",
+          fontSize: "20px",
         },
         "& .MuiInputBase-root:placeholder": {
-          fontSize: "14px",
+          fontSize: "20px",
         },
         "& .MuiInputBase-root:focus": {
           border: 0,
