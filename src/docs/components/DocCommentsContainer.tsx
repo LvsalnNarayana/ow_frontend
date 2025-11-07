@@ -1,27 +1,36 @@
+// External
+import type { JSX } from "react";
+
+
+// MUI
 import {
-  Divider,
   Stack,
-  Typography,
+  Divider,
   useTheme,
+  Typography,
   type Theme,
 } from "@mui/material";
+
+
+// Parent, Sibling, Index
 import DocComment from "./DocComment";
-const DocCommentsContainer = () => {
+
+const DocCommentsContainer = (): JSX.Element => {
   const theme: Theme = useTheme();
 
   return (
     <Stack
       spacing={1}
       sx={{
-        p: 1,
         width: "100%",
-        maxHeight: "100%",
-        backgroundColor: theme.palette.background.paper,
-        borderRadius: theme.shape.radius.xs,
-        position: "sticky",
-        flexGrow: 1,
+        p: 1,
         top: 0,
+        flexGrow: 1,
         zIndex: 100,
+        maxHeight: "100%",
+        position: "sticky",
+        borderRadius: theme.shape.radius.xs,
+        backgroundColor: theme.palette.background.paper,
       }}
     >
       <Typography variant="h6" textAlign="center">

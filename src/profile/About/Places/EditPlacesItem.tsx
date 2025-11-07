@@ -492,7 +492,11 @@ const EditPlacesItem = ({
         <Typography variant="subtitle2" sx={{ mb: 1, fontWeight: 600 }}>
           Privacy Settings
         </Typography>
-        <ChangeAudience label />
+        <ChangeAudience
+          label
+          visibility="public"
+          onVisibilityChange={() => {}}
+        />
       </Box>
 
       {/* Advanced Settings Toggle */}

@@ -40,7 +40,11 @@ const EditBirthdayItem = ({
         <Typography sx={{ mb: 1, fontWeight: 600, fontSize: "16px" }}>
           Birthday
         </Typography>
-        <ChangeAudience label />
+        <ChangeAudience
+          label
+          visibility="public"
+          onVisibilityChange={() => {}}
+        />
         <Stack
           direction="row"
           width={"100%"}
@@ -101,7 +105,7 @@ const EditBirthdayItem = ({
           </Stack>
         </Stack>
       </Stack>
-      <Divider flexItem/>
+      <Divider flexItem />
     </Stack>
   );
 };

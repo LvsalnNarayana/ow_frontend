@@ -25,7 +25,7 @@ import type { Visibility } from "../types/base/visibility.types";
 const ChangeAudience = ({
   sx,
   label,
-  visibility,
+  visibility = "public",
   fontSize = 14,
   iconFontSize = 14,
   onVisibilityChange,

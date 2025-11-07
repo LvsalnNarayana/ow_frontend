@@ -1,24 +1,33 @@
-/* eslint-disable import/no-extraneous-dependencies */
-/* eslint-disable no-extra-parens */
-/* eslint-disable operator-linebreak */
+// External
+import type { JSX } from "react";
+
+
+// MUI
 import { Stack, Typography } from "@mui/material";
 
-import UserAvatar from "../../../shared/UserAvatar";
-import { user } from "../../../sampleData/user";
-import { useCreatePostContext } from "../../context/CreatePostContext";
-import ChangeAudience from "../../../shared/ChangeAudience";
-import type { Visibility } from "../../../types/base/visibility.types";
-import type { PostPrivacy } from "../../../types/post/post.enums";
-import SearchUser from "../../../shared/SearchUser";
 
-const CreatePostUser = () => {
+// Shared
+import UserAvatar from "../../../shared/UserAvatar";
+import ChangeAudience from "../../../shared/ChangeAudience";
+
+
+// Context
+import { useCreatePostContext } from "../../context/CreatePostContext";
+
+
+// Parent, Sibling, Index
+import { generateUser } from "../../../types/user/user.types";
+import type { PostPrivacy } from "../../../types/post/post.enums";
+import type { Visibility } from "../../../types/base/visibility.types";
+
+const CreatePostUser = (): JSX.Element => {
   const {
+    actions: { setPrivacy },
     data: {
       feeling,
       publishing,
       metadata: { location, tagged_users },
     },
-    actions: { setPrivacy },
   } = useCreatePostContext();
 
   return (
@@ -29,7 +38,7 @@ const CreatePostUser = () => {
         justifyContent="flex-start"
         alignItems="flex-start"
       >
-        <UserAvatar username={user?.username} width={42} />
+        <UserAvatar username={generateUser()?.username} width={42} />
         <Stack
           gap={1}
           direction="column"
@@ -39,14 +48,14 @@ const CreatePostUser = () => {
           <Typography
             variant="body1"
             sx={{
-              fontWeight: 500,
               fontSize: 18,
+              fontWeight: 500,
               display: "inline",
               verticalAlign: "middle",
             }}
           >
             <span style={{ fontWeight: 600 }}>
-              {user?.firstName} {user?.lastName}
+              {generateUser()?.firstName} {generateUser()?.lastName}
             </span>
             {(Object.keys(location || {}).length > 0 ||
               tagged_users.length > 0 ||

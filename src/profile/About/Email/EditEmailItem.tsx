@@ -24,7 +24,7 @@ import { MuiOtpInput } from "mui-one-time-password-input";
 
 import ChangeAudience from "../../../shared/ChangeAudience";
 import TextInput from "../../../shared/inputs/TextInput";
-import type { Email } from "../../../types/user/user.types";
+import type { Email } from "../../../types/user/userData.types";
 
 interface EditEmailItemProps {
   emailItem?: Email;
@@ -275,7 +275,11 @@ const EditEmailItem = ({
 
           {/* Visibility/Audience Control */}
           <Box sx={{ width: "100%" }}>
-            <ChangeAudience label />
+            <ChangeAudience
+              label
+              visibility="public"
+              onVisibilityChange={() => {}}
+            />
           </Box>
 
           {/* Action Buttons */}

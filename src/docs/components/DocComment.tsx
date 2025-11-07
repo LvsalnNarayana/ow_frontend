@@ -1,53 +1,61 @@
+// External
+import type { JSX } from "react";
+
+
+// MUI
+import CheckOutlinedIcon from "@mui/icons-material/CheckOutlined";
+import MoreVertOutlinedIcon from "@mui/icons-material/MoreVertOutlined";
 import {
-  IconButton,
   Stack,
-  Typography,
   useTheme,
+  IconButton,
+  Typography,
   type Theme,
 } from "@mui/material";
-import UserAvatar from "../../shared/UserAvatar";
-import MoreVertOutlinedIcon from "@mui/icons-material/MoreVertOutlined";
-import CheckOutlinedIcon from "@mui/icons-material/CheckOutlined";
 
-const DocComment = () => {
+
+// Shared
+import UserAvatar from "../../shared/UserAvatar";
+
+const DocComment = (): JSX.Element => {
   const theme: Theme = useTheme();
   return (
     <Stack
-      spacing={1}
-      width={"100%"}
       sx={{
-        borderRadius: theme.shape.radius.xs,
         p: 2,
-        backgroundColor: theme.palette.background.default,
         boxShadow: theme.shadows[1],
+        borderRadius: theme.shape.radius.xs,
+        backgroundColor: theme.palette.background.default,
       }}
+      width={"100%"}
+      spacing={1}
     >
       <Stack
-        direction={"row"}
         justifyContent={"space-between"}
         alignItems={"center"}
+        direction={"row"}
       >
         <Stack
-          direction={"row"}
           justifyContent={"flex-start"}
           alignItems={"center"}
+          direction={"row"}
           gap={2}
         >
-          <UserAvatar width={28} username="chijcdjcd" />
+          <UserAvatar username="chijcdjcd" width={28} />
           <Stack>
-            <Typography variant="body1" fontSize={14} fontWeight={600}>
+            <Typography fontWeight={600} variant="body1" fontSize={14}>
               chijcdjcd
             </Typography>
-            <Typography variant="body1" fontSize={11} fontWeight={400}>
-              12:39 PM Today
+            <Typography fontWeight={400} variant="body1" fontSize={11}>
+              12:39&nbsp;PM Today
             </Typography>
           </Stack>
         </Stack>
         <Stack
-          gap={1}
-          direction={"row"}
           justifyContent={"center"}
           alignItems={"center"}
+          direction={"row"}
+          gap={1}
         >
           <IconButton sx={{ p: 0.5 }}>
             <CheckOutlinedIcon
@@ -66,7 +74,7 @@ const DocComment = () => {
         </Stack>
       </Stack>
       <Stack>
-        <Typography variant="body1" fontSize={14} fontWeight={400}>
+        <Typography fontWeight={400} variant="body1" fontSize={14}>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
           eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
         </Typography>

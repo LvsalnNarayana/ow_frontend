@@ -401,7 +401,11 @@ const EditPhoneItem = ({
 
           {/* Visibility/Audience Control */}
           <Box sx={{ width: "100%" }}>
-            <ChangeAudience label />
+        <ChangeAudience
+          label
+          visibility="public"
+          onVisibilityChange={() => {}}
+        />
           </Box>
 
           {/* Action Buttons */}

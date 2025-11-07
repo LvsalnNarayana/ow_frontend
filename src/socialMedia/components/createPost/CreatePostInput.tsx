@@ -1,30 +1,38 @@
-/* eslint-disable no-unused-vars */
+ 
 /* eslint-disable import/no-extraneous-dependencies */
-/* eslint-disable require-unicode-regexp */
+ 
+// External
 import { useState, useEffect } from "react";
 
+
+// MUI
 import { TextField } from "@mui/material";
 
-import { user } from "../../../sampleData/user";
+
+// Context
 import { useCreatePostContext } from "../../context/CreatePostContext";
+import { generateUser } from "../../../types/user/user.types";
 
 const CreatePostInput = () => {
   const {
+    actions: { setText },
     data: {
       content: { text },
     },
-    actions: { setText },
   } = useCreatePostContext();
 
   const [mentions, setMentions] = useState<string[]>([]);
+
   const [hashtags, setHashtags] = useState<string[]>([]);
 
   useEffect(() => {
     const extractEntities = (text: string) => {
       const mentionRegex = /@\w+/g;
+
       const hashtagRegex = /#\w+/g;
 
       const mentionsArray = text.match(mentionRegex) || [];
+
       const hashtagsArray = text.match(hashtagRegex) || [];
 
       setMentions(mentionsArray);
@@ -68,7 +76,7 @@ const CreatePostInput = () => {
             borderColor: "dodgerblue",
           },
       }}
-      placeholder={`What's on your mind? ${user?.firstName} ${user?.lastName}!!`}
+      placeholder={`What's on your mind? ${generateUser()?.firstName} ${generateUser()?.lastName}!!`}
     />
   );
 };

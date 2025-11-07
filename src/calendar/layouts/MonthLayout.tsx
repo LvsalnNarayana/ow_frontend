@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from "react";
-import { Stack, Box, Typography, Divider } from "@mui/material";
+import { Stack, Box, Typography } from "@mui/material";
 import moment from "moment";
 
 // Weather icons mapping

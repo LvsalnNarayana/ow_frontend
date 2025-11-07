@@ -1,27 +1,38 @@
-import {
-  Button,
-  FormControlLabel,
-  IconButton,
-  Stack,
-  Switch,
-  Typography,
-  useTheme,
-  type Theme,
-} from "@mui/material";
-import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
-import UserAvatar from "../../shared/UserAvatar";
-import ShareOutlinedIcon from "@mui/icons-material/ShareOutlined";
-import ModeCommentOutlinedIcon from "@mui/icons-material/ModeCommentOutlined";
-import StarBorderOutlinedIcon from "@mui/icons-material/StarBorderOutlined";
-import UserGroup from "../../shared/UserGroup";
-import type { JSX } from "react";
+// External
 import type React from "react";
-import ArrowBackOutlinedIcon from "@mui/icons-material/ArrowBackOutlined";
+import type { JSX } from "react";
 import { useNavigate, type NavigateFunction } from "react-router";
+
+
+// MUI
+import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
+import ShareOutlinedIcon from "@mui/icons-material/ShareOutlined";
+import ArrowBackOutlinedIcon from "@mui/icons-material/ArrowBackOutlined";
+import StarBorderOutlinedIcon from "@mui/icons-material/StarBorderOutlined";
+import ModeCommentOutlinedIcon from "@mui/icons-material/ModeCommentOutlined";
+import {
+  Stack,
+  Button,
+  Switch,
+  useTheme,
+  IconButton,
+  Typography,
+  type Theme,
+  FormControlLabel,
+} from "@mui/material";
+
+
+// Shared
+import UserGroup from "../../shared/UserGroup";
+import UserAvatar from "../../shared/UserAvatar";
+
+
+// Parent, Sibling, Index
 import DocSettingsMenu from "./DocSettingsMenu";
 
 const DocToolbar: React.ElementType = (): JSX.Element => {
   const theme: Theme = useTheme();
+
   const navigate: NavigateFunction = useNavigate();
   return (
     <Stack
@@ -116,33 +127,33 @@ const DocToolbar: React.ElementType = (): JSX.Element => {
             users={[
               {
                 id: 1,
+                lastname: "fdfdfdfd",
                 username: "testssseas",
                 firstname: "dsfdfdfdfdf",
-                lastname: "fdfdfdfd",
               },
               {
                 id: 2,
+                lastname: "fdfdfdfd",
                 username: "testsssseas",
                 firstname: "dsfdfdfdfdf",
-                lastname: "fdfdfdfd",
               },
               {
                 id: 3,
+                lastname: "fdfdfdfd",
                 username: "ttsssaseas",
                 firstname: "dsfdfdfdfdf",
-                lastname: "fdfdfdfd",
               },
               {
                 id: 4,
+                lastname: "fdfdfdfd",
                 username: "XXXXXXXXXX",
                 firstname: "dsfdfdfdfdf",
-                lastname: "fdfdfdfd",
               },
               {
                 id: 5,
+                lastname: "fdfdfdfd",
                 username: "XXXXXXXXXX",
                 firstname: "dsfdfdfdfdf",
-                lastname: "fdfdfdfd",
               },
             ]}
             length={3}
