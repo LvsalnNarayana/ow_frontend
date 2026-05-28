@@ -1,4 +1,5 @@
-import { Stack, Box, Typography, Paper } from "@mui/material";
+// MUI
+import { Box, Stack, Paper, Typography } from "@mui/material";
 
 interface TrendingTopic {
   id: string;
@@ -8,22 +9,23 @@ interface TrendingTopic {
 }
 
 const mockTrendingTopics: TrendingTopic[] = [
-  { id: "1", hashtag: "#TechNews", postCount: 1234, category: "Technology" },
+  { id: "1", postCount: 1234, hashtag: "#TechNews", category: "Technology" },
   {
     id: "2",
-    hashtag: "#MondayMotivation",
     postCount: 856,
     category: "Lifestyle",
+    hashtag: "#MondayMotivation",
   },
   {
     id: "3",
-    hashtag: "#WebDevelopment",
     postCount: 642,
     category: "Technology",
+    hashtag: "#WebDevelopment",
   },
-  { id: "4", hashtag: "#Photography", postCount: 423, category: "Art" },
-  { id: "5", hashtag: "#Fitness", postCount: 389, category: "Health" },
+  { id: "4", postCount: 423, category: "Art", hashtag: "#Photography" },
+  { id: "5", postCount: 389, category: "Health", hashtag: "#Fitness" },
 ];
+
 const TrendingTopicsSidebar = () => (
   <Paper
     sx={{

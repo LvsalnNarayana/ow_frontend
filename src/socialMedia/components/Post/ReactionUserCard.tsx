@@ -1,21 +1,27 @@
+// MUI
 import AddIcon from "@mui/icons-material/Add";
 import GroupsIcon from "@mui/icons-material/Groups";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import { Stack, Button, Typography } from "@mui/material";
 
+
+// Shared
 import UserAvatar from "../../../shared/UserAvatar";
-import type { ReactionUserInterface } from "../../../types/post.types";
+
+
+// Parent, Sibling, Index
+import type { ReactionUserInterface } from "../../../types/post/postUser.types";
 
 const ReactionUserCard = ({ user }: { user: ReactionUserInterface }) => {
   const handleReactionUserInteraction = () => {
     if (user?.friendship_status === "friends") {
-      // eslint-disable-next-line no-console
+       
       console.log("you are already friends");
     } else if (user?.friendship_status === "none") {
-      // eslint-disable-next-line no-console
+       
       console.log("add friend");
     } else if (user?.friendship_status === "pending") {
-      // eslint-disable-next-line no-console
+       
       console.log("request already sent");
     }
   };
@@ -50,16 +56,16 @@ const ReactionUserCard = ({ user }: { user: ReactionUserInterface }) => {
             component="p"
             sx={{ fontWeight: 500, fontSize: "12px" }}
           >
-            {user?.mutual_friends_count} Mutual Friends
+            {user?.mutualFriendsCount} Mutual Friends
           </Typography>
         </Stack>
       </Stack>
       <Button
         onClick={handleReactionUserInteraction}
         sx={{
+          minWidth: "150px",
           py: 0.5,
           fontSize: "12px",
-          minWidth: "150px",
         }}
         color="primary"
         variant="contained"

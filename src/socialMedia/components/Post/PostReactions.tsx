@@ -1,6 +1,9 @@
-/* eslint-disable max-lines */
+ 
+// External
 import { useState } from "react";
 
+
+// MUI
 import { Close } from "@mui/icons-material";
 import {
   Stack,
@@ -12,16 +15,20 @@ import {
   AvatarGroup,
 } from "@mui/material";
 
+
+// Parent, Sibling, Index
 import ReactionUserCard from "./ReactionUserCard";
 import type { PostInterface } from "../../../types/post/post.types";
 
 const PostReactions = ({ post }: { post: PostInterface }) => {
   const [reactionCategory, setReactionCategory] = useState(0);
+
   const [reactionsDialogOpen, setReactionsDialogOpen] = useState(false);
 
   const handleReactionsDialogOpen = () => {
     setReactionsDialogOpen(true);
   };
+
   const handleReactionsDialogClose = () => {
     setReactionsDialogOpen(false);
   };
@@ -91,9 +98,9 @@ const PostReactions = ({ post }: { post: PostInterface }) => {
         PaperProps={{
           elevation: 0,
           sx: {
-            pb: 2,
             width: "35vw",
             maxWidth: "80vw",
+            pb: 2,
             position: "relative",
           },
         }}
@@ -105,11 +112,11 @@ const PostReactions = ({ post }: { post: PostInterface }) => {
           justifyContent="space-between"
           alignItems="flex-start"
           sx={{
+            width: "100%",
             p: 2,
             pb: 0,
             top: 0,
             zIndex: 1000,
-            width: "100%",
             position: "sticky",
           }}
         >
@@ -248,8 +255,8 @@ const PostReactions = ({ post }: { post: PostInterface }) => {
             </Stack>
             <span
               style={{
-                bottom: 0,
                 width: "50px",
+                bottom: 0,
                 height: "4px",
                 position: "absolute",
                 borderRadius: "10px",
@@ -272,9 +279,9 @@ const PostReactions = ({ post }: { post: PostInterface }) => {
           alignItems="flex-start"
           gap={3}
           sx={{
+            width: "100%",
             p: 2,
             pb: 0,
-            width: "100%",
             height: "80vh",
             overflowY: "auto",
             maxHeight: "80vh",

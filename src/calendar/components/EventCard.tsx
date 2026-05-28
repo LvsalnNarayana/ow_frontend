@@ -1,22 +1,31 @@
+// External
 import React from "react";
+import moment from "moment";
+
+
+// MUI
+import { AccessTime as AccessTimeIcon } from "@mui/icons-material";
 import {
+  Card,
+  Chip,
   Stack,
   useTheme,
   Typography,
-  Card,
   CardContent,
-  Chip,
 } from "@mui/material";
-import { AccessTime as AccessTimeIcon } from "@mui/icons-material";
-import moment from "moment";
+
+
+// Parent, Sibling, Index
 import type { Event } from "../../types/event/event.types";
+
 const formatDate = (date: Date) => {
   return date.toLocaleDateString([], {
-    weekday: "short",
     month: "short",
     day: "numeric",
+    weekday: "short",
   });
 };
+
 const EventCard: React.FC<{ event: Event; showDate?: boolean }> = ({
   event,
   showDate = false,
@@ -28,12 +37,12 @@ const EventCard: React.FC<{ event: Event; showDate?: boolean }> = ({
       sx={{
         mb: 1,
         border: `1px solid ${theme.palette.divider}`,
-        borderLeft: `4px solid ${
-          event?.eventColor || theme.palette.primary.main
-        }`,
         "&:hover": {
           boxShadow: theme.shadows[2],
         },
+        borderLeft: `4px solid ${
+          event?.eventColor || theme.palette.primary.main
+        }`,
       }}
     >
       <CardContent sx={{ p: 2, "&:last-child": { pb: 2 } }}>
@@ -87,9 +96,9 @@ const EventCard: React.FC<{ event: Event; showDate?: boolean }> = ({
                   )}m`
             }
             sx={{
-              backgroundColor: `${event.eventColor}20`,
-              color: event.eventColor,
               fontWeight: 500,
+              color: event.eventColor,
+              backgroundColor: `${event.eventColor}20`,
             }}
           />
         </Stack>

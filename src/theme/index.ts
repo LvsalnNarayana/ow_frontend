@@ -1,15 +1,18 @@
 // material-ui
+// MUI
 import { createTheme, type Palette } from "@mui/material/styles";
 
+
+// Parent, Sibling, Index
+import themeColors from "./colors";
+import { DarkPalette } from "./palette";
+import themeTypography from "./typography";
 // project imports
 import componentStyleOverrides from "./componentStyleOverrides";
-import themeTypography from "./typography";
-import { DarkPalette } from "./palette";
-import themeColors from "./colors";
 
 export const theme = createTheme({
-  palette: DarkPalette(themeColors) as Palette,
   typography: themeTypography(),
+  palette: DarkPalette(themeColors) as Palette,
   shape: {
     borderRadius: 8,
     radius: {

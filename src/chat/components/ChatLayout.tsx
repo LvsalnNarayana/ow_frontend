@@ -1,14 +1,24 @@
+// External
+import { Outlet, useParams } from "react-router";
+
+
+// MUI
 import {
   Box,
-  Divider,
   List,
-  listItemButtonClasses,
   Stack,
+  Divider,
   Typography,
+  listItemButtonClasses,
 } from "@mui/material";
-import ChatItem from "./ChatItem";
+
+
+// Shared
 import TextInput from "../../shared/inputs/TextInput";
-import { Outlet, useParams } from "react-router";
+
+
+// Parent, Sibling, Index
+import ChatItem from "./ChatItem";
 
 const ChatLayout = () => {
   const { chatId } = useParams();
@@ -38,8 +48,8 @@ const ChatLayout = () => {
           height="100%"
           gap={2}
           sx={{
-            overflowY: "auto",
             px: 1,
+            overflowY: "auto",
           }}
         >
           <TextInput

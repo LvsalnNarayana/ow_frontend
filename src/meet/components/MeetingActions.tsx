@@ -1,17 +1,24 @@
+// External
 import React, { useState } from "react";
+
+
+// MUI
+import {
+  Login as LoginIcon,
+  VideoCall as VideoCallIcon,
+} from "@mui/icons-material";
 import {
   Stack,
+  Alert,
   Button,
   Divider,
-  Alert,
   Collapse,
-  CircularProgress,
   Typography,
+  CircularProgress,
 } from "@mui/material";
-import {
-  VideoCall as VideoCallIcon,
-  Login as LoginIcon,
-} from "@mui/icons-material";
+
+
+// Shared
 import TextInput from "../../shared/inputs/TextInput";
 
 interface MeetingActionsProps {
@@ -26,14 +33,14 @@ interface MeetingActionsProps {
 }
 
 const MeetingActions: React.FC<MeetingActionsProps> = ({
-  roomId,
-  isCreatingMeeting,
-  isJoiningMeeting,
   error,
-  onCreateMeeting,
+  roomId,
+  onClearError,
   onJoinMeeting,
   onRoomIdChange,
-  onClearError,
+  onCreateMeeting,
+  isJoiningMeeting,
+  isCreatingMeeting,
 }) => {
   const [showJoinForm, setShowJoinForm] = useState(false);
 

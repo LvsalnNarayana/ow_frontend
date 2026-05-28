@@ -1,4 +1,8 @@
+// External
 import { faker } from "@faker-js/faker";
+
+
+// Parent, Sibling, Index
 import type { FriendshipStatus } from "./friendshipStatus.types";
 
 export interface UserReference {
@@ -13,9 +17,9 @@ export interface UserReference {
 export const generateUserReference = (): UserReference => {
   return {
     id: faker.string.uuid(),
+    lastName: faker.person.lastName(),
     username: faker.internet.username(),
     firstName: faker.person.firstName(),
-    lastName: faker.person.lastName(),
     mutualFriendsCount: faker.number.int({ min: 0, max: 50 }),
     friendship_status: faker.helpers.arrayElement([
       "none",

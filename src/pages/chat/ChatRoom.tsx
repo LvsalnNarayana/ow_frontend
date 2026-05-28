@@ -1,7 +1,14 @@
-import { Divider, List, Stack } from "@mui/material";
+// MUI
+import { List, Stack, Divider } from "@mui/material";
+
+
+// Shared
+import TextInput from "../../shared/inputs/TextInput";
+
+
+// Parent, Sibling, Index
 import Message from "../../chat/components/Message";
 import UserInfoToolbar from "../../chat/components/UserInfoToolbar";
-import TextInput from "../../shared/inputs/TextInput";
 
 const ChatRoom = () => {
   return (
@@ -11,11 +18,11 @@ const ChatRoom = () => {
       <List
         sx={{
           width: "100%",
-          flexGrow: 1,
-          overflowY: "auto",
-          display: "flex",
-          flexDirection: "column-reverse",
           gap: 1,
+          flexGrow: 1,
+          display: "flex",
+          overflowY: "auto",
+          flexDirection: "column-reverse",
         }}
       >
         <Message />

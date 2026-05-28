@@ -1,27 +1,34 @@
+// External
+import moment from "moment";
+import { useNavigate } from "react-router";
 import React, { useState, useEffect } from "react";
+
+
+// MUI
 import {
-  Stack,
-  useTheme,
-  useMediaQuery,
   Box,
-  Button,
-  Typography,
   Chip,
+  Stack,
   Paper,
+  Button,
+  useTheme,
+  Typography,
+  useMediaQuery,
 } from "@mui/material";
 import {
+  Settings,
   Add as AddIcon,
   Event as EventIcon,
-  Schedule as ScheduleIcon,
   Today as TodayIcon,
+  Schedule as ScheduleIcon,
   NavigateNext as NavigateNextIcon,
-  Settings,
 } from "@mui/icons-material";
-import { generateEvent, type Event } from "../../types/event/event.types";
+
+
+// Parent, Sibling, Index
 import EventCard from "../../calendar/components/EventCard";
-import { useNavigate } from "react-router";
-import moment from "moment";
 import DayHoursLayout from "../../calendar/layouts/DayHoursLayout";
+import { type Event, generateEvent } from "../../types/event/event.types";
 import {
   generateTimeSlots,
   PIXEL_RATIO_CONSTANTS,
@@ -33,8 +40,11 @@ const mockUpcomingEvents: Event[] = Array.from({ length: 2 }, generateEvent);
 
 const CalendarDashboard: React.FC = () => {
   const theme = useTheme();
+
   const navigate = useNavigate();
+
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+
   const [currentTime, setCurrentTime] = useState(new Date());
 
   useEffect(() => {
@@ -44,11 +54,14 @@ const CalendarDashboard: React.FC = () => {
 
     return () => clearInterval(timer);
   }, []);
+
   const getCurrentTimePosition = () => {
     const threeHoursAgo = new Date(currentTime.getTime() - 3 * 60 * 60 * 1000);
 
     const hoursDiff = currentTime.getHours() - threeHoursAgo.getHours();
+
     const minutesDiff = currentTime.getMinutes() - threeHoursAgo.getMinutes();
+
     const totalMinutes = hoursDiff * 60 + minutesDiff;
 
     const adjustedTotalMinutes = Math.max(0, totalMinutes);
@@ -65,15 +78,15 @@ const CalendarDashboard: React.FC = () => {
       elevation={0}
       sx={{
         p: 2,
-        border: `1px solid ${theme.palette.divider}`,
-        borderRadius: 2,
         minHeight: 400,
+        borderRadius: 2,
+        border: `1px solid ${theme.palette.divider}`,
       }}
     >
       <Typography
         variant="h6"
         gutterBottom
-        sx={{ display: "flex", alignItems: "center", mb: 3 }}
+        sx={{ mb: 3, display: "flex", alignItems: "center" }}
       >
         <ScheduleIcon />
         Today's Timeline
@@ -82,31 +95,31 @@ const CalendarDashboard: React.FC = () => {
       <Box sx={{ position: "relative" }}>
         <DayHoursLayout
           slots={generateTimeSlots({
+            interval: 15,
             startHour: new Date().getHours() - 3,
             endHour:
               new Date().getHours() > 20 ? 24 : new Date().getHours() + 3,
-            interval: 15,
           })}
         />
         {timelinePosition !== null && (
           <>
             <Box
               sx={{
-                position: "absolute",
-                top: `${getCurrentTimePosition() + 8}PX`,
                 left: 0,
                 right: 0,
                 height: 2,
-                backgroundColor: theme.palette.error.main,
                 zIndex: 10,
+                position: "absolute",
+                top: `${getCurrentTimePosition() + 8}PX`,
+                backgroundColor: theme.palette.error.main,
                 "&::before": {
-                  content: '""',
-                  position: "absolute",
-                  left: -4,
-                  top: -4,
                   width: 10,
+                  top: -4,
+                  left: -4,
                   height: 10,
+                  content: '""',
                   borderRadius: "50%",
+                  position: "absolute",
                   backgroundColor: theme.palette.error.main,
                 },
               }}
@@ -124,10 +137,10 @@ const CalendarDashboard: React.FC = () => {
       flexGrow={1}
       sx={{
         width: "100%",
-        height: "100%",
-        p: 3,
         maxWidth: 1200,
+        p: 3,
         mx: "auto",
+        height: "100%",
       }}
     >
       {/* Header */}
@@ -144,10 +157,10 @@ const CalendarDashboard: React.FC = () => {
           </Typography>
           <Typography variant="body1" color="text.secondary">
             {new Date().toLocaleDateString([], {
-              weekday: "long",
-              year: "numeric",
               month: "long",
               day: "numeric",
+              weekday: "long",
+              year: "numeric",
             })}
           </Typography>
         </Stack>
@@ -185,8 +198,8 @@ const CalendarDashboard: React.FC = () => {
         elevation={0}
         sx={{
           p: 2,
-          border: `1px solid ${theme.palette.divider}`,
           borderRadius: 2,
+          border: `1px solid ${theme.palette.divider}`,
         }}
       >
         <Stack direction="row" spacing={2} flexWrap="wrap">
@@ -236,8 +249,8 @@ const CalendarDashboard: React.FC = () => {
             elevation={0}
             sx={{
               p: 2,
-              border: `1px solid ${theme.palette.divider}`,
               borderRadius: 2,
+              border: `1px solid ${theme.palette.divider}`,
             }}
           >
             <Stack
@@ -248,7 +261,7 @@ const CalendarDashboard: React.FC = () => {
             >
               <Typography
                 variant="h6"
-                sx={{ display: "flex", alignItems: "center", gap: 1 }}
+                sx={{ gap: 1, display: "flex", alignItems: "center" }}
               >
                 <TodayIcon />
                 Today's Events
@@ -269,12 +282,12 @@ const CalendarDashboard: React.FC = () => {
             ) : (
               <Box
                 sx={{
-                  textAlign: "center",
                   py: 4,
+                  textAlign: "center",
                   color: "text.secondary",
                 }}
               >
-                <EventIcon sx={{ fontSize: 48, mb: 1, opacity: 0.5 }} />
+                <EventIcon sx={{ mb: 1, fontSize: 48, opacity: 0.5 }} />
                 <Typography variant="body2">
                   No events scheduled for today
                 </Typography>
@@ -287,8 +300,8 @@ const CalendarDashboard: React.FC = () => {
             elevation={0}
             sx={{
               p: 2,
-              border: `1px solid ${theme.palette.divider}`,
               borderRadius: 2,
+              border: `1px solid ${theme.palette.divider}`,
             }}
           >
             <Stack
@@ -299,7 +312,7 @@ const CalendarDashboard: React.FC = () => {
             >
               <Typography
                 variant="h6"
-                sx={{ display: "flex", alignItems: "center", gap: 1 }}
+                sx={{ gap: 1, display: "flex", alignItems: "center" }}
               >
                 <NavigateNextIcon />
                 Upcoming Events
@@ -318,12 +331,12 @@ const CalendarDashboard: React.FC = () => {
             ) : (
               <Box
                 sx={{
-                  textAlign: "center",
                   py: 4,
+                  textAlign: "center",
                   color: "text.secondary",
                 }}
               >
-                <EventIcon sx={{ fontSize: 48, mb: 1, opacity: 0.5 }} />
+                <EventIcon sx={{ mb: 1, fontSize: 48, opacity: 0.5 }} />
                 <Typography variant="body2">No upcoming events</Typography>
               </Box>
             )}

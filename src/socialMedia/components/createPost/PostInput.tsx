@@ -1,12 +1,18 @@
 /* eslint-disable import/no-extraneous-dependencies */
+// MUI
 import { TextField } from "@mui/material";
 
-import type { PostUserInterface } from "../../../types/post/postUser.types";
+
+// Context
 import { useCreatePostContext } from "../../context/CreatePostContext";
+
+
+// Parent, Sibling, Index
+import type { PostUserInterface } from "../../../types/post/postUser.types";
 
 const PostInput = ({ user }: { user: PostUserInterface }) => {
   const {
-    actions: { setShowCreatePostDialog, setCreatePostScreen },
+    actions: { setCreatePostScreen, setShowCreatePostDialog },
   } = useCreatePostContext();
 
   return (

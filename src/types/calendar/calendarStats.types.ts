@@ -1,4 +1,5 @@
 // User's calendar statistics
+// External
 import { faker } from "@faker-js/faker";
 
 export interface CalendarStats {
@@ -19,14 +20,14 @@ export interface CalendarStats {
 
 export const generateCalendarStats = (): CalendarStats => {
   return {
+    mostActiveDay: faker.date.weekday(),
     totalEvents: faker.number.int({ min: 0, max: 100 }),
     upcomingEvents: faker.number.int({ min: 0, max: 10 }),
     eventsThisWeek: faker.number.int({ min: 0, max: 10 }),
+    mostActiveHour: faker.number.int({ min: 0, max: 23 }),
     eventsThisMonth: faker.number.int({ min: 0, max: 10 }),
     meetingHoursThisWeek: faker.number.int({ min: 0, max: 10 }),
     averageMeetingDuration: faker.number.int({ min: 30, max: 180 }),
-    mostActiveDay: faker.date.weekday(),
-    mostActiveHour: faker.number.int({ min: 0, max: 23 }),
     responseRate: {
       accepted: faker.number.int({ min: 0, max: 100 }),
       declined: faker.number.int({ min: 0, max: 100 }),

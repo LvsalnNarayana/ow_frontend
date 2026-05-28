@@ -1,31 +1,35 @@
+// External
 import React, { useState } from 'react';
+
+
+// Parent, Sibling, Index
 import YearLayout from '../../calendar/layouts/YearLayout';
 
 // Mock events data (you can replace this with your actual events)
 const mockEvents = [
   {
     id: "1",
-    startTime: new Date(2024, 0, 15), // January 15, 2024
-    endTime: new Date(2024, 0, 15),
     color: "#1976d2",
+    endTime: new Date(2024, 0, 15),
+    startTime: new Date(2024, 0, 15), // January 15, 2024
   },
   {
     id: "2",
-    startTime: new Date(2024, 2, 10), // March 10, 2024
-    endTime: new Date(2024, 2, 10),
     color: "#d32f2f",
+    endTime: new Date(2024, 2, 10),
+    startTime: new Date(2024, 2, 10), // March 10, 2024
   },
   {
     id: "3",
-    startTime: new Date(2024, 5, 20), // June 20, 2024
-    endTime: new Date(2024, 5, 20),
     color: "#388e3c",
+    endTime: new Date(2024, 5, 20),
+    startTime: new Date(2024, 5, 20), // June 20, 2024
   },
   {
     id: "4",
-    startTime: new Date(), // Today
-    endTime: new Date(),
     color: "#ff9800",
+    endTime: new Date(),
+    startTime: new Date(), // Today
   },
 ];
 

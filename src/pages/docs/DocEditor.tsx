@@ -1,10 +1,15 @@
-import { useSearchParams } from "react-router";
-import EditorLayout from "../../docs/components/EditorLayout";
+// External
 import type React from "react";
 import type { JSX } from "react";
+import { useSearchParams } from "react-router";
+
+
+// Parent, Sibling, Index
+import EditorLayout from "../../docs/components/EditorLayout";
 
 const DocEditor: React.ElementType = (): JSX.Element | null => {
   const [searchParams] = useSearchParams();
+
   const docId = searchParams?.get("docId");
   if (docId === undefined) {
     console.error("warning");

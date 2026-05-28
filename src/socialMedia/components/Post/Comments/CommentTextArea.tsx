@@ -1,6 +1,9 @@
-/* eslint-disable no-console */
+ 
+// External
 import React, { useState } from "react";
 
+
+// MUI
 import SendIcon from "@mui/icons-material/Send";
 import { TextField, InputAdornment } from "@mui/material";
 

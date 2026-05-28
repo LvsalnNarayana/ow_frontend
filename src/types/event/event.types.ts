@@ -1,37 +1,41 @@
-import { VISIBILITY_OPTIONS, type Visibility } from "../base/visibility.types";
-import { generatePlace, type Place } from "../place/place.types";
-import {
-  generateEventAnalytics,
-  type EventAnalytics,
-} from "./eventAnalytics.types";
-import {
-  generateEventAttachment,
-  type EventAttachment,
-} from "./eventAttachment.types";
-import { generateEventGuest, type EventGuest } from "./eventGuest.types";
-import {
-  generateEventGuestPermissions,
-  type EventGuestPermissions,
-} from "./eventGuestPermissions.types";
-import {
-  generateEventReminderNotificationSettings,
-  type EventReminderNotificationSettings,
-} from "./eventReminderNotificationSettings.types";
-import {
-  generateEventOrganizer,
-  type EventOrganizer,
-} from "./eventOrganizer.types";
-import { generateRecurrency, type Recurrence } from "./eventRecurrence.types";
+// External
+import { faker } from "@faker-js/faker";
+
+
+// Parent, Sibling, Index
+import { type Place, generatePlace } from "../place/place.types";
+import { type EventGuest, generateEventGuest } from "./eventGuest.types";
+import { type BaseEntity, generateBaseEntity } from "../base/base.types";
+import { type Recurrence, generateRecurrency } from "./eventRecurrence.types";
+import { type Visibility, VISIBILITY_OPTIONS } from "../base/visibility.types";
 import {
   TIMEZONE_OPTIONS,
   type TimezoneOptions,
 } from "../base/timezones.types";
-import { generateBaseEntity, type BaseEntity } from "../base/base.types";
 import {
-  generateUserReference,
+  type EventAnalytics,
+  generateEventAnalytics,
+} from "./eventAnalytics.types";
+import {
+  type EventOrganizer,
+  generateEventOrganizer,
+} from "./eventOrganizer.types";
+import {
+  type EventAttachment,
+  generateEventAttachment,
+} from "./eventAttachment.types";
+import {
   type UserReference,
+  generateUserReference,
 } from "../base/userReference.types";
-import { faker } from "@faker-js/faker";
+import {
+  type EventGuestPermissions,
+  generateEventGuestPermissions,
+} from "./eventGuestPermissions.types";
+import {
+  type EventReminderNotificationSettings,
+  generateEventReminderNotificationSettings,
+} from "./eventReminderNotificationSettings.types";
 
 export type EventStatus = "tentative" | "confirmed" | "cancelled" | "draft";
 
@@ -143,6 +147,7 @@ export interface Event extends BaseEntity {
   tags?: string[];
 
   analytics?: EventAnalytics;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   customFields?: Record<string, any>;
   lastModifiedBy: UserReference;
 }
@@ -150,58 +155,29 @@ export interface Event extends BaseEntity {
 export const generateEvent = (): Event => {
   return {
     ...generateBaseEntity(),
-    visibility: faker.helpers.arrayElement(
-      VISIBILITY_OPTIONS?.map((option) => option.value)
-    ) as Visibility,
+    customFields: {},
+    location: generatePlace(),
+    tags: [faker.lorem.word()],
     eventId: faker.string.uuid(),
     title: faker.lorem.sentence(),
-    description: faker.lorem.paragraph(),
-    startTime: new Date(
-      new Date().setHours(
-        faker?.number?.int({
-          min: 9,
-          max: 18,
-        })
-      )
-    ).toISOString(),
-    endTime: new Date(
-      new Date().setHours(
-        faker?.number?.int({
-          min: 9,
-          max: 18,
-        })
-      )
-    ).toISOString(),
-    timezone: faker.helpers.arrayElement(TIMEZONE_OPTIONS),
-    isAllDay: faker.datatype.boolean(),
-    status: {
-      isOpen: faker.datatype.boolean(),
-      isCompleted: faker.datatype.boolean(),
-      isCancelled: faker.datatype.boolean(),
-      isDeleted: faker.datatype.boolean(),
-      isArchived: faker.datatype.boolean(),
-      isPrivate: faker.datatype.boolean(),
-      isShared: faker.datatype.boolean(),
-      isPublished: faker.datatype.boolean(),
-      isDraft: faker.datatype.boolean(),
-      isScheduled: faker.datatype.boolean(),
-      isPast: faker.datatype.boolean(),
-      isFuture: faker.datatype.boolean(),
-      isToday: faker.datatype.boolean(),
-      isTomorrow: faker.datatype.boolean(),
-      isThisWeek: faker.datatype.boolean(),
-      isThisMonth: faker.datatype.boolean(),
-      isThisYear: faker.datatype.boolean(),
-    },
-    priority: faker.helpers.arrayElement(EVENT_PRIORITY_OPTIONS),
-    eventType: faker.helpers.arrayElement(EVENT_TYPE_OPTIONS),
-    recurrence: generateRecurrency(),
     seriesId: faker.string.uuid(),
-    isRecurring: faker.datatype.boolean(),
-    location: generatePlace(),
+    eventColor: faker.color.rgb(),
+    guests: [generateEventGuest()],
+    recurrence: generateRecurrency(),
+    categories: [faker.lorem.word()],
+    isAllDay: faker.datatype.boolean(),
     isOnline: faker.datatype.boolean(),
     organizer: generateEventOrganizer(),
-    guests: [generateEventGuest()],
+    analytics: generateEventAnalytics(),
+    description: faker.lorem.paragraph(),
+    isRecurring: faker.datatype.boolean(),
+    lastModifiedBy: generateUserReference(),
+    attachments: [generateEventAttachment()],
+    guestPermissions: generateEventGuestPermissions(),
+    timezone: faker.helpers.arrayElement(TIMEZONE_OPTIONS),
+    reminders: [generateEventReminderNotificationSettings()],
+    eventType: faker.helpers.arrayElement(EVENT_TYPE_OPTIONS),
+    priority: faker.helpers.arrayElement(EVENT_PRIORITY_OPTIONS),
     guestCount: faker.number.int({
       min: 1,
       max: 10,
@@ -210,14 +186,43 @@ export const generateEvent = (): Event => {
       min: 1,
       max: 10,
     }),
-    guestPermissions: generateEventGuestPermissions(),
-    attachments: [generateEventAttachment()],
-    reminders: [generateEventReminderNotificationSettings()],
-    eventColor: faker.color.rgb(),
-    categories: [faker.lorem.word()],
-    tags: [faker.lorem.word()],
-    analytics: generateEventAnalytics(),
-    customFields: {},
-    lastModifiedBy: generateUserReference(),
+    visibility: faker.helpers.arrayElement(
+      VISIBILITY_OPTIONS?.map((option) => option.value)
+    ) as Visibility,
+    endTime: new Date(
+      new Date().setHours(
+        faker?.number?.int({
+          min: 9,
+          max: 18,
+        })
+      )
+    ).toISOString(),
+    startTime: new Date(
+      new Date().setHours(
+        faker?.number?.int({
+          min: 9,
+          max: 18,
+        })
+      )
+    ).toISOString(),
+    status: {
+      isOpen: faker.datatype.boolean(),
+      isPast: faker.datatype.boolean(),
+      isDraft: faker.datatype.boolean(),
+      isToday: faker.datatype.boolean(),
+      isShared: faker.datatype.boolean(),
+      isFuture: faker.datatype.boolean(),
+      isDeleted: faker.datatype.boolean(),
+      isPrivate: faker.datatype.boolean(),
+      isArchived: faker.datatype.boolean(),
+      isTomorrow: faker.datatype.boolean(),
+      isThisWeek: faker.datatype.boolean(),
+      isThisYear: faker.datatype.boolean(),
+      isCompleted: faker.datatype.boolean(),
+      isCancelled: faker.datatype.boolean(),
+      isPublished: faker.datatype.boolean(),
+      isScheduled: faker.datatype.boolean(),
+      isThisMonth: faker.datatype.boolean(),
+    },
   };
 };

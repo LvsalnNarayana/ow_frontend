@@ -1,5 +1,6 @@
 // Guest permissions and status
 
+// External
 import { faker } from "@faker-js/faker";
 
 export interface EventGuestPermissions {

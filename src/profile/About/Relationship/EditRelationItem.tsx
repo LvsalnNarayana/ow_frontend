@@ -1,23 +1,31 @@
 /* eslint-disable react/no-array-index-key */
+// External
 import { useState } from "react";
 
+
+// MUI
 import {
   Stack,
   Select,
-  MenuItem,
-  Typography,
   Button,
   Divider,
+  MenuItem,
+  Typography,
 } from "@mui/material";
 
+
+// Shared
 // import useData from "../../../hooks/data/useData";
 import ChangeAudience from "../../../shared/ChangeAudience";
+
+
+// Parent, Sibling, Index
 import type { Relationship } from "../../../types/user/userInfo.types";
 import { RELATIONSHIP_OPTIONS } from "../../../types/base/relationShipStatus.types";
 
 const EditRelationItem = ({
-  relationItem,
   onCancel,
+  relationItem,
 }: {
   relationItem: Relationship;
   onCancel: () => void;
@@ -88,8 +96,8 @@ const EditRelationItem = ({
                 });
               }}
               sx={{
-                my: 0.5,
                 width: "100%",
+                my: 0.5,
                 "& .MuiSelect-select": {
                   p: 0.85,
                 },

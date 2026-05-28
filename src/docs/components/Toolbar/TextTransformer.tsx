@@ -1,53 +1,61 @@
+// External
 import React, { type JSX } from "react";
-import KeyboardArrowDownOutlinedIcon from "@mui/icons-material/KeyboardArrowDownOutlined";
-import FormatSizeOutlinedIcon from "@mui/icons-material/FormatSizeOutlined";
-import StrikethroughSOutlinedIcon from "@mui/icons-material/StrikethroughSOutlined";
-import SubscriptOutlinedIcon from "@mui/icons-material/SubscriptOutlined";
-import SuperscriptOutlinedIcon from "@mui/icons-material/SuperscriptOutlined";
+
+
+// MUI
 import BrushOutlinedIcon from "@mui/icons-material/BrushOutlined";
 import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
+import SubscriptOutlinedIcon from "@mui/icons-material/SubscriptOutlined";
+import FormatSizeOutlinedIcon from "@mui/icons-material/FormatSizeOutlined";
+import SuperscriptOutlinedIcon from "@mui/icons-material/SuperscriptOutlined";
+import StrikethroughSOutlinedIcon from "@mui/icons-material/StrikethroughSOutlined";
+import KeyboardArrowDownOutlinedIcon from "@mui/icons-material/KeyboardArrowDownOutlined";
+
+
+// Shared
 import ButtonMenu from "../../../shared/ButtonMenu";
+
 const TextTransformer: React.ElementType = (): JSX.Element => {
   const menu = [
     {
+      onClick: () => {},
       value: "Lower Case",
       icon: <span style={{ fontSize: 10 }}>abc</span>,
-      onClick: () => {},
     },
     {
+      onClick: () => {},
       value: "Upper Case",
       icon: <span style={{ fontSize: 9 }}>ABC</span>,
-      onClick: () => {},
     },
     {
+      onClick: () => {},
       value: "Capitalize",
       icon: <span style={{ fontSize: 10 }}>Abc</span>,
-      onClick: () => {},
     },
     {
+      onClick: () => {},
       value: "Strikethrough",
       icon: <StrikethroughSOutlinedIcon />,
-      onClick: () => {},
     },
     {
+      onClick: () => {},
       value: "Subscript",
       icon: <SubscriptOutlinedIcon />,
-      onClick: () => {},
     },
     {
+      onClick: () => {},
       value: "Superscript",
       icon: <SuperscriptOutlinedIcon />,
-      onClick: () => {},
     },
     {
+      onClick: () => {},
       value: "Highlight",
       icon: <BrushOutlinedIcon />,
-      onClick: () => {},
     },
     {
+      onClick: () => {},
       value: "Clear Formatting",
       icon: <DeleteOutlinedIcon />,
-      onClick: () => {},
     },
   ];
 

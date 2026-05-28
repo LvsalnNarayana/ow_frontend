@@ -1,17 +1,28 @@
-import { Button, Chip, Stack, Typography } from "@mui/material";
-import type { PostInterface } from "../../../types/post/post.types";
+// External
 import { useNavigate } from "react-router";
-import CustomTooltip from "../../../shared/CustomTooltip";
-import UserAvatar from "../../../shared/UserAvatar";
+
+
+// MUI
 import { CheckOutlined } from "@mui/icons-material";
+import { Chip, Stack, Button, Typography } from "@mui/material";
+
+
+// Shared
+import UserAvatar from "../../../shared/UserAvatar";
+import CustomTooltip from "../../../shared/CustomTooltip";
+
+
+// Parent, Sibling, Index
+import type { PostInterface } from "../../../types/post/post.types";
 
 const PostDescription = ({ post }: { post: PostInterface }) => {
   const renderDescription = (description: string) => {
     const FONT_SIZE = 16;
+
     const navigate = useNavigate();
     if (!description) return null;
 
-    // eslint-disable-next-line prefer-named-capture-group, require-unicode-regexp
+     
     const parts = description.split(/(@\w+|#\w+)/g).filter(Boolean);
 
     return parts.map((part, index) => {
@@ -80,9 +91,9 @@ const PostDescription = ({ post }: { post: PostInterface }) => {
             // eslint-disable-next-line react/no-array-index-key
             key={index}
             sx={{
+              margin: "0 4px",
               cursor: "pointer",
               color: "dodgerblue",
-              margin: "0 4px",
               textDecoration: "none",
               "&:hover": { textDecoration: "underline" },
             }}

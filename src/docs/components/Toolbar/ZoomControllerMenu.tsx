@@ -1,10 +1,21 @@
+// External
 import React, { type JSX } from "react";
+
+
+// MUI
 import KeyboardArrowDownOutlinedIcon from "@mui/icons-material/KeyboardArrowDownOutlined";
+
+
+// Shared
 import ButtonMenu from "../../../shared/ButtonMenu";
+
+
+// Context
 import { useDocConfig } from "../../context/DocsConfigContext";
 
 const ZoomControllerMenu: React.ElementType = (): JSX.Element => {
   const { settings, updateSetting } = useDocConfig();
+
   const menu = [
     {
       value: "25%",

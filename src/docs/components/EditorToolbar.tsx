@@ -1,28 +1,35 @@
-import {
-  Divider,
-  IconButton,
-  Stack,
-  ToggleButton,
-  ToggleButtonGroup,
-  useTheme,
-} from "@mui/material";
+// MUI
 import UndoOutlinedIcon from "@mui/icons-material/UndoOutlined";
 import RedoOutlinedIcon from "@mui/icons-material/RedoOutlined";
-import TextStylesMenu from "./Toolbar/TextStylesMenu";
-import FontFamilyMenu from "./Toolbar/FontFamilyMenu";
-import FontSizer from "./Toolbar/FontSizer";
-import FormatBoldOutlinedIcon from "@mui/icons-material/FormatBoldOutlined";
-import FormatItalicOutlinedIcon from "@mui/icons-material/FormatItalicOutlined";
-import FormatUnderlinedOutlinedIcon from "@mui/icons-material/FormatUnderlinedOutlined";
 import CodeOutlinedIcon from "@mui/icons-material/CodeOutlined";
+import FormatBoldOutlinedIcon from "@mui/icons-material/FormatBoldOutlined";
 import InsertLinkOutlinedIcon from "@mui/icons-material/InsertLinkOutlined";
+import FormatItalicOutlinedIcon from "@mui/icons-material/FormatItalicOutlined";
 import FormatColorTextOutlinedIcon from "@mui/icons-material/FormatColorTextOutlined";
 import FormatColorFillOutlinedIcon from "@mui/icons-material/FormatColorFillOutlined";
-import FontAligner from "./Toolbar/FontAligner";
-import TextTransformer from "./Toolbar/TextTransformer";
-import InsertNodeMenu from "./Toolbar/InsertNodeMenu";
-import ZoomControllerMenu from "./Toolbar/ZoomControllerMenu";
+import FormatUnderlinedOutlinedIcon from "@mui/icons-material/FormatUnderlinedOutlined";
+import {
+  Stack,
+  Divider,
+  useTheme,
+  IconButton,
+  ToggleButton,
+  ToggleButtonGroup,
+} from "@mui/material";
+
+
+// Shared
 import ButtonMenu from "../../shared/ButtonMenu";
+
+
+// Parent, Sibling, Index
+import FontSizer from "./Toolbar/FontSizer";
+import FontAligner from "./Toolbar/FontAligner";
+import TextStylesMenu from "./Toolbar/TextStylesMenu";
+import FontFamilyMenu from "./Toolbar/FontFamilyMenu";
+import InsertNodeMenu from "./Toolbar/InsertNodeMenu";
+import TextTransformer from "./Toolbar/TextTransformer";
+import ZoomControllerMenu from "./Toolbar/ZoomControllerMenu";
 
 const EditorToolbar = () => {
   const theme = useTheme();
@@ -36,11 +43,11 @@ const EditorToolbar = () => {
       justifyContent={"space-around"}
       bgcolor={theme?.palette?.background?.paper}
       sx={{
-        borderBottom: `1px solid ${theme?.palette?.divider}`,
-        position: "sticky",
         top: 0,
         zIndex: 1000,
         borderRadius: 5,
+        position: "sticky",
+        borderBottom: `1px solid ${theme?.palette?.divider}`,
       }}
     >
       <IconButton
@@ -86,8 +93,8 @@ const EditorToolbar = () => {
           aria-label="left aligned"
           sx={{
             p: 0.5,
-            color: theme?.palette?.text?.secondary,
             border: "none",
+            color: theme?.palette?.text?.secondary,
             "&:hover": {
               color: theme?.palette?.text?.primary,
             },
@@ -104,8 +111,8 @@ const EditorToolbar = () => {
           aria-label="left aligned"
           sx={{
             p: 0.5,
-            color: theme?.palette?.text?.secondary,
             border: "none",
+            color: theme?.palette?.text?.secondary,
             "&:hover": {
               color: theme?.palette?.text?.primary,
             },
@@ -122,8 +129,8 @@ const EditorToolbar = () => {
           aria-label="left aligned"
           sx={{
             p: 0.5,
-            color: theme?.palette?.text?.secondary,
             border: "none",
+            color: theme?.palette?.text?.secondary,
             "&:hover": {
               color: theme?.palette?.text?.primary,
             },
@@ -140,8 +147,8 @@ const EditorToolbar = () => {
           aria-label="left aligned"
           sx={{
             p: 0.5,
-            color: theme?.palette?.text?.secondary,
             border: "none",
+            color: theme?.palette?.text?.secondary,
             "&:hover": {
               color: theme?.palette?.text?.primary,
             },
@@ -158,8 +165,8 @@ const EditorToolbar = () => {
           aria-label="left aligned"
           sx={{
             p: 0.5,
-            color: theme?.palette?.text?.secondary,
             border: "none",
+            color: theme?.palette?.text?.secondary,
             "&:hover": {
               color: theme?.palette?.text?.primary,
             },
@@ -178,8 +185,8 @@ const EditorToolbar = () => {
         aria-label="left aligned"
         sx={{
           p: 0.5,
-          color: theme?.palette?.text?.secondary,
           border: "none",
+          color: theme?.palette?.text?.secondary,
           "&:hover": {
             color: theme?.palette?.text?.primary,
           },
@@ -196,8 +203,8 @@ const EditorToolbar = () => {
         aria-label="left aligned"
         sx={{
           p: 0.5,
-          color: theme?.palette?.text?.secondary,
           border: "none",
+          color: theme?.palette?.text?.secondary,
           "&:hover": {
             color: theme?.palette?.text?.primary,
           },

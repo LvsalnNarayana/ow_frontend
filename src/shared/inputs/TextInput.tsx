@@ -1,19 +1,26 @@
+// External
 import { type JSX, useState, type ChangeEvent } from "react";
+
+
+// MUI
 import { Stack, TextField, Typography } from "@mui/material";
+
+
+// Parent, Sibling, Index
 import type { TextInputProps } from "../../interface/TextInputProps.interface";
 
 const TextInput = ({
   name,
-  value: initialValue = "",
-  onChange,
   label,
-  placeholder = "Type Something…",
-  helperText = "",
+  onChange,
   error = false,
+  type = "text",
+  helperText = "",
   disabled = false,
   fontSize = "14px",
   helperFontSize = "12px",
-  type = "text",
+  value: initialValue = "",
+  placeholder = "Type Something…",
 }: TextInputProps): JSX.Element => {
   const [value, setValue] = useState(initialValue);
 
@@ -50,16 +57,33 @@ const TextInput = ({
         disabled={disabled}
         InputProps={{
           sx: (theme) => ({
-            color: theme.palette.text.primary,
-            borderRadius: "6px",
-            outline: "none",
             p: 0,
-            "& .MuiOutlinedInput-notchedOutline": {
-              outline: "none",
-              borderWidth: 1,
-              borderColor: error
-                ? theme.palette.error.main
-                : theme.palette.divider,
+            outline: "none",
+            borderRadius: "6px",
+            color: theme.palette.text.primary,
+            "&.Mui-disabled": {
+              backgroundColor: theme.palette.action.disabledBackground,
+            },
+            "&.Mui-error .MuiOutlinedInput-notchedOutline": {
+              borderColor: theme.palette.error.main,
+            },
+            "&.Mui-error:hover .MuiOutlinedInput-notchedOutline": {
+              borderColor: theme.palette.error.main,
+            },
+            "&.Mui-error.Mui-focused .MuiOutlinedInput-notchedOutline": {
+              borderColor: theme.palette.error.main,
+            },
+            "&.Mui-disabled.Mui-focused .MuiOutlinedInput-notchedOutline": {
+              borderColor: theme.palette.text.disabled,
+            },
+
+            "&.Mui-disabled:hover .MuiOutlinedInput-notchedOutline": {
+              backgroundColor: theme.palette.action.disabledBackground,
+            },
+            "& .MuiInputBase-input::placeholder": {
+              opacity: 0.5,
+              fontSize: fontSize,
+              color: theme.palette.text.primary,
             },
             "&:hover .MuiOutlinedInput-notchedOutline": {
               borderColor: error
@@ -72,40 +96,23 @@ const TextInput = ({
                 ? theme.palette.error.main
                 : theme.palette.primary.main,
             },
-            "&.Mui-disabled": {
-              backgroundColor: theme.palette.action.disabledBackground,
-            },
-            "&.Mui-disabled:hover .MuiOutlinedInput-notchedOutline": {
-              backgroundColor: theme.palette.action.disabledBackground,
-            },
-
-            "&.Mui-disabled.Mui-focused .MuiOutlinedInput-notchedOutline": {
-              borderColor: theme.palette.text.disabled,
-            },
-            "&.Mui-error .MuiOutlinedInput-notchedOutline": {
-              borderColor: theme.palette.error.main,
-            },
-            "&.Mui-error:hover .MuiOutlinedInput-notchedOutline": {
-              borderColor: theme.palette.error.main,
-            },
-            "&.Mui-error.Mui-focused .MuiOutlinedInput-notchedOutline": {
-              borderColor: theme.palette.error.main,
-            },
-            "& .MuiInputBase-input::placeholder": {
-              color: theme.palette.text.primary,
-              fontSize: fontSize,
-              opacity: 0.5,
+            "& .MuiOutlinedInput-notchedOutline": {
+              borderWidth: 1,
+              outline: "none",
+              borderColor: error
+                ? theme.palette.error.main
+                : theme.palette.divider,
             },
             "& .MuiInputBase-input": {
-              color: theme.palette.text.primary,
-              fontSize: fontSize,
-              verticalAlign: "middle",
-              display: "flex",
-              alignItems: "center",
+              borderWidth: 1,
               lineHeight: 1,
               height: "20px",
+              display: "flex",
+              fontSize: fontSize,
               padding: "8px 12px",
-              borderWidth: 1,
+              alignItems: "center",
+              verticalAlign: "middle",
+              color: theme.palette.text.primary,
             },
           }),
         }}
@@ -113,8 +120,8 @@ const TextInput = ({
           sx: (theme) => ({
             mx: 1,
             mt: 1,
-            backgroundColor: "transparent",
             fontSize: helperFontSize,
+            backgroundColor: "transparent",
             color: disabled
               ? theme.palette.text.disabled
               : error

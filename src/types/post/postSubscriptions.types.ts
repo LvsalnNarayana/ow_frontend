@@ -1,6 +1,7 @@
+// Parent, Sibling, Index
 import {
-  generatePostSubscriptionUser,
   type PostSubscriptionUser,
+  generatePostSubscriptionUser,
 } from "./postUser.types";
 
 export interface PostSubscriptions {
@@ -17,6 +18,14 @@ export interface PostSubscriptions {
 
 export const generatePostSubscriptions = (): PostSubscriptions => {
   return {
+    subscriber_count: 10,
+    user_subscribed: true,
+    preferences: {
+      notify_on_shares: true,
+      notify_on_comments: true,
+      notify_on_mentions: true,
+      notify_on_reactions: true,
+    },
     subscribers: Array.from(
       { length: 10 },
       () =>
@@ -24,13 +33,5 @@ export const generatePostSubscriptions = (): PostSubscriptions => {
           ...generatePostSubscriptionUser(),
         } as PostSubscriptionUser)
     ),
-    subscriber_count: 10,
-    user_subscribed: true,
-    preferences: {
-      notify_on_comments: true,
-      notify_on_reactions: true,
-      notify_on_shares: true,
-      notify_on_mentions: true,
-    },
   };
 };

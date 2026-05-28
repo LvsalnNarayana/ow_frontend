@@ -1,45 +1,52 @@
-import FormatAlignLeftOutlinedIcon from "@mui/icons-material/FormatAlignLeftOutlined";
-import FormatAlignCenterOutlinedIcon from "@mui/icons-material/FormatAlignCenterOutlined";
-import FormatAlignJustifyOutlinedIcon from "@mui/icons-material/FormatAlignJustifyOutlined";
-import KeyboardArrowDownOutlinedIcon from "@mui/icons-material/KeyboardArrowDownOutlined";
-import FormatAlignRightOutlinedIcon from "@mui/icons-material/FormatAlignRightOutlined";
-import FormatIndentIncreaseOutlinedIcon from "@mui/icons-material/FormatIndentIncreaseOutlined";
-import FormatIndentDecreaseOutlinedIcon from "@mui/icons-material/FormatIndentDecreaseOutlined";
-import ButtonMenu from "../../../shared/ButtonMenu";
+// External
 import type React from "react";
 import type { JSX } from "react";
+
+
+// MUI
+import FormatAlignLeftOutlinedIcon from "@mui/icons-material/FormatAlignLeftOutlined";
+import FormatAlignRightOutlinedIcon from "@mui/icons-material/FormatAlignRightOutlined";
+import FormatAlignCenterOutlinedIcon from "@mui/icons-material/FormatAlignCenterOutlined";
+import KeyboardArrowDownOutlinedIcon from "@mui/icons-material/KeyboardArrowDownOutlined";
+import FormatAlignJustifyOutlinedIcon from "@mui/icons-material/FormatAlignJustifyOutlined";
+import FormatIndentIncreaseOutlinedIcon from "@mui/icons-material/FormatIndentIncreaseOutlined";
+import FormatIndentDecreaseOutlinedIcon from "@mui/icons-material/FormatIndentDecreaseOutlined";
+
+
+// Shared
+import ButtonMenu from "../../../shared/ButtonMenu";
 
 const FontAligner: React.ElementType = (): JSX.Element => {
   const menu = [
     {
+      onClick: () => {},
       value: "Left Align",
       icon: <FormatAlignLeftOutlinedIcon />,
-      onClick: () => {},
     },
     {
+      onClick: () => {},
       value: "Right Align",
       icon: <FormatAlignRightOutlinedIcon />,
-      onClick: () => {},
     },
     {
+      onClick: () => {},
       value: "Center Align",
       icon: <FormatAlignCenterOutlinedIcon />,
-      onClick: () => {},
     },
     {
+      onClick: () => {},
       value: "Justify Align",
       icon: <FormatAlignJustifyOutlinedIcon />,
-      onClick: () => {},
     },
     {
+      onClick: () => {},
       value: "Increase Indent",
       icon: <FormatIndentIncreaseOutlinedIcon />,
-      onClick: () => {},
     },
     {
+      onClick: () => {},
       value: "Decrease Indent",
       icon: <FormatIndentDecreaseOutlinedIcon />,
-      onClick: () => {},
     },
   ];
 

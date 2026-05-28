@@ -1,18 +1,25 @@
-import {
-  Box,
-  buttonBaseClasses,
-  Collapse,
-  ListItemIcon,
-  listItemIconClasses,
-  ListItemText,
-  MenuItem,
-  Tooltip,
-  tooltipClasses,
-  Typography,
-  useTheme,
-} from "@mui/material";
+// External
 import { type JSX } from "react";
 import { useNavigate } from "react-router";
+
+
+// MUI
+import {
+  Box,
+  Tooltip,
+  Collapse,
+  MenuItem,
+  useTheme,
+  Typography,
+  ListItemIcon,
+  ListItemText,
+  tooltipClasses,
+  buttonBaseClasses,
+  listItemIconClasses,
+} from "@mui/material";
+
+
+// Parent, Sibling, Index
 import type { NavigationDataType } from "../../data/navigationData";
 
 const SidebarMenuItem = ({
@@ -25,6 +32,7 @@ const SidebarMenuItem = ({
   active: boolean;
 }): JSX.Element => {
   const theme = useTheme();
+
   const navigate = useNavigate();
   return (
     <Tooltip
@@ -50,20 +58,16 @@ const SidebarMenuItem = ({
         disableTouchRipple
         selected={active}
         sx={{
+          width: open ? "100%" : "fit-content",
           mb: 1,
           px: 1,
           py: 1,
-          width: open ? "100%" : "fit-content",
           borderRadius: 1,
-          gap: open ? 2 : 0,
           display: "flex",
-          flexDirection: "row",
+          gap: open ? 2 : 0,
           textAlign: "center",
+          flexDirection: "row",
           justifyContent: "flex-start",
-          [`&.${buttonBaseClasses.root} .${listItemIconClasses.root}`]: {
-            minWidth: "auto",
-            marginRight: 0,
-          },
           [`&:hover`]: {
             backgroundColor: `${theme.palette.primary.main}40`,
           },
@@ -72,6 +76,10 @@ const SidebarMenuItem = ({
           },
           [`&:hover.Mui-selected`]: {
             backgroundColor: `${theme.palette.primary.main}60`,
+          },
+          [`&.${buttonBaseClasses.root} .${listItemIconClasses.root}`]: {
+            minWidth: "auto",
+            marginRight: 0,
           },
           transition: theme.transitions.create(["gap", "width"], {
             easing: theme.transitions.easing.sharp,
@@ -84,8 +92,8 @@ const SidebarMenuItem = ({
       >
         <ListItemIcon
           sx={{
-            p: 0,
             minWidth: "auto",
+            p: 0,
             justifyContent: "center",
           }}
         >

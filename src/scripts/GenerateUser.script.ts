@@ -1,12 +1,13 @@
+// Parent, Sibling, Index
 import { generateMockUser } from "./MockUserData.script";
 
 // Generate a user with specific properties
 const customUser = generateMockUser({
-  firstName: "John",
-  lastName: "Doe",
-  username: "johndoe123",
-  isVerified: true,
   isActive: true,
+  lastName: "Doe",
+  isVerified: true,
+  firstName: "John",
+  username: "johndoe123",
   // Override any other properties as needed
 });
 
@@ -17,12 +18,12 @@ export const userWithCustomEmail = generateMockUser({
   email: [
     {
       id: "custom-email-id",
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
-      email: "john.doe@company.com",
-      visibility: "public",
       verified: true,
       primary: false,
+      visibility: "public",
+      email: "john.doe@company.com",
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
     },
   ],
 });

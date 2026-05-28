@@ -1,36 +1,43 @@
+// External
 import React, { useState } from "react";
+
+
+// MUI
 import {
-  Stack,
-  IconButton,
-  Tooltip,
+  Box,
   Menu,
+  Stack,
+  Tooltip,
+  Divider,
   MenuItem,
+  useTheme,
+  IconButton,
+  Typography,
   ListItemIcon,
   ListItemText,
-  Divider,
-  Typography,
-  Box,
-  useTheme,
 } from "@mui/material";
 import {
   Mic as MicIcon,
-  MicOff as MicOffIcon,
-  Videocam as VideocamIcon,
-  VideocamOff as VideocamOffIcon,
-  ScreenShare as ScreenShareIcon,
-  StopScreenShare as StopScreenShareIcon,
   Chat as ChatIcon,
+  Stop as StopIcon,
+  PanTool as HandIcon,
+  MicOff as MicOffIcon,
   People as PeopleIcon,
   CallEnd as CallEndIcon,
+  Videocam as VideocamIcon,
   MoreVert as MoreVertIcon,
-  FiberManualRecord as RecordIcon,
-  Stop as StopIcon,
   Settings as SettingsIcon,
-  Fullscreen as FullscreenIcon,
   GridView as GridViewIcon,
+  Fullscreen as FullscreenIcon,
   ViewAgenda as ViewAgendaIcon,
-  PanTool as HandIcon,
+  VideocamOff as VideocamOffIcon,
+  ScreenShare as ScreenShareIcon,
+  FiberManualRecord as RecordIcon,
+  StopScreenShare as StopScreenShareIcon,
 } from "@mui/icons-material";
+
+
+// Parent, Sibling, Index
 import type { MeetingSettings } from "../../types/meet/meeting.types";
 
 interface MeetingControlsProps {
@@ -48,22 +55,24 @@ interface MeetingControlsProps {
 }
 
 const MeetingControls: React.FC<MeetingControlsProps> = ({
-  settings,
-  participantCount,
-  unreadMessages,
-  onToggleMute,
   onToggleVideo,
-  onToggleScreenShare,
-  onToggleRecording,
+  settings,
+  onToggleMute,
   onToggleChat,
-  onToggleParticipants,
+  unreadMessages,
   onLeaveMeeting,
   onChangeLayout,
+  participantCount,
+  onToggleRecording,
+  onToggleScreenShare,
+  onToggleParticipants,
 }) => {
   const theme = useTheme();
+
   const [moreMenuAnchor, setMoreMenuAnchor] = useState<null | HTMLElement>(
     null
   );
+
   const [layoutMenuAnchor, setLayoutMenuAnchor] = useState<null | HTMLElement>(
     null
   );
@@ -84,9 +93,9 @@ const MeetingControls: React.FC<MeetingControlsProps> = ({
   const controlButtonStyle = {
     width: 40,
     height: 40,
+    color: "white",
     borderRadius: "50%",
     backgroundColor: "rgba(255, 255, 255, 0.1)",
-    color: "white",
     "&:hover": {
       backgroundColor: "rgba(255, 255, 255, 0.2)",
     },
@@ -193,17 +202,17 @@ const MeetingControls: React.FC<MeetingControlsProps> = ({
                 <Typography
                   variant="caption"
                   sx={{
-                    position: "absolute",
+                    minWidth: 16,
                     top: -16,
                     right: -16,
-                    backgroundColor: "primary.main",
-                    borderRadius: "50%",
-                    minWidth: 16,
                     height: 16,
                     display: "flex",
+                    fontSize: "0.7rem",
+                    borderRadius: "50%",
+                    position: "absolute",
                     alignItems: "center",
                     justifyContent: "center",
-                    fontSize: "0.7rem",
+                    backgroundColor: "primary.main",
                   }}
                 >
                   {participantCount}
@@ -225,17 +234,17 @@ const MeetingControls: React.FC<MeetingControlsProps> = ({
                 <Typography
                   variant="caption"
                   sx={{
-                    position: "absolute",
+                    minWidth: 16,
                     top: -8,
                     right: -8,
-                    backgroundColor: "error.main",
-                    borderRadius: "50%",
-                    minWidth: 16,
                     height: 16,
                     display: "flex",
+                    fontSize: "0.7rem",
+                    borderRadius: "50%",
+                    position: "absolute",
                     alignItems: "center",
                     justifyContent: "center",
-                    fontSize: "0.7rem",
+                    backgroundColor: "error.main",
                   }}
                 >
                   {unreadMessages > 9 ? "9+" : unreadMessages}
@@ -296,10 +305,10 @@ const MeetingControls: React.FC<MeetingControlsProps> = ({
         }}
         PaperProps={{
           sx: {
-            backgroundColor: theme.palette.background.paper,
-            backdropFilter: "blur(10px)",
-            color: "white",
             minWidth: 200,
+            color: "white",
+            backdropFilter: "blur(10px)",
+            backgroundColor: theme.palette.background.paper,
           },
         }}
       >
@@ -352,10 +361,10 @@ const MeetingControls: React.FC<MeetingControlsProps> = ({
         onClose={handleMenuClose}
         PaperProps={{
           sx: {
-            backgroundColor: "rgba(0, 0, 0, 0.9)",
-            backdropFilter: "blur(10px)",
-            color: "white",
             minWidth: 180,
+            color: "white",
+            backdropFilter: "blur(10px)",
+            backgroundColor: "rgba(0, 0, 0, 0.9)",
           },
         }}
       >
@@ -403,18 +412,18 @@ const MeetingControls: React.FC<MeetingControlsProps> = ({
       {settings.isRecording && (
         <Box
           sx={{
-            position: "absolute",
+            px: 2,
+            gap: 1,
+            py: 0.5,
             top: -40,
             left: "50%",
-            transform: "translateX(-50%)",
-            backgroundColor: "error.main",
             color: "white",
-            px: 2,
-            py: 0.5,
             borderRadius: 2,
             display: "flex",
+            position: "absolute",
             alignItems: "center",
-            gap: 1,
+            transform: "translateX(-50%)",
+            backgroundColor: "error.main",
           }}
         >
           <RecordIcon sx={{ fontSize: 16, animation: "pulse 2s infinite" }} />

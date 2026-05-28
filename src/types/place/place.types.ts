@@ -2,10 +2,14 @@
 // BASE PLACE TYPES
 // =============================================================================
 
+// External
 import { faker } from "@faker-js/faker";
+
+
+// Parent, Sibling, Index
 import {
-  generateBaseEntity,
   type BaseEntity,
+  generateBaseEntity,
   type VisibilityMixin,
 } from "../base/base.types";
 
@@ -151,21 +155,21 @@ export const generatePlace = (): Place => {
   const isActive = faker.datatype.boolean();
   const placeTag = generatePlaceTag(city, state, country, name);
   const address = {
-    street: faker.location.streetAddress(),
     city,
     state,
     country,
     postalCode: faker.location.zipCode(),
+    street: faker.location.streetAddress(),
     countryCode: faker.location.countryCode(),
   };
   return {
     ...generateBaseEntity(),
     name,
-    placeTag,
     address,
-    coordinates,
+    placeTag,
     timezone,
     isActive,
+    coordinates,
   };
 };
 
@@ -179,13 +183,13 @@ export const generateUserPlace = (): UserPlace => {
   const notes = faker.lorem.sentence();
   return {
     ...generateBaseEntity(),
-    placeId: place.id,
+    notes,
     userId,
     placeType,
     isCurrent,
     isHometown,
     isFavorite,
-    notes,
+    placeId: place.id,
     visibility: "public",
   };
 };

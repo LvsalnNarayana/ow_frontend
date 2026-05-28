@@ -1,18 +1,26 @@
-/* eslint-disable function-paren-newline */
-/* eslint-disable implicit-arrow-linebreak */
-/* eslint-disable arrow-body-style */
+ 
+ 
+ 
+// External
 import moment from "moment";
 import { useState } from "react";
 
-import { Button, Divider, Stack, Typography } from "@mui/material";
 
+// MUI
+import { Stack, Button, Divider, Typography } from "@mui/material";
+
+
+// Shared
 import ChangeAudience from "../../../shared/ChangeAudience";
 import SelectDateTime from "../../../shared/SelectDateTime";
+
+
+// Parent, Sibling, Index
 import type { Birthdate } from "../../../types/user/userInfo.types";
 
 const EditBirthdayItem = ({
-  birthdayItem,
   onCancel,
+  birthdayItem,
 }: {
   birthdayItem: Birthdate;
   onCancel: () => void;

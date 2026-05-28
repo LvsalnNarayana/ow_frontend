@@ -13,6 +13,14 @@ export interface TimeSlot {
 export const PIXEL_RATIO_CONSTANTS = {
   BASE_SLOT_HEIGHT: 48,
 
+  convertMinutesToPixels: (
+    minutes: number,
+    interval: "15min" | "30min" | "60min" = "15min"
+  ) => {
+    const config = PIXEL_RATIO_CONSTANTS.RATIOS[interval];
+    return (minutes / config.minutes) * config.pixelHeight;
+  },
+
   RATIOS: {
     "15min": {
       minutes: 15,
@@ -29,14 +37,6 @@ export const PIXEL_RATIO_CONSTANTS = {
       pixelHeight: 48,
       pixelsPerMinute: 48 / 60,
     },
-  },
-
-  convertMinutesToPixels: (
-    minutes: number,
-    interval: "15min" | "30min" | "60min" = "15min"
-  ) => {
-    const config = PIXEL_RATIO_CONSTANTS.RATIOS[interval];
-    return (minutes / config.minutes) * config.pixelHeight;
   },
 };
 
@@ -63,8 +63,8 @@ export function generateTimeSlots(
   options: TimeSlotGenerationOptions = {}
 ): TimeSlot[] {
   const {
-    startHour = 0,
     endHour = 24,
+    startHour = 0,
     interval = 15,
     includeEndTime = false,
   } = options;
@@ -93,15 +93,15 @@ export function generateTimeSlots(
       const period: TimePeriod = hour < 12 ? "AM" : "PM";
 
       const slot: TimeSlot = {
+        hour12,
+        period,
+        hour24: hour,
+        minutes: minute,
+        totalMinutes: hour * 60 + minute,
+        label: `${hour12}:${minute.toString().padStart(2, "0")} ${period}`,
         value: `${hour.toString().padStart(2, "0")}:${minute
           .toString()
           .padStart(2, "0")}`,
-        label: `${hour12}:${minute.toString().padStart(2, "0")} ${period}`,
-        hour24: hour,
-        hour12,
-        period,
-        minutes: minute,
-        totalMinutes: hour * 60 + minute,
       };
 
       slots.push(slot);

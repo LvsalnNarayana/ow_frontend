@@ -35,35 +35,35 @@ export interface EventNotificationPreferences {
 
 export const defaultEventNotificationPreferences: EventNotificationPreferences =
   {
-    email: {
+    sms: {
       enabled: true,
-      eventInvites: true,
-      eventUpdates: true,
+      phoneNumber: "",
+      urgentUpdates: true,
       eventReminders: true,
-      dailyAgenda: true,
-      weeklyDigest: true,
-      eventCancellations: true,
-      responseUpdates: true,
-    },
-    push: {
-      enabled: true,
-      eventReminders: true,
-      eventInvites: true,
-      eventUpdates: true,
-      upcomingEvents: true,
-      conflictAlerts: true,
     },
     desktop: {
       enabled: true,
-      eventReminders: true,
-      eventStarting: true,
-      conflictAlerts: true,
       showPreview: true,
-    },
-    sms: {
-      enabled: true,
+      eventStarting: true,
       eventReminders: true,
-      urgentUpdates: true,
-      phoneNumber: "",
+      conflictAlerts: true,
+    },
+    push: {
+      enabled: true,
+      eventInvites: true,
+      eventUpdates: true,
+      eventReminders: true,
+      upcomingEvents: true,
+      conflictAlerts: true,
+    },
+    email: {
+      enabled: true,
+      dailyAgenda: true,
+      eventInvites: true,
+      eventUpdates: true,
+      weeklyDigest: true,
+      eventReminders: true,
+      responseUpdates: true,
+      eventCancellations: true,
     },
   };

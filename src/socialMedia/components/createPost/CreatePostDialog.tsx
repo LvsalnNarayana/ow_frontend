@@ -1,13 +1,16 @@
 /* eslint-disable import/no-extraneous-dependencies */
 
+// MUI
 import { Dialog, Divider } from "@mui/material";
 
+
+// Parent, Sibling, Index
 import CreatePostTags from "./CreatePostTags";
 import CreatePostDraft from "./CreatePostDraft";
 import CreatePostHeader from "./CreatePostHeader";
-import type { PostScreen } from "../../../types/createPost/createPost.types";
 import CreatePostLocation from "./CreatePostLocation";
 import CreatePostFeelings from "./CreatePostFeelings";
+import type { PostScreen } from "../../../types/createPost/createPost.types";
 
 const CreatePostDialog = ({
   createPostScreen,
@@ -47,9 +50,9 @@ const CreatePostDialog = ({
       }}
       PaperProps={{
         sx: {
-          m: 0,
           width: "35vw",
           maxWidth: "90vw !important",
+          m: 0,
           transition: "all 0.1s ease-in",
         },
       }}

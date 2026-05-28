@@ -1,6 +1,10 @@
+// External
 import { faker } from "@faker-js/faker";
+
+
+// Parent, Sibling, Index
 import type { NotificationType } from "./notification.constants";
-import { generateBaseEntity, type BaseEntity } from "../base/base.types";
+import { type BaseEntity, generateBaseEntity } from "../base/base.types";
 
 export interface Notification extends BaseEntity {
   read: boolean;
@@ -12,6 +16,7 @@ export const generateNotification = (): Notification => {
   return {
     ...generateBaseEntity(),
     read: faker.datatype.boolean(),
+    content: faker.lorem.sentence(),
     type: faker.helpers.arrayElement([
       "post_like",
       "post_reaction",
@@ -39,6 +44,5 @@ export const generateNotification = (): Notification => {
       "doc_shared",
       "doc_comment",
     ]),
-    content: faker.lorem.sentence(),
   };
 };

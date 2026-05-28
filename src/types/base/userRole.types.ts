@@ -5,11 +5,11 @@ export type UserRole = typeof ADMIN | typeof USER;
 
 export const USER_ROLES_OPTIONS = [
   {
-    label: "Admin",
     value: ADMIN,
+    label: "Admin",
   },
   {
-    label: "User",
     value: USER,
+    label: "User",
   },
 ];

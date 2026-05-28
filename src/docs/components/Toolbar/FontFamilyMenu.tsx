@@ -1,6 +1,14 @@
+// External
 import React, { type JSX } from "react";
+
+
+// MUI
 import KeyboardArrowDownOutlinedIcon from "@mui/icons-material/KeyboardArrowDownOutlined";
+
+
+// Shared
 import ButtonMenu from "../../../shared/ButtonMenu";
+
 const FontFamilyMenu: React.ElementType = (): JSX.Element => {
   const menu = [
     {

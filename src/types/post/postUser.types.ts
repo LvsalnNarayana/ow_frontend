@@ -1,12 +1,16 @@
+// External
 import { faker } from "@faker-js/faker";
-import {
-  generateUserReference,
-  type UserReference,
-} from "../base/userReference.types";
+
+
+// Parent, Sibling, Index
 import type { ReactionType } from "./post.enums";
 import { REACTIONS } from "../base/reaction.types";
+import {
+  type UserReference,
+  generateUserReference,
+} from "../base/userReference.types";
 
-export interface PostUserInterface extends UserReference {}
+export type PostUserInterface = UserReference;
 
 export interface PostAuthorInterface extends PostUserInterface {
   is_logged_in_user: boolean;
@@ -31,8 +35,8 @@ export const generatePostAuthorInterface = (): PostAuthorInterface => {
 export const generatePostSubscriptionUser = (): PostSubscriptionUser => {
   return {
     ...generatePostUserInterface(),
-    subscribed_at: faker.date.recent().toISOString(),
     is_subscribed: faker.datatype.boolean(),
+    subscribed_at: faker.date.recent().toISOString(),
   };
 };
 export const generatePostUserInterface = (): PostUserInterface => {
@@ -44,7 +48,7 @@ export const generatePostUserInterface = (): PostUserInterface => {
 export const generateReactionUserInterface = (): ReactionUserInterface => {
   return {
     ...generatePostUserInterface(),
-    reaction_type: faker.helpers.arrayElement(REACTIONS),
     reacted_at: faker.date.recent().toISOString(),
+    reaction_type: faker.helpers.arrayElement(REACTIONS),
   };
 };

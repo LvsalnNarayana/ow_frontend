@@ -1,3 +1,4 @@
+// External
 import { faker } from "@faker-js/faker";
 
 export interface AccountSettings {
@@ -10,10 +11,10 @@ export interface AccountSettings {
 
 export const generateAccountSettings = (): AccountSettings => {
   return {
-    language: faker.location.language().name,
     timezone: faker.location.timeZone(),
+    language: faker.location.language().name,
     smsNotifications: faker.datatype.boolean(),
-    emailNotifications: faker.datatype.boolean(),
     twoFactorEnabled: faker.datatype.boolean(),
+    emailNotifications: faker.datatype.boolean(),
   };
 };

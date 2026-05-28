@@ -1,56 +1,67 @@
+// External
 import React, { useState } from "react";
+
+
+// MUI
 import {
-  Stack,
-  Typography,
-  TextField,
-  Switch,
-  FormControlLabel,
-  Select,
-  MenuItem,
-  FormControl,
-  InputLabel,
-  Chip,
-  Button,
   Box,
+  Chip,
+  Stack,
+  Switch,
+  Select,
+  Button,
+  MenuItem,
+  TextField,
+  Typography,
+  InputLabel,
+  FormControl,
+  FormControlLabel,
 } from "@mui/material";
-import { TIMEZONE_OPTIONS } from "../../types/base/timezones.types";
-import { generateEventReminderNotificationSettings } from "../../types/event/eventReminderNotificationSettings.types";
-import type { CalendarSettings } from "../../types/calendar/calendarSettings.types";
-import type { CalendarPreferences } from "../../types/calendar/calendarPreference.types";
-import type { DayOfWeek } from "../../types/base/dayOfWeek.types";
+
+
+// Shared
 import TextInput from "../../shared/inputs/TextInput";
 import SelectInput from "../../shared/inputs/SelectInput";
+
+
+// Parent, Sibling, Index
+import type { DayOfWeek } from "../../types/base/dayOfWeek.types";
+import { TIMEZONE_OPTIONS } from "../../types/base/timezones.types";
+import type { CalendarSettings } from "../../types/calendar/calendarSettings.types";
+import type { CalendarPreferences } from "../../types/calendar/calendarPreference.types";
+import { generateEventReminderNotificationSettings } from "../../types/event/eventReminderNotificationSettings.types";
 
 // Default values for settings and preferences
 const defaultSettings: CalendarSettings = {
   defaultEventDuration: 30,
-  defaultNotifications: [generateEventReminderNotificationSettings()],
   autoAcceptInvites: false,
+  defaultEventReminder: 15,
+  enableNotifications: true,
   defaultVisibility: "private",
   defaultEventColor: "#1976d2",
-  enableNotifications: true,
-  defaultEventCategory: "Meeting",
-  defaultEventReminder: 15,
   defaultEventReminderTime: 15,
+  defaultEventCategory: "Meeting",
+  defaultNotifications: [generateEventReminderNotificationSettings()],
 };
 
 const defaultPreferences: CalendarPreferences = {
-  defaultTimezone: TIMEZONE_OPTIONS[0],
-  weekStartsOn: "SUN",
   timeFormat: "12h",
+  weekStartsOn: "SUN",
   dateFormat: "MM/DD/YYYY",
-  workingHours: {
-    start: "09:00",
-    end: "17:00",
-    days: ["MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY"],
-  },
   showDeclinedEvents: false,
   enableSmartSuggestions: true,
   enableConflictDetection: true,
+  defaultTimezone: TIMEZONE_OPTIONS[0],
+  workingHours: {
+    end: "17:00",
+    start: "09:00",
+    days: ["MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY"],
+  },
 };
 
 const CalendarSettings: React.FC = () => {
   const [settings, setSettings] = useState<CalendarSettings>(defaultSettings);
+
   const [preferences, setPreferences] =
     useState<CalendarPreferences>(defaultPreferences);
 
@@ -79,6 +90,7 @@ const CalendarSettings: React.FC = () => {
   const handleWorkingDaysChange = (day: DayOfWeek) => {
     setPreferences((prev) => {
       const currentDays = prev.workingHours.days;
+
       const newDays = currentDays.includes(day)
         ? currentDays.filter((d) => d !== day)
         : [...currentDays, day];

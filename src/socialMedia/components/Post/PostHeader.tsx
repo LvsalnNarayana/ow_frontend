@@ -1,21 +1,32 @@
-import MoreVertIcon from "@mui/icons-material/MoreVert";
+// External
+import moment from "moment";
+
+
+// MUI
 import { Stack, Typography } from "@mui/material";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
 import DoNotDisturbIcon from "@mui/icons-material/DoNotDisturb";
 import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
 import CancelPresentationIcon from "@mui/icons-material/CancelPresentation";
 
+
+// Shared
 import UserAvatar from "../../../shared/UserAvatar";
-import type { PostInterface } from "../../../types/post/post.types";
-import moment from "moment";
 import ButtonMenu from "../../../shared/ButtonMenu";
+
+
+// Parent, Sibling, Index
+import type { PostInterface } from "../../../types/post/post.types";
 
 const PostHeader = ({ post }: { post: PostInterface }) => {
   const handlePostSave = () => {
     console.log("Post Saved");
   };
+
   const handleUnfollowUser = () => {
     console.log("Unfollowed User");
   };
+
   const hanldeBlockUser = () => {
     console.log("User Blocked");
   };
@@ -69,7 +80,7 @@ const PostHeader = ({ post }: { post: PostInterface }) => {
             variant="body1"
             component="p"
             color="text.secondary"
-            sx={{ fontWeight: 400, fontSize: 14 }}
+            sx={{ fontSize: 14, fontWeight: 400 }}
           >
             {moment(post?.createdAt).format("DD MMM, YYYY HH:MM A")}
           </Typography>
@@ -91,18 +102,18 @@ const PostHeader = ({ post }: { post: PostInterface }) => {
           menu={[
             {
               value: "Save",
-              icon: <BookmarkBorderIcon fontSize="small" />,
               onClick: handlePostSave,
+              icon: <BookmarkBorderIcon fontSize="small" />,
             },
             {
               value: "Unfollow",
-              icon: <CancelPresentationIcon fontSize="small" />,
               onClick: handleUnfollowUser,
+              icon: <CancelPresentationIcon fontSize="small" />,
             },
             {
               value: "Block",
-              icon: <DoNotDisturbIcon fontSize="small" />,
               onClick: hanldeBlockUser,
+              icon: <DoNotDisturbIcon fontSize="small" />,
             },
           ]}
         />

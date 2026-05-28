@@ -1,6 +1,9 @@
-/* eslint-disable operator-linebreak */
+ 
+// External
 import { useState } from "react";
 
+
+// MUI
 import {
   LockOutlined,
   CloseOutlined,
@@ -13,29 +16,31 @@ import {
   Dialog,
   Button,
   Divider,
+  useTheme,
   Typography,
   IconButton,
-  useTheme,
   type CSSObject,
 } from "@mui/material";
 
+
+// Parent, Sibling, Index
 import CustomTooltip from "./CustomTooltip";
 import type { Visibility } from "../types/base/visibility.types";
 
 const ChangeAudience = ({
   sx,
   label,
-  visibility = "public",
   fontSize = 14,
   iconFontSize = 14,
-  onVisibilityChange,
+  visibility = "public",
+  onVisibilityChange = () => {},
 }: {
   sx?: CSSObject;
   label?: boolean;
-  visibility: Visibility;
+  visibility?: Visibility;
   fontSize?: number;
   iconFontSize?: number;
-  onVisibilityChange: (visibility: Visibility) => void;
+  onVisibilityChange?: (visibility: Visibility) => void;
 }) => {
   const theme = useTheme();
 
@@ -45,6 +50,7 @@ const ChangeAudience = ({
   const handleChangeAudienceDialogOpen = () => {
     return setChangeAudienceDialogOpen(true);
   };
+
   const handleChangeAudienceDialogClose = () => {
     return setChangeAudienceDialogOpen(false);
   };
@@ -111,11 +117,11 @@ const ChangeAudience = ({
         PaperProps={{
           elevation: 0,
           sx: {
-            p: 2,
             width: "35vw",
-            height: "auto",
             // backgroundColor: "white",
             maxWidth: "90vw !important",
+            p: 2,
+            height: "auto",
             transition: "all 0.1s ease-in",
           },
         }}

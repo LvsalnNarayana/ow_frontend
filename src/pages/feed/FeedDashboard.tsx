@@ -1,16 +1,20 @@
-import { Stack, Grid } from "@mui/material";
+// MUI
+import { Grid, Stack } from "@mui/material";
+
+
+// Parent, Sibling, Index
 import Post from "../../socialMedia/components/Post/Post";
-import {
-  generateMultiplePosts,
-  type PostInterface,
-} from "../../types/post/post.types";
-import CreatePost from "../../socialMedia/components/createPost/CreatePost";
 import { generateStory } from "../../types/story/story.types";
-import FriendSuggestionsSidebar from "../../socialMedia/components/FriendSuggestionsSidebar";
-import TrendingTopicsSidebar from "../../socialMedia/components/TrendingTopicsSidebar";
 import MemoriesSidebar from "../../socialMedia/components/MemoriesSidebar";
-import LiveEventsSidebar from "../../socialMedia/components/LiveEventsSidebar";
+import CreatePost from "../../socialMedia/components/createPost/CreatePost";
 import StoriesContainer from "../../socialMedia/components/StoriesContainer";
+import LiveEventsSidebar from "../../socialMedia/components/LiveEventsSidebar";
+import TrendingTopicsSidebar from "../../socialMedia/components/TrendingTopicsSidebar";
+import {
+  type PostInterface,
+  generateMultiplePosts,
+} from "../../types/post/post.types";
+import FriendSuggestionsSidebar from "../../socialMedia/components/FriendSuggestionsSidebar";
 
 const FeedDashboard = () => {
   return (
@@ -19,8 +23,8 @@ const FeedDashboard = () => {
         width: "100%",
         minHeight: "100%",
         overflowY: "auto",
-        backgroundColor: "background.default",
         position: "relative",
+        backgroundColor: "background.default",
       }}
     >
       <Grid
@@ -31,20 +35,20 @@ const FeedDashboard = () => {
       >
         <Grid
           size={{
-            xs: 12,
             md: 3,
+            xs: 12,
           }}
           sx={{
-            display: { xs: "none", md: "block" },
-            position: "sticky",
             top: 20,
             zIndex: 100,
+            position: "sticky",
+            display: { xs: "none", md: "block" },
           }}
         >
           <TrendingTopicsSidebar />
           <LiveEventsSidebar />
         </Grid>
-        <Grid size={{ xs: 12, md: 5 }}>
+        <Grid size={{ md: 5, xs: 12 }}>
           <Stack alignItems="center" gap={3}>
             <StoriesContainer
               stories={Array.from({ length: 10 }, generateStory)}
@@ -57,8 +61,8 @@ const FeedDashboard = () => {
         </Grid>
         <Grid
           size={{
-            xs: 12,
             md: 3,
+            xs: 12,
           }}
           sx={{ display: { xs: "none", md: "block" } }}
         >

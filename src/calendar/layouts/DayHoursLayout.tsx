@@ -1,15 +1,23 @@
+// External
+import { useRef, useEffect } from "react";
+
+
+// MUI
 import { Stack, Divider, Typography } from "@mui/material";
+
+
+// Parent, Sibling, Index
 import { type TimeSlot } from "../../types/base/hours.types";
-import { useEffect, useRef } from "react";
 
 const DayHoursLayout = ({
-  children,
   slots,
+  children,
 }: {
   children?: React.ReactNode;
   slots?: TimeSlot[];
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
+
   const nineAmRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -41,22 +49,25 @@ const DayHoursLayout = ({
             component="div"
             onClick={(event) => {
               const target = event.currentTarget;
+
               const rect = target.getBoundingClientRect();
+
               const yPosition = event.clientY - rect.top;
               let hourInt = parseInt(hour?.label?.split(" ")[0], 10);
               if (hour?.label?.split(" ")[1].toLowerCase() === "pm") {
                 hourInt += 12;
               }
-              let startMinutes = 0;
+              let _startMinutes = 0;
               if (yPosition < 12) {
-                startMinutes = 0;
+                _startMinutes = 0;
               } else if (yPosition < 24) {
-                startMinutes = 15;
+                _startMinutes = 15;
               } else if (yPosition < 36) {
-                startMinutes = 30;
+                _startMinutes = 30;
               } else if (yPosition < 48) {
-                startMinutes = 45;
+                _startMinutes = 45;
               }
+              void _startMinutes;
             }}
             direction="row"
             justifyContent="flex-start"
@@ -68,8 +79,8 @@ const DayHoursLayout = ({
             <Typography
               variant="body1"
               sx={{
-                flexShrink: 0,
                 width: 53,
+                flexShrink: 0,
                 fontWeight: 600,
                 display: "flex",
                 fontSize: "10px",
@@ -86,8 +97,8 @@ const DayHoursLayout = ({
             )}
             <Divider
               sx={{
-                ml: index === (slots?.length - 1 || 0) ? 0.5 : -2.5,
                 flexGrow: 1,
+                ml: index === (slots?.length - 1 || 0) ? 0.5 : -2.5,
               }}
             />
           </Stack>

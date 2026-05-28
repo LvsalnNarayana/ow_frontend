@@ -1,17 +1,22 @@
+// MUI
 import { Stack, MenuItem, MenuList } from "@mui/material";
+
+
+// Parent, Sibling, Index
 import type { AboutMenuOptionType } from "../../types/aboutMenu.types";
 
 type AboutMenuProps = {
   activeMenu: AboutMenuOptionType;
   setActiveMenu: (menu: AboutMenuOptionType) => void;
 };
+
 const AboutMenu = ({ activeMenu, setActiveMenu }: AboutMenuProps) => {
   return (
     <Stack
       direction="column"
       justifyContent="flex-start"
       alignItems="flex-start"
-      sx={{ py: 2, width: 300 }}
+      sx={{ width: 300, py: 2 }}
       gap={2}
     >
       <MenuList

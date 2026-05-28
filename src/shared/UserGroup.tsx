@@ -1,7 +1,12 @@
+// External
 import React, { type JSX } from "react";
 
+
+// MUI
 import { Stack, useTheme } from "@mui/material";
 
+
+// Parent, Sibling, Index
 import UserAvatar from "./UserAvatar";
 import CustomTooltip from "./CustomTooltip";
 
@@ -18,6 +23,7 @@ interface User {
   firstname: string;
   lastname: string;
 }
+
 const UserGroup: React.ElementType<UserGroupProps> = ({
   sx,
   users,
@@ -46,8 +52,8 @@ const UserGroup: React.ElementType<UserGroupProps> = ({
               style={{
                 marginLeft: -10,
                 borderRadius: "100%",
-                border: `2px solid ${theme?.palette?.background?.paper}`,
                 zIndex: `${users.length + 100 - index}`,
+                border: `2px solid ${theme?.palette?.background?.paper}`,
               }}
             >
               <UserAvatar username={user?.username} width={size} />

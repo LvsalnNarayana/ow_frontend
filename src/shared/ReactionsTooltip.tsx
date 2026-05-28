@@ -1,17 +1,23 @@
+// External
 import { useState, type JSX } from "react";
 
+
+// MUI
 import { Stack, Avatar } from "@mui/material";
 
+
+// Parent, Sibling, Index
 import CustomTooltip from "./CustomTooltip";
 
-const ReactionsTooltip = ({ type, width, children }:{
+const ReactionsTooltip = ({ width, type, children }:{
   type: string,
   width: number,
   children: JSX.Element
 }) => {
   const [reactionTooltipOpen, setReactionTooltipOpen] = useState(false);
+
   const handleReaction = (reaction: string) => {
-    // eslint-disable-next-line no-console
+     
     console.log(`${type} reaction : ${reaction}`);
   };
 

@@ -12,8 +12,8 @@ export const generateEventDisplaySettings = (): EventDisplaySettings => {
   return {
     showTime: true,
     showLocation: true,
-    showAttendees: true,
     compactView: false,
+    showAttendees: true,
     colorScheme: "category",
   };
 };

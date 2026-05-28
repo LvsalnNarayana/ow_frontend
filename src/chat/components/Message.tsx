@@ -1,37 +1,42 @@
-/* eslint-disable multiline-ternary */
-/* eslint-disable max-lines */
-/* eslint-disable max-statements */
+ 
+ 
+ 
+// External
 import React, { useRef, useState } from "react";
 
+
+// MUI
 import MoreVertIcon from "@mui/icons-material/MoreVert";
+import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
+import ContentCopyOutlinedIcon from "@mui/icons-material/ContentCopyOutlined";
 import EmojiEmotionsOutlinedIcon from "@mui/icons-material/EmojiEmotionsOutlined";
+import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import {
+  Menu,
   Stack,
   Avatar,
+  useTheme,
+  MenuItem,
   Typography,
   IconButton,
-  useTheme,
-  Menu,
-  MenuItem,
   ListItemIcon,
   ListItemText,
 } from "@mui/material";
 
+
+// Shared
 import UserAvatar from "../../shared/UserAvatar";
 import CustomTooltip from "../../shared/CustomTooltip";
 import ReactionsTooltip from "../../shared/ReactionsTooltip";
-import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
-import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
-import ContentCopyOutlinedIcon from "@mui/icons-material/ContentCopyOutlined";
 
 const Message = ({
   message = {
     id: "message_1234",
     mentions: [],
     attachments: [],
+    timestamp: "2023-06-24T10:00:00Z",
     message:
       "Hey John, how are you?dskjdklajbfkljbdfklbsdklfbdbvkflsbjlklkvsfklbfdfdfkjbdfbdjfbsjbhghjbgjfhgjfhbjshgjjbgfsjhgjfbgfsuhgsfhjgbfjhbvfhjsbvfjshbklbflkbsgbkgjbfskgfsjkhgbfsjkgbfsj",
-    timestamp: "2023-06-24T10:00:00Z",
     user: {
       id: "user_1",
       is_logged_in: true,
@@ -82,12 +87,15 @@ const Message = ({
   },
 }) => {
   const theme = useTheme();
+
   const messageRef = useRef(null);
+
   const [showMessageReaction, setShowMessageReaction] =
     useState<boolean>(false);
 
   const [messageMenuAnchorEl, setMessageMenuAnchorEl] =
     useState<HTMLElement | null>(null);
+
   const messageMenuOpen = Boolean(messageMenuAnchorEl);
 
   const handleMessageMenuClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -104,9 +112,9 @@ const Message = ({
       alignItems="flex-start"
       gap={1}
       sx={{
-        p: 1,
         width: "70%",
         maxWidth: "70%",
+        p: 1,
         ml: message?.user?.is_logged_in ? `auto` : ``,
       }}
       ref={messageRef}
@@ -123,8 +131,8 @@ const Message = ({
         justifyContent="flex-start"
         alignItems={message?.user?.is_logged_in ? `flex-end` : `flex-start`}
         sx={{
-          mt: -1,
           width: "100%",
+          mt: -1,
           height: "fit-content",
         }}
       >
@@ -193,8 +201,8 @@ const Message = ({
               ) : (
                 <div
                   style={{
-                    flexShrink: 0,
                     width: "30px",
+                    flexShrink: 0,
                     height: "30px",
                   }}
                 />
@@ -219,15 +227,15 @@ const Message = ({
             >
               <div
                 style={{
-                  flexShrink: 0,
                   width: "30px",
+                  flexShrink: 0,
                   height: "30px",
                 }}
               />
               <div
                 style={{
-                  flexShrink: 0,
                   width: "20px",
+                  flexShrink: 0,
                   height: "20px",
                 }}
               />
@@ -241,14 +249,14 @@ const Message = ({
             <Typography
               variant="body1"
               sx={{
+                width: "100%",
                 px: 2,
                 py: 1.5,
                 fontSize: 14,
+                whiteSpace: "pre-wrap",
+                wordBreak: "break-word",
                 borderRadius: theme.shape.radius.xs,
                 backgroundColor: theme.palette.background.paper,
-                wordBreak: "break-word",
-                whiteSpace: "pre-wrap",
-                width: "100%",
               }}
             >
               {message?.message}
@@ -257,13 +265,13 @@ const Message = ({
             <Stack
               direction="row"
               justifyContent={
-                // eslint-disable-next-line multiline-ternary
+                 
                 message?.engagement?.reactions?.length > 0
                   ? `space-between`
                   : `flex-start`
               }
               alignItems="center"
-              sx={{ my: 0.5, width: "100%" }}
+              sx={{ width: "100%", my: 0.5 }}
             >
               <Typography
                 variant="body1"

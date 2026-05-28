@@ -1,22 +1,26 @@
-import type {
-  User,
-  Email,
-  Phone,
-  Friend,
-  FriendRequest,
-  UserReference,
-  Website,
-  PostSubscription,
-  Event,
-  PrivacySettings,
-} from "../types/user/user.types";
-import type { AccountSettings } from "../types/user/accountSettings.types";
+// Parent, Sibling, Index
+import type { Work } from "../types/user/work.types";
+import type { Event } from "../types/event/event.types";
+import type { Group } from "../types/group/group.types";
+import { generateEvent } from "../types/event/event.types";
+import { generateGroup } from "../types/group/group.types";
+import type { UserRole } from "../types/base/userRole.types";
 import type { UserInfo } from "../types/user/userInfo.types";
 import type { Education } from "../types/user/education.types";
-import type { Group } from "../types/group/group.types";
+import { generateUserPlace } from "../types/place/place.types";
+import type { UserReference } from "../types/base/userReference.types";
+import type { Email, Phone, Website } from "../types/user/userData.types";
+import type { Friend, FriendRequest } from "../types/friend/friend.types";
+import { generatePostReference } from "../types/base/postReference.types";
+import type { PrivacySettings } from "../types/user/privacySettings.types";
+import type { AccountSettings } from "../types/user/accountSettings.types";
+import type {
+  User,
+  PostSubscription,
+} from "../types/user/user.types";
 import type { Notification } from "../types/notification/notification.types";
-import type { Place, Coordinates, Address } from "../types/place/place.types";
-import type { Work } from "../types/user/work.types";
+import type { Place, Address, Coordinates } from "../types/place/place.types";
+import { generateNotification } from "../types/notification/notification.types";
 
 // Helper function to generate random IDs
 const generateId = (): string => Math.random().toString(36).substr(2, 9);
@@ -147,14 +151,14 @@ const generateMockAddress = (): Address => {
   const countryIndex = Math.floor(Math.random() * countries.length);
 
   return {
-    street: `${Math.floor(Math.random() * 9999) + 1} ${
-      ["Main", "Oak", "Pine", "Maple", "Cedar"][Math.floor(Math.random() * 5)]
-    } St`,
     city: cities[cityIndex],
     state: states[cityIndex],
     country: countries[countryIndex],
-    postalCode: `${Math.floor(Math.random() * 90000) + 10000}`,
     countryCode: countryCodes[countryIndex],
+    postalCode: `${Math.floor(Math.random() * 90000) + 10000}`,
+    street: `${Math.floor(Math.random() * 9999) + 1} ${
+      ["Main", "Oak", "Pine", "Maple", "Cedar"][Math.floor(Math.random() * 5)]
+    } St`,
   };
 };
 
@@ -175,62 +179,64 @@ const generateMockPlace = (): Place => {
   return {
     id: generateId(),
     name,
+    address,
+    timezone: "America/New_York",
+    isActive: Math.random() > 0.1,
+    createdAt: generateRandomDate(),
+    updatedAt: generateRandomDate(),
+    coordinates: generateMockCoordinates(),
     placeTag: `${name.toLowerCase().replace(/\s+/g, "-")}-${address.city
       .toLowerCase()
       .replace(/\s+/g, "-")}`,
-    address,
-    coordinates: generateMockCoordinates(),
-    timezone: "America/New_York",
-    createdAt: generateRandomDate(),
-    updatedAt: generateRandomDate(),
-    isActive: Math.random() > 0.1,
   };
 };
 
 // Mock data generators for nested interfaces
 const generateMockEmail = (): Email => ({
   id: generateId(),
+  primary: Math.random() > 0.5,
+  verified: Math.random() > 0.5,
   createdAt: generateRandomDate(),
   updatedAt: generateRandomDate(),
   email: `${generateUsername()}@example.com`,
   visibility: ["public", "friends", "only_me"][
     Math.floor(Math.random() * 3)
   ] as any,
-  verified: Math.random() > 0.5,
-  primary: Math.random() > 0.5,
 });
 
 const generateMockPhone = (): Phone => ({
   id: generateId(),
+  country: "US",
+  countryCode: "+1",
+  primary: Math.random() > 0.5,
+  verified: Math.random() > 0.5,
   createdAt: generateRandomDate(),
   updatedAt: generateRandomDate(),
   phone: `${Math.floor(Math.random() * 9000000000) + 1000000000}`,
-  countryCode: "+1",
-  country: "US",
   visibility: ["public", "friends", "only_me"][
     Math.floor(Math.random() * 3)
   ] as any,
-  verified: Math.random() > 0.5,
-  primary: Math.random() > 0.5,
 });
 
 const generateMockUserReference = (): UserReference => ({
   id: generateId(),
   username: generateUsername(),
-  firstName: generateFirstName(),
   lastName: generateLastName(),
+  friendship_status: "friends",
+  firstName: generateFirstName(),
+  mutualFriendsCount: Math.floor(Math.random() * 50),
 });
 
 const generateMockFriend = (): Friend => ({
   ...generateMockUserReference(),
-  mutualFriendsCount: Math.floor(Math.random() * 50),
   friendsSince: generateRandomDate(1000),
+  mutualFriendsCount: Math.floor(Math.random() * 50),
 });
 
 const generateMockFriendRequest = (): FriendRequest => ({
   ...generateMockUserReference(),
-  mutualFriendsCount: Math.floor(Math.random() * 20),
   requestedAt: generateRandomDate(30),
+  mutualFriendsCount: Math.floor(Math.random() * 20),
   status: ["requested", "accepted", "declined", "blocked", "request_sent"][
     Math.floor(Math.random() * 5)
   ] as any,
@@ -240,38 +246,23 @@ const generateMockWebsite = (): Website => ({
   id: generateId(),
   createdAt: generateRandomDate(),
   updatedAt: generateRandomDate(),
-  url: `https://www.${generateUsername()}.com`,
   title: `${generateFirstName()}'s Portfolio`,
+  url: `https://www.${generateUsername()}.com`,
   visibility: ["public", "friends", "only_me"][
     Math.floor(Math.random() * 3)
   ] as any,
 });
 
-const generateMockPostSubscription = (): PostSubscription => ({
-  id: generateId(),
-  createdAt: generateRandomDate(),
-  updatedAt: generateRandomDate(),
-  postId: generateId(),
-});
+const generateMockPostSubscription = (): PostSubscription =>
+  generatePostReference();
 
-const generateMockEvent = (): Event => ({
-  id: generateId(),
-  createdAt: generateRandomDate(),
-  updatedAt: generateRandomDate(),
-  name: `Event ${Math.floor(Math.random() * 100)}`,
-  date: generateRandomDate(-30), // Future date
-  status: ["going", "interested", "not_going"][
-    Math.floor(Math.random() * 3)
-  ] as any,
-  type: ["virtual", "in_person"][Math.floor(Math.random() * 2)] as any,
-  location: Math.random() > 0.5 ? "New York, NY" : undefined,
-});
+const generateMockEvent = (): Event => generateEvent();
 
 const generateMockPrivacySettings = (): PrivacySettings => ({
-  profileVisibility: ["public", "friends", "only_me"][
+  messagePrivacy: ["public", "friends", "only_me"][
     Math.floor(Math.random() * 3)
   ] as any,
-  messagePrivacy: ["public", "friends", "only_me"][
+  profileVisibility: ["public", "friends", "only_me"][
     Math.floor(Math.random() * 3)
   ] as any,
   timelinePostPrivacy: ["public", "friends", "only_me"][
@@ -283,39 +274,12 @@ const generateMockAccountSettings = (): AccountSettings => ({
   language: "en",
   timezone: "America/New_York",
   smsNotifications: Math.random() > 0.5,
-  emailNotifications: Math.random() > 0.5,
   twoFactorEnabled: Math.random() > 0.5,
+  emailNotifications: Math.random() > 0.5,
 });
 
 // Generate mock notification with proper structure
-const generateMockNotification = (): Notification => {
-  const notificationTypes = [
-    "like",
-    "comment",
-    "friend_request",
-    "message",
-    "mention",
-    "post_share",
-  ];
-  const contents = [
-    "liked your post",
-    "commented on your photo",
-    "sent you a friend request",
-    "sent you a message",
-    "mentioned you in a post",
-    "shared your post",
-  ];
-
-  return {
-    id: generateId(),
-    read: Math.random() > 0.6,
-    type: notificationTypes[
-      Math.floor(Math.random() * notificationTypes.length)
-    ] as any,
-    created_at: generateRandomDate(30),
-    content: contents[Math.floor(Math.random() * contents.length)],
-  };
-};
+const generateMockNotification = (): Notification => generateNotification();
 
 // Generate mock work with proper structure
 const generateMockWork = (): Work => {
@@ -344,18 +308,18 @@ const generateMockWork = (): Work => {
 
   return {
     id: generateId(),
+    startDate,
     current: isCurrent,
+    place: generateMockPlace(),
+    endDate: isCurrent ? "" : generateRandomDate(100),
     company: companies[Math.floor(Math.random() * companies.length)],
+    position: positions[Math.floor(Math.random() * positions.length)],
     visibility: ["public", "friends", "only_me"][
       Math.floor(Math.random() * 3)
     ] as any,
-    position: positions[Math.floor(Math.random() * positions.length)],
-    startDate,
-    endDate: isCurrent ? "" : generateRandomDate(100),
     description: `Working as a ${
       positions[Math.floor(Math.random() * positions.length)]
     } with focus on innovative solutions and team collaboration.`,
-    place: generateMockPlace(),
   };
 };
 
@@ -377,106 +341,53 @@ const generateMockEducation = (): Education => {
     "PhD",
     "Associate Degree",
   ];
-  const cities = [
-    "Cambridge, MA",
-    "Palo Alto, CA",
-    "Berkeley, CA",
-    "New Haven, CT",
-    "Princeton, NJ",
-    "Boston, MA",
-  ];
   const isCurrent = Math.random() > 0.8;
   const startDate = generateRandomDate(3000);
 
   return {
     id: generateId(),
+    startDate,
     current: isCurrent,
-    city: cities[Math.floor(Math.random() * cities.length)],
+    place: generateMockPlace(),
+    endDate: isCurrent ? "" : generateRandomDate(500),
     school: schools[Math.floor(Math.random() * schools.length)],
+    degree: degrees[Math.floor(Math.random() * degrees.length)],
     visibility: ["public", "friends", "only_me"][
       Math.floor(Math.random() * 3)
-    ] as any,
-    degree: degrees[Math.floor(Math.random() * degrees.length)],
-    startDate,
-    endDate: isCurrent ? "" : generateRandomDate(500),
+    ] as Education["visibility"],
     description: `Studied ${
       degrees[Math.floor(Math.random() * degrees.length)]
     } with focus on computer science and technology.`,
-    place: generateMockPlace(),
   };
 };
 
 // Generate mock group with proper structure
-const generateMockGroup = (): Group => {
-  const groupNames = [
-    "Tech Enthusiasts",
-    "Photography Club",
-    "Book Lovers",
-    "Fitness Community",
-    "Travel Buddies",
-    "Cooking Masters",
-    "Gaming Squad",
-    "Music Lovers",
-  ];
-  const roles = ["Member", "Admin", "Moderator"];
-  const privacyOptions = ["private", "public"];
-  const activityStatuses = ["active", "inactive"];
-  const descriptions = [
-    "A community for tech enthusiasts to share knowledge and experiences",
-    "Photography lovers sharing tips and showcasing their work",
-    "Book club for avid readers and literary discussions",
-    "Fitness community supporting healthy lifestyle choices",
-    "Travel enthusiasts sharing adventures and tips",
-    "Cooking enthusiasts sharing recipes and techniques",
-  ];
-
-  const maxMembers = Math.floor(Math.random() * 10000) + 100;
-  const currentMembers = Math.floor(Math.random() * maxMembers);
-
-  return {
-    id: generateId(),
-    role: roles[Math.floor(Math.random() * roles.length)] as any,
-    members_count: currentMembers,
-    privacy: privacyOptions[
-      Math.floor(Math.random() * privacyOptions.length)
-    ] as any,
-    max_members_count: maxMembers,
-    joined_at: generateRandomDate(365),
-    name: groupNames[Math.floor(Math.random() * groupNames.length)],
-    activity_status: activityStatuses[
-      Math.floor(Math.random() * activityStatuses.length)
-    ] as any,
-    icon: `https://via.placeholder.com/64x64?text=${groupNames[
-      Math.floor(Math.random() * groupNames.length)
-    ].charAt(0)}`,
-    description: descriptions[Math.floor(Math.random() * descriptions.length)],
-  };
-};
+const generateMockGroup = (): Group => generateGroup();
 
 // Mock generators for UserInfo (basic implementation - adjust based on actual interface)
 const generateMockUserInfo = (): UserInfo =>
   ({
     gender: "female",
-    birthdate: {
-      visibility: "public",
-      date: generateRandomDate(18),
-    },
     bio: "This is a mock bio.",
     relationship: {
       status: "Single",
       visibility: "public",
     },
-    languages: {
-      values: ["English", "Spanish"],
+    birthdate: {
       visibility: "public",
-    },
-    interests: {
-      values: ["Travel", "Photography"],
-      visibility: "public",
+      date: generateRandomDate(18),
     },
     hobbies: {
-      values: ["Reading", "Painting"],
       visibility: "public",
+      values: ["Reading", "Painting"],
+    },
+    languages: {
+      visibility: "public",
+      values: ["English", "Spanish"],
+    },
+    interests: {
+      visibility: "public",
+      values: ["Travel", "Photography"],
     },
   } as UserInfo);
 
@@ -492,11 +403,38 @@ export const generateMockUser = (overrides?: Partial<User>): User => {
 
   const mockUser: User = {
     id: generateId(),
+    username,
+    lastName,
+    firstName,
+    role: "user" as UserRole,
+    info: generateMockUserInfo(),
+    isActive: Math.random() > 0.1,
+    isDeleted: Math.random() > 0.9,
+    isBanned: Math.random() > 0.95,
     createdAt: generateRandomDate(),
     updatedAt: generateRandomDate(),
-    username,
-    firstName,
-    lastName,
+    isVerified: Math.random() > 0.3,
+    lastActive: generateRandomDate(7),
+    privacySettings: generateMockPrivacySettings(),
+    accountSettings: generateMockAccountSettings(),
+    posts: Array.from({ length: Math.floor(Math.random() * 50) + 10 }, () =>
+      generateId()
+    ),
+    events: Array.from(
+      { length: Math.floor(Math.random() * 5) },
+      generateMockEvent
+    ),
+    places: Array.from(
+      { length: Math.floor(Math.random() * 5) },
+      generateUserPlace
+    ),
+    groups: Array.from(
+      { length: Math.floor(Math.random() * 8) },
+      generateMockGroup
+    ),
+    sessions: Array.from({ length: Math.floor(Math.random() * 3) + 1 }, () =>
+      generateId()
+    ),
     email: Array.from(
       { length: Math.floor(Math.random() * 3) + 1 },
       generateMockEmail
@@ -505,33 +443,13 @@ export const generateMockUser = (overrides?: Partial<User>): User => {
       { length: Math.floor(Math.random() * 2) + 1 },
       generateMockPhone
     ),
-    info: generateMockUserInfo(),
-    friends: Array.from(
-      { length: Math.floor(Math.random() * 20) + 5 },
-      generateMockFriend
-    ),
-    friendRequests: Array.from(
-      { length: Math.floor(Math.random() * 5) },
-      generateMockFriendRequest
-    ),
-    blockedUsers: Array.from(
-      { length: Math.floor(Math.random() * 3) },
-      generateMockUserReference
-    ),
-    posts: Array.from({ length: Math.floor(Math.random() * 50) + 10 }, () =>
-      generateId()
-    ),
     websites: Array.from(
       { length: Math.floor(Math.random() * 3) },
       generateMockWebsite
     ),
-    postSubscriptions: Array.from(
-      { length: Math.floor(Math.random() * 10) },
-      generateMockPostSubscription
-    ),
-    events: Array.from(
-      { length: Math.floor(Math.random() * 5) },
-      generateMockEvent
+    friends: Array.from(
+      { length: Math.floor(Math.random() * 20) + 5 },
+      generateMockFriend
     ),
     workHistory: Array.from(
       { length: Math.floor(Math.random() * 3) + 1 },
@@ -541,28 +459,22 @@ export const generateMockUser = (overrides?: Partial<User>): User => {
       { length: Math.floor(Math.random() * 2) + 1 },
       generateMockEducation
     ),
-    places: Array.from(
-      { length: Math.floor(Math.random() * 5) },
-      generateMockPlace
+    blockedUsers: Array.from(
+      { length: Math.floor(Math.random() * 3) },
+      generateMockUserReference
     ),
-    groups: Array.from(
-      { length: Math.floor(Math.random() * 8) },
-      generateMockGroup
+    friendRequests: Array.from(
+      { length: Math.floor(Math.random() * 5) },
+      generateMockFriendRequest
     ),
     notifications: Array.from(
       { length: Math.floor(Math.random() * 15) + 5 },
       generateMockNotification
     ),
-    privacySettings: generateMockPrivacySettings(),
-    accountSettings: generateMockAccountSettings(),
-    isActive: Math.random() > 0.1,
-    isVerified: Math.random() > 0.3,
-    isDeleted: Math.random() > 0.9,
-    isBanned: Math.random() > 0.95,
-    sessions: Array.from({ length: Math.floor(Math.random() * 3) + 1 }, () =>
-      generateId()
+    postSubscriptions: Array.from(
+      { length: Math.floor(Math.random() * 10) },
+      generateMockPostSubscription
     ),
-    lastActive: generateRandomDate(7),
   };
 
   return { ...mockUser, ...overrides };
@@ -593,13 +505,13 @@ export const generateMockUserByType = (
         ...baseUser,
         isActive: true,
         lastActive: generateRandomDate(1),
-        friends: Array.from(
-          { length: Math.floor(Math.random() * 50) + 20 },
-          generateMockFriend
-        ),
         posts: Array.from(
           { length: Math.floor(Math.random() * 100) + 50 },
           () => generateId()
+        ),
+        friends: Array.from(
+          { length: Math.floor(Math.random() * 50) + 20 },
+          generateMockFriend
         ),
         notifications: Array.from(
           { length: Math.floor(Math.random() * 25) + 10 },
@@ -610,23 +522,23 @@ export const generateMockUserByType = (
     case "new":
       return generateMockUser({
         ...baseUser,
+        workHistory: [],
+        isVerified: false,
         createdAt: generateRandomDate(7),
+        posts: Array.from({ length: Math.floor(Math.random() * 5) }, () =>
+          generateId()
+        ),
         friends: Array.from(
           { length: Math.floor(Math.random() * 5) },
           generateMockFriend
         ),
-        posts: Array.from({ length: Math.floor(Math.random() * 5) }, () =>
-          generateId()
-        ),
-        isVerified: false,
-        notifications: Array.from(
-          { length: Math.floor(Math.random() * 5) + 1 },
-          generateMockNotification
-        ),
-        workHistory: [],
         education: Array.from(
           { length: Math.floor(Math.random() * 1) + 1 },
           generateMockEducation
+        ),
+        notifications: Array.from(
+          { length: Math.floor(Math.random() * 5) + 1 },
+          generateMockNotification
         ),
       });
 
@@ -645,6 +557,10 @@ export const generateMockUserByType = (
       return generateMockUser({
         ...baseUser,
         isVerified: true,
+        accountSettings: {
+          ...generateMockAccountSettings(),
+          twoFactorEnabled: true,
+        },
         email: [
           {
             ...generateMockEmail(),
@@ -659,10 +575,6 @@ export const generateMockUserByType = (
             primary: false,
           },
         ],
-        accountSettings: {
-          ...generateMockAccountSettings(),
-          twoFactorEnabled: true,
-        },
       });
 
     default:
@@ -714,6 +626,7 @@ export const generateMockUserByProfile = (
     case "professional":
       return generateMockUser({
         ...baseUser,
+        isVerified: true,
         workHistory: Array.from(
           { length: Math.floor(Math.random() * 4) + 2 },
           generateMockWork
@@ -722,7 +635,6 @@ export const generateMockUserByProfile = (
           { length: Math.floor(Math.random() * 3) + 1 },
           generateMockEducation
         ),
-        isVerified: true,
         websites: Array.from(
           { length: Math.floor(Math.random() * 2) + 1 },
           () => ({
@@ -735,6 +647,22 @@ export const generateMockUserByProfile = (
     case "entrepreneur":
       return generateMockUser({
         ...baseUser,
+        websites: Array.from(
+          { length: Math.floor(Math.random() * 3) + 1 },
+          generateMockWebsite
+        ),
+        groups: Array.from(
+          { length: Math.floor(Math.random() * 6) + 2 },
+          () => ({
+            ...generateMockGroup(),
+            role: ["Admin", "Moderator"][Math.floor(Math.random() * 2)] as any,
+            name: [
+              "Entrepreneurs Network",
+              "Business Leaders",
+              "Startup Community",
+            ][Math.floor(Math.random() * 3)],
+          })
+        ),
         workHistory: Array.from(
           { length: Math.floor(Math.random() * 3) + 1 },
           () => ({
@@ -750,45 +678,29 @@ export const generateMockUserByProfile = (
             ][Math.floor(Math.random() * 4)],
           })
         ),
-        websites: Array.from(
-          { length: Math.floor(Math.random() * 3) + 1 },
-          generateMockWebsite
-        ),
-        groups: Array.from(
-          { length: Math.floor(Math.random() * 6) + 2 },
-          () => ({
-            ...generateMockGroup(),
-            name: [
-              "Entrepreneurs Network",
-              "Business Leaders",
-              "Startup Community",
-            ][Math.floor(Math.random() * 3)],
-            role: ["Admin", "Moderator"][Math.floor(Math.random() * 2)] as any,
-          })
-        ),
       });
 
     case "freelancer":
       return generateMockUser({
         ...baseUser,
+        websites: Array.from(
+          { length: Math.floor(Math.random() * 2) + 1 },
+          () => ({
+            ...generateMockWebsite(),
+            title: "Portfolio & Services",
+          })
+        ),
         workHistory: Array.from(
           { length: Math.floor(Math.random() * 5) + 2 },
           () => ({
             ...generateMockWork(),
+            current: Math.random() > 0.3,
             position: [
               "Freelance Designer",
               "Independent Consultant",
               "Contract Developer",
               "Freelance Writer",
             ][Math.floor(Math.random() * 4)],
-            current: Math.random() > 0.3,
-          })
-        ),
-        websites: Array.from(
-          { length: Math.floor(Math.random() * 2) + 1 },
-          () => ({
-            ...generateMockWebsite(),
-            title: "Portfolio & Services",
           })
         ),
       });

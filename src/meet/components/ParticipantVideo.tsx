@@ -1,5 +1,9 @@
+// External
 import React from "react";
-import { Box, Typography, Stack, Avatar, Chip } from "@mui/material";
+
+
+// MUI
+import { Box, Chip, Stack, Avatar, Typography } from "@mui/material";
 import {
   Mic as MicIcon,
   MicOff as MicOffIcon,
@@ -7,6 +11,9 @@ import {
   // VideocamOff as VideocamOffIcon,
   // MoreVert as MoreVertIcon,
 } from "@mui/icons-material";
+
+
+// Parent, Sibling, Index
 import type { Participant } from "../../types/meet/meeting.types";
 
 interface ParticipantVideoProps {
@@ -17,8 +24,8 @@ interface ParticipantVideoProps {
 
 const ParticipantVideo: React.FC<ParticipantVideoProps> = ({
   participant,
-  isCurrentUser = false,
   size = "medium",
+  isCurrentUser = false,
 }) => {
   const getSizeStyles = () => {
     switch (size) {
@@ -35,12 +42,12 @@ const ParticipantVideo: React.FC<ParticipantVideoProps> = ({
     <Box
       sx={{
         ...getSizeStyles(),
-        position: "relative",
         borderRadius: 2,
         overflow: "hidden",
+        position: "relative",
         backgroundColor: "grey.900",
-        border: participant.isScreenSharing ? "2px solid" : "none",
         borderColor: "primary.main",
+        border: participant.isScreenSharing ? "2px solid" : "none",
       }}
     >
       {/* Video/Avatar Display */}
@@ -49,10 +56,10 @@ const ParticipantVideo: React.FC<ParticipantVideoProps> = ({
           sx={{
             width: "100%",
             height: "100%",
-            backgroundColor: "grey.800",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
+            backgroundColor: "grey.800",
           }}
         >
           {/* Placeholder for actual video stream */}
@@ -83,13 +90,13 @@ const ParticipantVideo: React.FC<ParticipantVideoProps> = ({
       {/* Participant Info Overlay */}
       <Box
         sx={{
-          position: "absolute",
-          bottom: 0,
-          left: 0,
-          right: 0,
-          background: "linear-gradient(transparent, rgba(0,0,0,0.4))",
           px: 2,
+          left: 0,
           py: 1.5,
+          right: 0,
+          bottom: 0,
+          position: "absolute",
+          background: "linear-gradient(transparent, rgba(0,0,0,0.4))",
         }}
       >
         <Stack
@@ -115,9 +122,9 @@ const ParticipantVideo: React.FC<ParticipantVideoProps> = ({
                 size="small"
                 sx={{
                   height: 20,
+                  color: "white",
                   fontSize: "0.7rem",
                   backgroundColor: "primary.main",
-                  color: "white",
                 }}
               />
             )}
@@ -130,9 +137,9 @@ const ParticipantVideo: React.FC<ParticipantVideoProps> = ({
             )}
 
             {participant.isMuted ? (
-              <MicOffIcon sx={{ color: "error.main", fontSize: 18 }} />
+              <MicOffIcon sx={{ fontSize: 18, color: "error.main" }} />
             ) : (
-              <MicIcon sx={{ color: "success.main", fontSize: 18 }} />
+              <MicIcon sx={{ fontSize: 18, color: "success.main" }} />
             )}
           </Stack>
         </Stack>
@@ -142,13 +149,13 @@ const ParticipantVideo: React.FC<ParticipantVideoProps> = ({
       {participant.connectionStatus !== "connected" && (
         <Box
           sx={{
-            position: "absolute",
-            top: 8,
-            right: 8,
-            backgroundColor: "rgba(0,0,0,0.7)",
-            borderRadius: 1,
             px: 1,
+            top: 8,
             py: 0.5,
+            right: 8,
+            borderRadius: 1,
+            position: "absolute",
+            backgroundColor: "rgba(0,0,0,0.7)",
           }}
         >
           <Typography variant="caption" color="warning.main">
@@ -161,13 +168,13 @@ const ParticipantVideo: React.FC<ParticipantVideoProps> = ({
       {participant.isScreenSharing && (
         <Box
           sx={{
-            position: "absolute",
+            px: 1,
             top: 8,
             left: 8,
-            backgroundColor: "primary.main",
-            borderRadius: 1,
-            px: 1,
             py: 0.5,
+            borderRadius: 1,
+            position: "absolute",
+            backgroundColor: "primary.main",
           }}
         >
           <Typography variant="caption" color="white" fontSize="0.7rem">

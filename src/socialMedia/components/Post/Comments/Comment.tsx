@@ -1,35 +1,43 @@
-/* eslint-disable max-statements-per-line */
-/* eslint-disable no-shadow */
-/* eslint-disable multiline-ternary */
+ 
+ 
+ 
 /* eslint-disable prettier/prettier */
-/* eslint-disable no-unsafe-optional-chaining */
+ 
+// External
+import moment from "moment";
 import { useState } from "react";
+import { useNavigate } from "react-router";
 
+
+// MUI
 import ReplyIcon from "@mui/icons-material/Reply";
 import { Chip, Link, Stack, Typography } from "@mui/material";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 
-import CommentInput from "./CommentInput";
-import CommentReply from "./CommentReply";
+
+// Shared
 // import useDate from "../../../hooks/useDate";
 import UserAvatar from "../../../../shared/UserAvatar";
 import CustomTooltip from "../../../../shared/CustomTooltip";
-import type {
-  PostComment,
-  PostCommentReply,
-} from "../../../../types/post.types";
-import moment from "moment";
-import { useNavigate } from "react-router";
+
+
+// Parent, Sibling, Index
+import CommentInput from "./CommentInput";
+import CommentReply from "./CommentReply";
+import type { PostComment } from "../../../../types/post/postComment.types";
+import type { PostCommentReply } from "../../../../types/post/postCommentReply.types";
 
 const Comment = ({ comment }: { comment: PostComment }) => {
   const navigate = useNavigate();
+
   const [replySlice, setReplySlice] = useState(1);
+
   const [showReplyInput, setShowReplyInput] = useState(false);
 
   const renderComment = (comment: PostComment) => {
     if (!comment) return null;
 
-    // eslint-disable-next-line prefer-named-capture-group, require-unicode-regexp
+     
     const parts = comment?.content?.split(/(@\w+|#\w+)/g).filter(Boolean);
 
     return parts.map((part, index) => {
@@ -73,12 +81,15 @@ const Comment = ({ comment }: { comment: PostComment }) => {
       return part;
     });
   };
+
   const handleShowReplyInput = () => {
     setShowReplyInput(true);
   };
+
   const handleCloseReplyInput = () => {
     setShowReplyInput(false);
   };
+
   const handleViewMoreReplies = () => {
     setReplySlice((prevReplySlice) => {
       const remainingReplies = comment?.replies?.items?.length - prevReplySlice;
@@ -88,8 +99,9 @@ const Comment = ({ comment }: { comment: PostComment }) => {
         : prevReplySlice + remainingReplies;
     });
   };
+
   const handleCommentLike = () => {
-    // eslint-disable-next-line no-console
+     
     console.log("Liked Comment");
   };
 
@@ -105,7 +117,7 @@ const Comment = ({ comment }: { comment: PostComment }) => {
         direction="row"
         justifyContent="space-between"
         alignItems="center"
-        sx={{ my: 1, width: "100%" }}
+        sx={{ width: "100%", my: 1 }}
       >
         <Stack
           justifyContent="flex-start"
@@ -125,8 +137,8 @@ const Comment = ({ comment }: { comment: PostComment }) => {
           >
             <Typography
               sx={{
-                fontWeight: 600,
                 fontSize: 14,
+                fontWeight: 600,
                 cursor: "pointer",
                 "&:hover": {
                   textDecoration: "underline",
@@ -142,8 +154,8 @@ const Comment = ({ comment }: { comment: PostComment }) => {
             </Typography>
             <Typography
               sx={{
-                fontWeight: 400,
                 fontSize: 12,
+                fontWeight: 400,
               }}
               variant="body1"
               component="p"
@@ -254,7 +266,7 @@ const Comment = ({ comment }: { comment: PostComment }) => {
           Reply
         </Typography>
       </Stack>
-      <Stack sx={{ px: 4, width: "100%" }} gap={2}>
+      <Stack sx={{ width: "100%", px: 4 }} gap={2}>
         {showReplyInput && (
           <CommentInput closeReply={handleCloseReplyInput} type="reply" />
         )}
@@ -271,7 +283,7 @@ const Comment = ({ comment }: { comment: PostComment }) => {
           </>
         )}
         {
-          // eslint-disable-next-line operator-linebreak
+           
           comment?.replies?.items?.length > 0 &&
             replySlice < comment?.replies?.items?.length && (
               <Typography

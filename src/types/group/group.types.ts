@@ -1,8 +1,12 @@
+// External
 import { faker } from "@faker-js/faker";
+
+
+// Parent, Sibling, Index
 import type { UserReference } from "../base/userReference.types";
-import { VISIBILITY_OPTIONS, type Visibility } from "../base/visibility.types";
 import type { FriendshipStatus } from "../base/friendshipStatus.types";
-import { generateBaseEntity, type BaseEntity } from "../base/base.types";
+import { type BaseEntity, generateBaseEntity } from "../base/base.types";
+import { type Visibility, VISIBILITY_OPTIONS } from "../base/visibility.types";
 
 // Group Categories
 export const GROUP_CATEGORIES = [
@@ -100,10 +104,32 @@ export interface Group extends BaseEntity {
 
 export const generateGroup = (): Group => {
   const membersCount = faker.number.int({ min: 10, max: 50000 });
-  const maxMembersCount = faker.number.int({ min: membersCount, max: 100000 });
+  const maxMembersCount = faker.number.int({ max: 100000, min: membersCount });
 
   return {
     ...generateBaseEntity(),
+    icon: faker.image.avatar(),
+    members_count: membersCount,
+    max_members_count: maxMembersCount,
+    featured: faker.datatype.boolean(),
+    joined_at: faker.date.past().toISOString(),
+    role: faker.helpers.arrayElement(USER_ROLES),
+    last_activity: faker.date.recent().toISOString(),
+    privacy: faker.helpers.arrayElement(PRIVACY_OPTIONS),
+    description: faker.lorem.paragraph({ min: 2, max: 4 }),
+    category: faker.helpers.arrayElement(GROUP_CATEGORIES),
+    created_at: faker.date.past({ years: 3 }).toISOString(),
+    coverImage: faker.image.url({ width: 1200, height: 400 }),
+    pending_requests_count: faker.number.int({ min: 0, max: 100 }),
+    activity_status: faker.helpers.arrayElement(ACTIVITY_STATUSES),
+    verification_status: faker.helpers.arrayElement(VERIFICATION_STATUSES),
+    trending_score: faker.number.float({ min: 0, max: 100, fractionDigits: 2 }),
+    rules: faker.helpers.multiple(() => faker.lorem.sentence(), {
+      count: { min: 3, max: 8 },
+    }),
+    visibility: faker.helpers.arrayElement(
+      VISIBILITY_OPTIONS?.map(({ value }) => value)
+    ) as Visibility,
     name:
       faker.company.name() +
       " " +
@@ -114,15 +140,29 @@ export const generateGroup = (): Group => {
         "Society",
         "Network",
       ]),
-    description: faker.lorem.paragraph({ min: 2, max: 4 }),
-    icon: faker.image.avatar(),
-    coverImage: faker.image.url({ width: 1200, height: 400 }),
-    role: faker.helpers.arrayElement(USER_ROLES),
-    privacy: faker.helpers.arrayElement(PRIVACY_OPTIONS),
-    visibility: faker.helpers.arrayElement(
-      VISIBILITY_OPTIONS?.map(({ value }) => value)
-    ) as Visibility,
-    category: faker.helpers.arrayElement(GROUP_CATEGORIES),
+    location: faker.datatype.boolean()
+      ? {
+          city: faker.location.city(),
+          country: faker.location.country(),
+          coordinates: {
+            lat: faker.location.latitude(),
+            lng: faker.location.longitude(),
+          },
+        }
+      : undefined,
+    settings: {
+      show_member_list: faker.datatype.boolean(),
+      allow_discussions: faker.datatype.boolean(),
+      allow_member_posts: faker.datatype.boolean(),
+      allow_member_invites: faker.datatype.boolean(),
+      require_approval_for_posts: faker.datatype.boolean(),
+    },
+    stats: {
+      events_count: faker.number.int({ min: 0, max: 500 }),
+      posts_count: faker.number.int({ min: 0, max: 10000 }),
+      weekly_active_members: faker.number.int({ min: 0, max: membersCount }),
+      growth_rate: faker.number.float({ max: 50, min: -10, fractionDigits: 2 }),
+    },
     tags: faker.helpers.arrayElements(
       [
         "community",
@@ -139,28 +179,11 @@ export const generateGroup = (): Group => {
       ],
       { min: 2, max: 5 }
     ),
-    location: faker.datatype.boolean()
-      ? {
-          city: faker.location.city(),
-          country: faker.location.country(),
-          coordinates: {
-            lat: faker.location.latitude(),
-            lng: faker.location.longitude(),
-          },
-        }
-      : undefined,
-    members_count: membersCount,
-    max_members_count: maxMembersCount,
-    pending_requests_count: faker.number.int({ min: 0, max: 100 }),
-    joined_at: faker.date.past().toISOString(),
-    created_at: faker.date.past({ years: 3 }).toISOString(),
-    activity_status: faker.helpers.arrayElement(ACTIVITY_STATUSES),
-    last_activity: faker.date.recent().toISOString(),
     owner: {
       id: faker.string.uuid(),
+      lastName: faker.person.lastName(),
       username: faker.internet.userName(),
       firstName: faker.person.firstName(),
-      lastName: faker.person.lastName(),
       mutualFriendsCount: faker.number.int({ min: 0, max: 50 }),
       friendship_status: faker.helpers.arrayElement([
         "friends",
@@ -168,12 +191,21 @@ export const generateGroup = (): Group => {
         "blocked",
       ]) as FriendshipStatus,
     },
+    links: {
+      website: faker.datatype.boolean() ? faker.internet.url() : undefined,
+      social_media: {
+        twitter: faker.datatype.boolean() ? faker.internet.url() : undefined,
+        facebook: faker.datatype.boolean() ? faker.internet.url() : undefined,
+        linkedin: faker.datatype.boolean() ? faker.internet.url() : undefined,
+        instagram: faker.datatype.boolean() ? faker.internet.url() : undefined,
+      },
+    },
     admins: faker.helpers.multiple(
       () => ({
         id: faker.string.uuid(),
+        lastName: faker.person.lastName(),
         username: faker.internet.userName(),
         firstName: faker.person.firstName(),
-        lastName: faker.person.lastName(),
         mutualFriendsCount: faker.number.int({ min: 0, max: 50 }),
         friendship_status: faker.helpers.arrayElement([
           "friends",
@@ -186,9 +218,9 @@ export const generateGroup = (): Group => {
     moderators: faker.helpers.multiple(
       () => ({
         id: faker.string.uuid(),
+        lastName: faker.person.lastName(),
         username: faker.internet.userName(),
         firstName: faker.person.firstName(),
-        lastName: faker.person.lastName(),
         mutualFriendsCount: faker.number.int({ min: 0, max: 50 }),
         friendship_status: faker.helpers.arrayElement([
           "friends",
@@ -198,33 +230,5 @@ export const generateGroup = (): Group => {
       }),
       { count: { min: 0, max: 5 } }
     ),
-    rules: faker.helpers.multiple(() => faker.lorem.sentence(), {
-      count: { min: 3, max: 8 },
-    }),
-    links: {
-      website: faker.datatype.boolean() ? faker.internet.url() : undefined,
-      social_media: {
-        facebook: faker.datatype.boolean() ? faker.internet.url() : undefined,
-        twitter: faker.datatype.boolean() ? faker.internet.url() : undefined,
-        instagram: faker.datatype.boolean() ? faker.internet.url() : undefined,
-        linkedin: faker.datatype.boolean() ? faker.internet.url() : undefined,
-      },
-    },
-    settings: {
-      allow_member_posts: faker.datatype.boolean(),
-      require_approval_for_posts: faker.datatype.boolean(),
-      allow_member_invites: faker.datatype.boolean(),
-      show_member_list: faker.datatype.boolean(),
-      allow_discussions: faker.datatype.boolean(),
-    },
-    stats: {
-      posts_count: faker.number.int({ min: 0, max: 10000 }),
-      events_count: faker.number.int({ min: 0, max: 500 }),
-      weekly_active_members: faker.number.int({ min: 0, max: membersCount }),
-      growth_rate: faker.number.float({ min: -10, max: 50, fractionDigits: 2 }),
-    },
-    verification_status: faker.helpers.arrayElement(VERIFICATION_STATUSES),
-    featured: faker.datatype.boolean(),
-    trending_score: faker.number.float({ min: 0, max: 100, fractionDigits: 2 }),
   };
 };

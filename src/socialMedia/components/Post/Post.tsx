@@ -1,7 +1,12 @@
+// External
 import { useState } from "react";
 
+
+// MUI
 import { Stack, Divider, useTheme } from "@mui/material";
 
+
+// Parent, Sibling, Index
 import PostMedia from "./PostMedia";
 import PostHeader from "./PostHeader";
 import PostActions from "./PostActions";
@@ -12,6 +17,7 @@ import type { PostInterface } from "../../../types/post/post.types";
 
 const Post = ({ post }: { post: PostInterface }) => {
   const theme = useTheme();
+
   const [commentInputField, setCommentInputField] = useState(false);
 
   return (
@@ -23,9 +29,9 @@ const Post = ({ post }: { post: PostInterface }) => {
       gap={2}
       sx={{
         p: 2,
-        boxShadow: theme.shadows[3],
         // maxWidth: 500,
         borderRadius: 2,
+        boxShadow: theme.shadows[3],
         backgroundColor: theme.palette.background.paper,
       }}
     >

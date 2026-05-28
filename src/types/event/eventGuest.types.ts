@@ -1,17 +1,20 @@
+// External
 import { faker } from "@faker-js/faker";
+
+
+// Parent, Sibling, Index
 import type { EventStatus } from "./event.types";
 import {
-  generateUserReference,
   type UserReference,
+  generateUserReference,
 } from "../base/userReference.types";
 import {
-  generateEventInteractions,
   type EventInteraction,
+  generateEventInteractions,
 } from "./eventInteraction.types";
-
 import {
-  generateEventReminderNotificationSettings,
   type EventReminderNotificationSettings,
+  generateEventReminderNotificationSettings,
 } from "./eventReminderNotificationSettings.types";
 
 export interface EventGuest extends UserReference {
@@ -27,17 +30,17 @@ export interface EventGuest extends UserReference {
 export const generateEventGuest = (): EventGuest => {
   return {
     ...generateUserReference(),
+    isOrganizer: false,
     userId: faker.string.uuid(),
+    isOptional: faker.datatype.boolean(),
+    interactions: [generateEventInteractions()],
+    responseTime: faker.date.recent().toISOString(),
+    reminders: [generateEventReminderNotificationSettings()],
     status: faker.helpers.arrayElement([
       "tentative",
       "confirmed",
       "cancelled",
       "draft",
     ]),
-    isOptional: faker.datatype.boolean(),
-    isOrganizer: false,
-    responseTime: faker.date.recent().toISOString(),
-    interactions: [generateEventInteractions()],
-    reminders: [generateEventReminderNotificationSettings()],
   };
 };

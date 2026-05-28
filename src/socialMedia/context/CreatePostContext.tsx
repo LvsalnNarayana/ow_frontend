@@ -1,15 +1,18 @@
-import React, { createContext, useState, type ReactNode } from "react";
+// External
+import React, { useState, createContext, type ReactNode } from "react";
 
-import type {
-  CreatePostBuilderActions,
-  CreatePostInterface,
-  PostScreen,
-} from "../../types/createPost/createPost.types";
-import type { Visibility } from "../../types/base/visibility.types";
-import type { PostMedia } from "../../types/post/postMedia.types";
-import type { PollData } from "../../types/post/poll.types";
+
+// Parent, Sibling, Index
 import type { Event } from "../../types/event/event.types";
+import type { PollData } from "../../types/post/poll.types";
+import type { PostMedia } from "../../types/post/postMedia.types";
+import type { Visibility } from "../../types/base/visibility.types";
 import type { PostUserInterface } from "../../types/post/postUser.types";
+import type {
+  PostScreen,
+  CreatePostInterface,
+  CreatePostBuilderActions,
+} from "../../types/createPost/createPost.types";
 
 interface CreatePostProviderProps {
   children: ReactNode;
@@ -20,48 +23,48 @@ interface CreatePostContextProps {
 }
 
 const initialState: CreatePostInterface = {
+  media: [],
+  visibility: "public",
+  feeling: {
+    image: "",
+    feeling: "",
+  },
+  timeline: {
+    timeline_owner_id: undefined,
+    is_wall_post: false,
+    timeline_owner: undefined,
+  },
   content: {
     text: "",
     media: [],
     poll: undefined,
-    event: undefined,
     link: undefined,
+    event: undefined,
   },
-  feeling: {
-    feeling: "",
-    image: "",
-  },
-  visibility: "public",
-  media: [],
   metadata: {
     hashtags: [],
-    location: undefined,
-    tagged_users: [],
-    mentioned_users: [],
     language: "en",
+    tagged_users: [],
+    location: undefined,
+    mentioned_users: [],
     content_warning: undefined,
-  },
-  author: {
-    id: "1",
-    firstName: "John",
-    lastName: "Doe",
-    username: "johndoe",
-    is_logged_in_user: true,
-    mutual_friends_count: 10,
-    friendship_status: "friends",
   },
   publishing: {
     privacy: "public",
     allowed_users: [],
     excluded_users: [],
+    allow_sharing: true,
     allow_comments: true,
     allow_reactions: true,
-    allow_sharing: true,
   },
-  timeline: {
-    is_wall_post: false,
-    timeline_owner_id: undefined,
-    timeline_owner: undefined,
+  author: {
+    id: "1",
+    lastName: "Doe",
+    firstName: "John",
+    username: "johndoe",
+    mutualFriendsCount: 10,
+    is_logged_in_user: true,
+    friendship_status: "friends",
   },
   ui_state: {
     is_draft: false,
@@ -76,36 +79,36 @@ const initialState: CreatePostInterface = {
 const CreatePostContext = createContext<CreatePostContextProps>({
   data: initialState,
   actions: {
-    setVisibility: () => {},
+    reset: () => {},
     setText: () => {},
-    addMedia: () => {},
-    removeMedia: () => {},
     setPoll: () => {},
-    setEvent: () => {},
     setLink: () => {},
+    addMedia: () => {},
+    setEvent: () => {},
+    setAuthor: () => {},
+    setFeeling: () => {},
+    setPrivacy: () => {},
+    removeMedia: () => {},
     setHashtags: () => {},
     setLocation: () => {},
-    setTaggedUsers: () => {},
-    setMentionedUsers: () => {},
-    setFeeling: () => {},
     setLanguage: () => {},
-    setContentWarning: () => {},
-    setAuthor: () => {},
+    setWallPost: () => {},
+    setVisibility: () => {},
     setDraftState: () => {},
-    setPrivacy: () => {},
+    setTaggedUsers: () => {},
+    setShowPreview: () => {},
     setAllowedUsers: () => {},
     setExcludedUsers: () => {},
-    toggleAllowComments: () => {},
-    toggleAllowReactions: () => {},
-    toggleAllowSharing: () => {},
-    setWallPost: () => {},
     setTimelineOwner: () => {},
+    setMentionedUsers: () => {},
+    setContentWarning: () => {},
+    toggleAllowSharing: () => {},
+    toggleAllowComments: () => {},
     setCreatePostScreen: () => {},
-    setShowCreatePostDialog: () => {},
-    setShowPreview: () => {},
+    toggleAllowReactions: () => {},
     setMediaUploadProgress: () => {},
     setUploadingMediaState: () => {},
-    reset: () => {},
+    setShowCreatePostDialog: () => {},
   },
 });
 
@@ -115,6 +118,18 @@ export const CreatePostProvider: React.FC<CreatePostProviderProps> = ({
   const [state, setState] = useState<CreatePostInterface>({ ...initialState });
 
   const actions: CreatePostBuilderActions = {
+    build: () => {
+      return state;
+    },
+    reset: () => {
+      setState({ ...initialState });
+    },
+    setAuthor: (author) => {
+      setState((prev) => ({
+        ...prev,
+        author,
+      }));
+    },
     setVisibility: (visibility: Visibility) => {
       setState((prev: CreatePostInterface) => ({ ...prev, visibility }));
     },
@@ -122,109 +137,6 @@ export const CreatePostProvider: React.FC<CreatePostProviderProps> = ({
       setState((prev: CreatePostInterface) => ({
         ...prev,
         feeling: feelingItem,
-      }));
-    },
-    setText: (text: string) => {
-      setState((prev: CreatePostInterface) => ({
-        ...prev,
-        content: { ...prev.content, text },
-      }));
-    },
-    addMedia: (media: Omit<PostMedia, "id">[]) => {
-      setState((prev: CreatePostInterface) => ({
-        ...prev,
-        content: {
-          ...prev.content,
-          media: [...prev.content.media, ...media],
-        },
-        media: [...prev.media, ...media],
-      }));
-    },
-    removeMedia: (index: number) => {
-      setState((prev: CreatePostInterface) => {
-        const newMedia = [...prev.content.media];
-        newMedia.splice(index, 1);
-        return {
-          ...prev,
-          content: { ...prev.content, media: newMedia },
-          media: newMedia,
-        };
-      });
-    },
-    setPoll: (poll: PollData) => {
-      setState((prev: CreatePostInterface) => ({
-        ...prev,
-        content: { ...prev.content, poll },
-      }));
-    },
-    setEvent: (event: Event) => {
-      setState((prev: CreatePostInterface) => ({
-        ...prev,
-        content: { ...prev.content, event },
-      }));
-    },
-    setLink: (link: {
-      url: string;
-      title?: string;
-      description?: string;
-      image?: string;
-      domain: string;
-    }) => {
-      setState((prev: CreatePostInterface) => ({
-        ...prev,
-        content: { ...prev.content, link },
-      }));
-    },
-    setPrivacy: (privacy) => {
-      setState((prev) => ({
-        ...prev,
-        publishing: { ...prev.publishing, privacy },
-      }));
-    },
-    setAllowedUsers: (users) => {
-      setState((prev) => ({
-        ...prev,
-        publishing: { ...prev.publishing, allowed_users: users },
-      }));
-    },
-    setExcludedUsers: (users) => {
-      setState((prev) => ({
-        ...prev,
-        publishing: { ...prev.publishing, excluded_users: users },
-      }));
-    },
-    toggleAllowComments: (allow) => {
-      setState((prev) => ({
-        ...prev,
-        publishing: { ...prev.publishing, allow_comments: allow },
-      }));
-    },
-    toggleAllowReactions: (allow) => {
-      setState((prev) => ({
-        ...prev,
-        publishing: { ...prev.publishing, allow_reactions: allow },
-      }));
-    },
-    toggleAllowSharing: (allow) => {
-      setState((prev) => ({
-        ...prev,
-        publishing: { ...prev.publishing, allow_sharing: allow },
-      }));
-    },
-    setWallPost: (isWallPost) => {
-      setState((prev) => ({
-        ...prev,
-        timeline: { ...prev.timeline, is_wall_post: isWallPost },
-      }));
-    },
-    setTimelineOwner: (owner: PostUserInterface) => {
-      setState((prev: CreatePostInterface) => ({
-        ...prev,
-        timeline: {
-          is_wall_post: prev.timeline?.is_wall_post ?? false,
-          timeline_owner: owner,
-          timeline_owner_id: owner?.id,
-        },
       }));
     },
     setHashtags: (hashtags) => {
@@ -239,10 +151,46 @@ export const CreatePostProvider: React.FC<CreatePostProviderProps> = ({
         metadata: { ...prev.metadata, location },
       }));
     },
+    setLanguage: (language) => {
+      setState((prev) => ({
+        ...prev,
+        metadata: { ...prev.metadata, language },
+      }));
+    },
+    setPrivacy: (privacy) => {
+      setState((prev) => ({
+        ...prev,
+        publishing: { ...prev.publishing, privacy },
+      }));
+    },
     setTaggedUsers: (users) => {
       setState((prev) => ({
         ...prev,
         metadata: { ...prev.metadata, tagged_users: users },
+      }));
+    },
+    setText: (text: string) => {
+      setState((prev: CreatePostInterface) => ({
+        ...prev,
+        content: { ...prev.content, text },
+      }));
+    },
+    setPoll: (poll: PollData) => {
+      setState((prev: CreatePostInterface) => ({
+        ...prev,
+        content: { ...prev.content, poll },
+      }));
+    },
+    setEvent: (event: Event) => {
+      setState((prev: CreatePostInterface) => ({
+        ...prev,
+        content: { ...prev.content, event },
+      }));
+    },
+    setAllowedUsers: (users) => {
+      setState((prev) => ({
+        ...prev,
+        publishing: { ...prev.publishing, allowed_users: users },
       }));
     },
     setMentionedUsers: (users) => {
@@ -251,10 +199,22 @@ export const CreatePostProvider: React.FC<CreatePostProviderProps> = ({
         metadata: { ...prev.metadata, mentioned_users: users },
       }));
     },
-    setLanguage: (language) => {
+    setWallPost: (isWallPost) => {
       setState((prev) => ({
         ...prev,
-        metadata: { ...prev.metadata, language },
+        timeline: { ...prev.timeline, is_wall_post: isWallPost },
+      }));
+    },
+    setExcludedUsers: (users) => {
+      setState((prev) => ({
+        ...prev,
+        publishing: { ...prev.publishing, excluded_users: users },
+      }));
+    },
+    toggleAllowSharing: (allow) => {
+      setState((prev) => ({
+        ...prev,
+        publishing: { ...prev.publishing, allow_sharing: allow },
       }));
     },
     setContentWarning: (warning) => {
@@ -263,13 +223,64 @@ export const CreatePostProvider: React.FC<CreatePostProviderProps> = ({
         metadata: { ...prev.metadata, content_warning: warning },
       }));
     },
-    setAuthor: (author) => {
+    toggleAllowComments: (allow) => {
       setState((prev) => ({
         ...prev,
-        author,
+        publishing: { ...prev.publishing, allow_comments: allow },
       }));
     },
-    setDraftState: (isDraft) => {
+    toggleAllowReactions: (allow) => {
+      setState((prev) => ({
+        ...prev,
+        publishing: { ...prev.publishing, allow_reactions: allow },
+      }));
+    },
+    setLink: (link: {
+      url: string;
+      title?: string;
+      description?: string;
+      image?: string;
+      domain: string;
+    }) => {
+      setState((prev: CreatePostInterface) => ({
+        ...prev,
+        content: { ...prev.content, link },
+      }));
+    },
+    addMedia: (media: Omit<PostMedia, "id">[]) => {
+      setState((prev: CreatePostInterface) => ({
+        ...prev,
+        media: [...prev.media, ...media],
+        content: {
+          ...prev.content,
+          media: [...prev.content.media, ...media],
+        },
+      }));
+    },
+    setTimelineOwner: (owner: PostUserInterface) => {
+      setState((prev: CreatePostInterface) => ({
+        ...prev,
+        timeline: {
+          timeline_owner_id: owner?.id,
+          timeline_owner: owner,
+          is_wall_post: prev.timeline?.is_wall_post ?? false,
+        },
+      }));
+    },
+
+    removeMedia: (index: number) => {
+      setState((prev: CreatePostInterface) => {
+        const newMedia = [...prev.content.media];
+        newMedia.splice(index, 1);
+        return {
+          ...prev,
+          media: newMedia,
+          content: { ...prev.content, media: newMedia },
+        };
+      });
+    },
+
+    setShowCreatePostDialog: (show) => {
       setState((prev) => ({
         ...prev,
         ui_state: {
@@ -278,10 +289,9 @@ export const CreatePostProvider: React.FC<CreatePostProviderProps> = ({
             show_preview: false,
             uploading_media: false,
             media_upload_progress: 0,
-            show_create_post_dialog: false,
             create_post_screen: "draft",
           }),
-          is_draft: isDraft,
+          show_create_post_dialog: show,
         },
       }));
     },
@@ -295,14 +305,30 @@ export const CreatePostProvider: React.FC<CreatePostProviderProps> = ({
             show_preview: false,
             uploading_media: false,
             media_upload_progress: 0,
-            show_create_post_dialog: false,
             create_post_screen: "draft",
+            show_create_post_dialog: false,
           }),
           show_preview: show,
         },
       }));
     },
 
+    setDraftState: (isDraft) => {
+      setState((prev) => ({
+        ...prev,
+        ui_state: {
+          ...(prev.ui_state ?? {
+            is_draft: false,
+            show_preview: false,
+            uploading_media: false,
+            media_upload_progress: 0,
+            create_post_screen: "draft",
+            show_create_post_dialog: false,
+          }),
+          is_draft: isDraft,
+        },
+      }));
+    },
     setUploadingMediaState: (uploading) => {
       setState((prev) => ({
         ...prev,
@@ -312,8 +338,8 @@ export const CreatePostProvider: React.FC<CreatePostProviderProps> = ({
             show_preview: false,
             uploading_media: false,
             media_upload_progress: 0,
-            show_create_post_dialog: false,
             create_post_screen: "draft",
+            show_create_post_dialog: false,
           }),
           uploading_media: uploading,
         },
@@ -329,14 +355,13 @@ export const CreatePostProvider: React.FC<CreatePostProviderProps> = ({
             show_preview: false,
             uploading_media: false,
             media_upload_progress: 0,
-            show_create_post_dialog: false,
             create_post_screen: "draft",
+            show_create_post_dialog: false,
           }),
           media_upload_progress: progress,
         },
       }));
     },
-
     setCreatePostScreen: (screen: PostScreen) => {
       setState((prev) => ({
         ...prev,
@@ -360,33 +385,11 @@ export const CreatePostProvider: React.FC<CreatePostProviderProps> = ({
         },
       }));
     },
-    setShowCreatePostDialog: (show) => {
-      setState((prev) => ({
-        ...prev,
-        ui_state: {
-          ...(prev.ui_state ?? {
-            is_draft: false,
-            show_preview: false,
-            uploading_media: false,
-            media_upload_progress: 0,
-            create_post_screen: "draft",
-          }),
-          show_create_post_dialog: show,
-        },
-      }));
-    },
-
-    reset: () => {
-      setState({ ...initialState });
-    },
-    build: () => {
-      return state;
-    },
   };
 
   const contextValue: CreatePostContextProps = {
-    data: state,
     actions,
+    data: state,
   };
 
   return (

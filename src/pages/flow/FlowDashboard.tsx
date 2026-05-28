@@ -1,65 +1,69 @@
-import React, { useState, useRef, useCallback } from "react";
+// External
+import React, { useRef, useState, useCallback } from "react";
+
+
+// MUI
+import ChangeHistoryIcon from "@mui/icons-material/ChangeHistory";
 import {
   Box,
-  Paper,
-  Toolbar,
-  IconButton,
-  Typography,
-  Divider,
-  ButtonGroup,
-  Tooltip,
-  MenuItem,
   Chip,
+  Grid,
+  Card,
+  Paper,
   Stack,
   Drawer,
-  Accordion,
-  AccordionSummary,
-  AccordionDetails,
-  TextField,
   Select,
-  FormControl,
-  InputLabel,
   Slider,
   Button,
   Dialog,
+  Toolbar,
+  Divider,
+  Tooltip,
+  MenuItem,
+  Accordion,
+  TextField,
+  IconButton,
+  Typography,
+  InputLabel,
+  ButtonGroup,
+  FormControl,
   DialogTitle,
+  CardContent,
   DialogContent,
   DialogActions,
-  Grid,
-  Card,
-  CardContent,
+  AccordionSummary,
+  AccordionDetails,
 } from "@mui/material";
 import {
-  PanTool,
-  Rectangle,
-  Circle,
-  Timeline,
-  TextFields,
-  Image,
-  StickyNote2,
   Undo,
   Redo,
-  ZoomIn,
-  ZoomOut,
-  FitScreen,
-  Share,
-  ExpandMore,
-  Upload,
   Star,
-  ArrowForward,
-  CallMade,
-  TrendingUp,
-  AccountTree,
+  Image,
+  Share,
+  Circle,
+  ZoomIn,
+  Upload,
   Schema,
-  BubbleChart,
-  Timeline as TimelineIcon,
-  FormatAlignLeft,
-  FormatAlignCenter,
-  FormatAlignRight,
+  PanTool,
+  ZoomOut,
   Hexagon,
+  Timeline,
+  CallMade,
   Pentagon, // Substitute for Pentagon
+  Rectangle,
+  FitScreen,
+  TextFields,
+  ExpandMore,
+  TrendingUp,
+  StickyNote2,
+  AccountTree,
+  BubbleChart,
+  ArrowForward,
+  FormatAlignLeft,
+  FormatAlignRight,
+  FormatAlignCenter,
+  Timeline as TimelineIcon,
 } from "@mui/icons-material";
-import ChangeHistoryIcon from "@mui/icons-material/ChangeHistory";
 interface CanvasElement {
   id: string;
   type:
@@ -91,13 +95,19 @@ const SIDEBAR_WIDTH = 280;
 
 const FlowDashboard: React.FC = () => {
   const [selectedTool, setSelectedTool] = useState<string>("select");
+
   const [elements, setElements] = useState<CanvasElement[]>([]);
+
   const [selectedElement, setSelectedElement] = useState<CanvasElement | null>(
     null
   );
+
   const [zoomLevel, setZoomLevel] = useState(100);
+
   const [canvasOffset, setCanvasOffset] = useState({ x: 0, y: 0 });
+
   const [uploadDialogOpen, setUploadDialogOpen] = useState(false);
+
   const canvasRef = useRef<HTMLDivElement>(null);
 
   // Shape categories for left sidebar
@@ -105,29 +115,29 @@ const FlowDashboard: React.FC = () => {
     {
       title: "Basic Shapes",
       shapes: [
-        { id: "rectangle", icon: <Rectangle />, label: "Rectangle" },
-        { id: "circle", icon: <Circle />, label: "Circle" },
-        { id: "triangle", icon: <ChangeHistoryIcon />, label: "Triangle" },
-        { id: "hexagon", icon: <Hexagon />, label: "Hexagon" },
-        { id: "star", icon: <Star />, label: "Star" },
+        { id: "rectangle", label: "Rectangle", icon: <Rectangle /> },
+        { id: "circle", label: "Circle", icon: <Circle /> },
+        { id: "triangle", label: "Triangle", icon: <ChangeHistoryIcon /> },
+        { id: "hexagon", label: "Hexagon", icon: <Hexagon /> },
+        { id: "star", label: "Star", icon: <Star /> },
       ],
     },
     {
       title: "Arrows & Lines",
       shapes: [
-        { id: "line", icon: <Timeline />, label: "Line" },
-        { id: "arrow", icon: <ArrowForward />, label: "Arrow" },
+        { id: "line", label: "Line", icon: <Timeline /> },
+        { id: "arrow", label: "Arrow", icon: <ArrowForward /> },
         { id: "curved-arrow", icon: <CallMade />, label: "Curved Arrow" },
-        { id: "trend-line", icon: <TrendingUp />, label: "Trend Line" },
+        { id: "trend-line", label: "Trend Line", icon: <TrendingUp /> },
       ],
     },
     {
       title: "Flowchart",
       shapes: [
-        { id: "process", icon: <Rectangle />, label: "Process" },
-        { id: "decision", icon: <Pentagon />, label: "Decision" },
+        { id: "process", label: "Process", icon: <Rectangle /> },
+        { id: "decision", label: "Decision", icon: <Pentagon /> },
         { id: "start-end", icon: <Circle />, label: "Start/End" },
-        { id: "connector", icon: <AccountTree />, label: "Connector" },
+        { id: "connector", label: "Connector", icon: <AccountTree /> },
       ],
     },
     {
@@ -135,16 +145,16 @@ const FlowDashboard: React.FC = () => {
       shapes: [
         { id: "flowchart", icon: <></>, label: "Flowchart" },
         { id: "org-chart", icon: <Schema />, label: "Org Chart" },
-        { id: "mind-map", icon: <BubbleChart />, label: "Mind Map" },
-        { id: "timeline", icon: <TimelineIcon />, label: "Timeline" },
+        { id: "mind-map", label: "Mind Map", icon: <BubbleChart /> },
+        { id: "timeline", label: "Timeline", icon: <TimelineIcon /> },
       ],
     },
     {
       title: "Text & Media",
       shapes: [
-        { id: "text", icon: <TextFields />, label: "Text" },
-        { id: "sticky", icon: <StickyNote2 />, label: "Sticky Note" },
-        { id: "image", icon: <Image />, label: "Image" },
+        { id: "text", label: "Text", icon: <TextFields /> },
+        { id: "sticky", label: "Sticky Note", icon: <StickyNote2 /> },
+        { id: "image", label: "Image", icon: <Image /> },
       ],
     },
   ];
@@ -190,33 +200,34 @@ const FlowDashboard: React.FC = () => {
 
       const x =
         (event.clientX - rect.left - canvasOffset.x) / (zoomLevel / 100);
+
       const y = (event.clientY - rect.top - canvasOffset.y) / (zoomLevel / 100);
 
       const newElement: CanvasElement = {
+        borderWidth: 2,
         id: Date.now().toString(),
-        type: selectedTool as any,
+        width: selectedTool === "text" ? 200 : 100,
         x,
         y,
-        width: selectedTool === "text" ? 200 : 100,
-        height: selectedTool === "text" ? 40 : 100,
-        content:
-          selectedTool === "text"
-            ? "Double click to edit"
-            : selectedTool === "sticky"
-            ? "Sticky note"
-            : undefined,
+        opacity: 1,
+        rotation: 0,
+        fontSize: 14,
         color: "#1976d2",
+        fontWeight: "normal",
+        type: selectedTool as any,
+        height: selectedTool === "text" ? 40 : 100,
         backgroundColor:
           selectedTool === "sticky"
             ? "#fff59d"
             : selectedTool === "text"
             ? "transparent"
             : "#e3f2fd",
-        fontSize: 14,
-        fontWeight: "normal",
-        opacity: 1,
-        rotation: 0,
-        borderWidth: 2,
+        content:
+          selectedTool === "text"
+            ? "Double click to edit"
+            : selectedTool === "sticky"
+            ? "Sticky note"
+            : undefined,
       };
 
       setElements((prev) => [...prev, newElement]);
@@ -243,39 +254,39 @@ const FlowDashboard: React.FC = () => {
     const isSelected = selectedElement?.id === element.id;
 
     const commonStyles = {
-      position: "absolute" as const,
-      left: element.x,
-      top: element.y,
       width: element.width,
-      height: element.height,
+      top: element.y,
+      left: element.x,
+      display: "flex",
       cursor: "pointer",
+      alignItems: "center",
+      height: element.height,
+      justifyContent: "center",
+      fontSize: element.fontSize,
+      transformOrigin: "top left",
+      position: "absolute" as const,
+      opacity: element.opacity || 1,
+      fontWeight: element.fontWeight,
+      backgroundColor: element.backgroundColor,
+      color: element.type === "text" ? element.color : "#333",
       border: `${element.borderWidth || 2}px solid ${element.color}`,
+      padding:
+        element.type === "text" || element.type === "sticky" ? "8px" : "0",
+      transform: `scale(${zoomLevel / 100}) rotate(${
+        element.rotation || 0
+      }deg)`,
       borderRadius:
         element.type === "circle"
           ? "50%"
           : element.type === "sticky"
           ? "8px"
           : "4px",
-      backgroundColor: element.backgroundColor,
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center",
-      fontSize: element.fontSize,
-      fontWeight: element.fontWeight,
-      color: element.type === "text" ? element.color : "#333",
-      padding:
-        element.type === "text" || element.type === "sticky" ? "8px" : "0",
       boxShadow:
         element.type === "sticky"
           ? "0 2px 8px rgba(0,0,0,0.1)"
           : isSelected
           ? "0 0 0 2px #1976d2"
           : "none",
-      transform: `scale(${zoomLevel / 100}) rotate(${
-        element.rotation || 0
-      }deg)`,
-      transformOrigin: "top left",
-      opacity: element.opacity || 1,
     };
 
     return (
@@ -288,12 +299,12 @@ const FlowDashboard: React.FC = () => {
           <Typography
             variant="body2"
             sx={{
+              width: "100%",
+              textAlign: "center",
+              wordBreak: "break-word",
               fontSize: element.fontSize,
               fontWeight: element.fontWeight,
               color: element.type === "text" ? element.color : "#333",
-              textAlign: "center",
-              wordBreak: "break-word",
-              width: "100%",
             }}
           >
             {element.content}
@@ -304,7 +315,7 @@ const FlowDashboard: React.FC = () => {
   };
 
   return (
-    <Box sx={{ height: "100%", display: "flex", gap: 2 }}>
+    <Box sx={{ gap: 2, height: "100%", display: "flex" }}>
       {/* Left Sidebar - Shapes */}
       <Drawer
         variant="permanent"
@@ -313,9 +324,9 @@ const FlowDashboard: React.FC = () => {
           flexShrink: 0,
           "& .MuiDrawer-paper": {
             width: SIDEBAR_WIDTH,
-            boxSizing: "border-box",
-            position: "relative",
             height: "100%",
+            position: "relative",
+            boxSizing: "border-box",
           },
         }}
       >
@@ -325,7 +336,7 @@ const FlowDashboard: React.FC = () => {
           </Typography>
         </Box>
 
-        <Box sx={{ overflow: "auto", flex: 1 }}>
+        <Box sx={{ flex: 1, overflow: "auto" }}>
           {shapeCategories.map((category) => (
             <Accordion key={category.title} defaultExpanded>
               <AccordionSummary expandIcon={<ExpandMore />}>
@@ -344,18 +355,18 @@ const FlowDashboard: React.FC = () => {
                     >
                       <Card
                         sx={{
-                          cursor: "pointer",
                           minHeight: 60,
                           display: "flex",
+                          cursor: "pointer",
                           alignItems: "center",
                           justifyContent: "center",
+                          "&:hover": {
+                            bgcolor: "action.hover",
+                          },
                           bgcolor:
                             selectedTool === shape.id
                               ? "primary.light"
                               : "background.paper",
-                          "&:hover": {
-                            bgcolor: "action.hover",
-                          },
                         }}
                         onClick={() => handleToolSelect(shape.id)}
                       >
@@ -396,13 +407,13 @@ const FlowDashboard: React.FC = () => {
         sx={{
           flex: 1,
           display: "flex",
-          flexDirection: "column",
           bgcolor: "#f5f5f5",
+          flexDirection: "column",
         }}
       >
         {/* Top Toolbar */}
         <Paper elevation={1} sx={{ zIndex: 10 }}>
-          <Toolbar sx={{ minHeight: "48px !important", gap: 1 }}>
+          <Toolbar sx={{ gap: 1, minHeight: "48px !important" }}>
             <Typography variant="h6" sx={{ fontWeight: 600, color: "#1976d2" }}>
               DrawBoard
             </Typography>
@@ -415,9 +426,9 @@ const FlowDashboard: React.FC = () => {
                 <IconButton
                   onClick={() => handleToolSelect("select")}
                   sx={{
+                    color: selectedTool === "select" ? "white" : "#666",
                     bgcolor:
                       selectedTool === "select" ? "#1976d2" : "transparent",
-                    color: selectedTool === "select" ? "white" : "#666",
                   }}
                 >
                   <PanTool />
@@ -454,7 +465,7 @@ const FlowDashboard: React.FC = () => {
                 label={`${zoomLevel}%`}
                 size="small"
                 variant="outlined"
-                sx={{ cursor: "pointer", minWidth: "60px" }}
+                sx={{ minWidth: "60px", cursor: "pointer" }}
               />
               <Tooltip title="Zoom In">
                 <IconButton onClick={handleZoomIn}>
@@ -473,8 +484,8 @@ const FlowDashboard: React.FC = () => {
             <Tooltip title="Share">
               <IconButton
                 sx={{
-                  bgcolor: "#1976d2",
                   color: "white",
+                  bgcolor: "#1976d2",
                   "&:hover": { bgcolor: "#1565c0" },
                 }}
               >
@@ -485,41 +496,41 @@ const FlowDashboard: React.FC = () => {
         </Paper>
 
         {/* Canvas Area */}
-        <Box sx={{ flex: 1, position: "relative", overflow: "hidden" }}>
+        <Box sx={{ flex: 1, overflow: "hidden", position: "relative" }}>
           <Box
             ref={canvasRef}
             onClick={handleCanvasClick}
             sx={{
               width: "100%",
               height: "100%",
+              overflow: "hidden",
               position: "relative",
+              backgroundSize: "20px 20px",
               cursor: selectedTool === "select" ? "default" : "crosshair",
+              backgroundPosition: `${canvasOffset.x}px ${canvasOffset.y}px`,
               backgroundImage: `
                 radial-gradient(circle, #ddd 1px, transparent 1px)
               `,
-              backgroundSize: "20px 20px",
-              backgroundPosition: `${canvasOffset.x}px ${canvasOffset.y}px`,
-              overflow: "hidden",
             }}
           >
             {/* Grid overlay */}
             <Box
               sx={{
-                position: "absolute",
                 top: 0,
                 left: 0,
                 right: 0,
                 bottom: 0,
+                opacity: 0.3,
+                position: "absolute",
+                pointerEvents: "none",
+                backgroundPosition: `${canvasOffset.x}px ${canvasOffset.y}px`,
+                backgroundSize: `${20 * (zoomLevel / 100)}px ${
+                  20 * (zoomLevel / 100)
+                }px`,
                 backgroundImage: `
                   linear-gradient(rgba(0,0,0,0.1) 1px, transparent 1px),
                   linear-gradient(90deg, rgba(0,0,0,0.1) 1px, transparent 1px)
                 `,
-                backgroundSize: `${20 * (zoomLevel / 100)}px ${
-                  20 * (zoomLevel / 100)
-                }px`,
-                backgroundPosition: `${canvasOffset.x}px ${canvasOffset.y}px`,
-                pointerEvents: "none",
-                opacity: 0.3,
               }}
             />
 
@@ -538,9 +549,9 @@ const FlowDashboard: React.FC = () => {
           flexShrink: 0,
           "& .MuiDrawer-paper": {
             width: SIDEBAR_WIDTH,
-            boxSizing: "border-box",
-            position: "relative",
             height: "100%",
+            position: "relative",
+            boxSizing: "border-box",
           },
         }}
       >
@@ -550,7 +561,7 @@ const FlowDashboard: React.FC = () => {
           </Typography>
         </Box>
 
-        <Box sx={{ overflow: "auto", flex: 1 }}>
+        <Box sx={{ flex: 1, overflow: "auto" }}>
           {selectedElement ? (
             <>
               {/* Arrange Section */}
@@ -677,10 +688,10 @@ const FlowDashboard: React.FC = () => {
                       </Typography>
                       <Box
                         sx={{
-                          display: "grid",
                           gridTemplateColumns: "repeat(4, 1fr)",
-                          gap: 1,
                           mt: 1,
+                          gap: 1,
+                          display: "grid",
                         }}
                       >
                         {colors.map((color) => (
@@ -692,16 +703,16 @@ const FlowDashboard: React.FC = () => {
                             sx={{
                               width: 32,
                               height: 32,
-                              backgroundColor: color,
                               borderRadius: 1,
                               cursor: "pointer",
+                              backgroundColor: color,
+                              "&:hover": {
+                                transform: "scale(1.1)",
+                              },
                               border:
                                 selectedElement.backgroundColor === color
                                   ? "2px solid #333"
                                   : "1px solid #ddd",
-                              "&:hover": {
-                                transform: "scale(1.1)",
-                              },
                             }}
                           />
                         ))}
@@ -714,10 +725,10 @@ const FlowDashboard: React.FC = () => {
                       </Typography>
                       <Box
                         sx={{
-                          display: "grid",
                           gridTemplateColumns: "repeat(4, 1fr)",
-                          gap: 1,
                           mt: 1,
+                          gap: 1,
+                          display: "grid",
                         }}
                       >
                         {colors.map((color) => (
@@ -729,16 +740,16 @@ const FlowDashboard: React.FC = () => {
                             sx={{
                               width: 32,
                               height: 32,
-                              backgroundColor: color,
                               borderRadius: 1,
                               cursor: "pointer",
+                              backgroundColor: color,
+                              "&:hover": {
+                                transform: "scale(1.1)",
+                              },
                               border:
                                 selectedElement.color === color
                                   ? "2px solid #333"
                                   : "1px solid #ddd",
-                              "&:hover": {
-                                transform: "scale(1.1)",
-                              },
                             }}
                           />
                         ))}
@@ -907,13 +918,13 @@ const FlowDashboard: React.FC = () => {
           <Box
             sx={{
               p: 2,
+              mt: 2,
+              borderRadius: 2,
               textAlign: "center",
               border: "2px dashed #ccc",
-              borderRadius: 2,
-              mt: 2,
             }}
           >
-            <Upload sx={{ fontSize: 48, color: "#ccc", mb: 2 }} />
+            <Upload sx={{ mb: 2, fontSize: 48, color: "#ccc" }} />
             <Typography variant="body2" color="text.secondary">
               Drag and drop your image here or click to browse
             </Typography>

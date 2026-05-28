@@ -1,4 +1,5 @@
-import { VISIBILITY_OPTIONS, type Visibility } from "../base/visibility.types";
+// Parent, Sibling, Index
+import { type Visibility, VISIBILITY_OPTIONS } from "../base/visibility.types";
 
 export interface PrivacySettings {
   profileVisibility: Visibility;
@@ -8,10 +9,10 @@ export interface PrivacySettings {
 
 export const generatePrivacySettings = (): PrivacySettings => {
   return {
-    profileVisibility: VISIBILITY_OPTIONS?.map(
+    messagePrivacy: VISIBILITY_OPTIONS?.map(
       (option) => option.value
     )[0] as Visibility,
-    messagePrivacy: VISIBILITY_OPTIONS?.map(
+    profileVisibility: VISIBILITY_OPTIONS?.map(
       (option) => option.value
     )[0] as Visibility,
     timelinePostPrivacy: VISIBILITY_OPTIONS?.map(

@@ -1,10 +1,20 @@
+// External
 import React from "react";
+
+
+// MUI
 import { Stack, Typography } from "@mui/material";
+
+
+// Shared
 import UserAvatar from "../../shared/UserAvatar";
-import type { User } from "../../types/meet/meeting.types";
+
+
+// Parent, Sibling, Index
+import type { MeetingUser } from "../../types/meet/meeting.types";
 
 interface UserGreetingProps {
-  user: User;
+  user: MeetingUser;
 }
 
 const UserGreeting: React.FC<UserGreetingProps> = ({ user }) => {

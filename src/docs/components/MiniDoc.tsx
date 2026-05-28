@@ -1,33 +1,38 @@
-import {
-  IconButton,
-  ListItemIcon,
-  ListItemText,
-  Menu,
-  MenuItem,
-  Stack,
-  Typography,
-  useTheme,
-  Box,
-  Avatar,
-  Tooltip,
-  Card,
-  CardContent,
-} from "@mui/material";
-import Markdown from "react-markdown";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
+// External
 import { useState } from "react";
-import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
-import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
-import LaunchOutlinedIcon from "@mui/icons-material/LaunchOutlined";
-import StarBorderIcon from "@mui/icons-material/StarBorder";
+import Markdown from "react-markdown";
+import { useNavigate } from "react-router";
+
+
+// MUI
 import StarIcon from "@mui/icons-material/Star";
+import LockIcon from "@mui/icons-material/Lock";
 import ShareIcon from "@mui/icons-material/Share";
 import PeopleIcon from "@mui/icons-material/People";
-import LockIcon from "@mui/icons-material/Lock";
-import { useNavigate } from "react-router";
-import UserAvatar from "../../shared/UserAvatar";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
+import StarBorderIcon from "@mui/icons-material/StarBorder";
+import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
+import LaunchOutlinedIcon from "@mui/icons-material/LaunchOutlined";
+import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
+import {
+  Box,
+  Menu,
+  Card,
+  Stack,
+  Avatar,
+  Tooltip,
+  MenuItem,
+  useTheme,
+  IconButton,
+  Typography,
+  CardContent,
+  ListItemIcon,
+  ListItemText,
+} from "@mui/material";
+
+
+// Shared
 import UserGroup from "../../shared/UserGroup";
-import { user } from "../../sampleData/user";
 
 const markdown =
   "# Project Proposal\n\n*This document outlines the key objectives and timeline for our upcoming project initiative.*\n\n## Overview\nWe are proposing a comprehensive solution that will streamline our workflow and improve team collaboration.";
@@ -40,42 +45,48 @@ interface MiniDocProps {
 }
 
 const MiniDoc = ({
-  viewMode = "grid",
-  isRecent = false,
   isShared = false,
+  viewMode = "grid",
   isStarred = false,
 }: MiniDocProps) => {
   const navigate = useNavigate();
+
   const theme = useTheme();
+
   const [starred, setStarred] = useState(isStarred);
 
   // Mock data
   const docData = {
+    author: "John Doe",
+    isPrivate: !isShared,
     title: "Project Proposal",
     lastModified: "2 hours ago",
-    author: "John Doe",
     collaborators: ["Alice", "Bob", "Charlie"],
-    isPrivate: !isShared,
   };
 
   const calculateFontSize = (px: number) => {
     const a4Width = 210;
+
     const a4Height = 297;
+
     const a4Diagonal = Math.sqrt(a4Width ** 2 + a4Height ** 2);
+
     const a4FontSize = a4Diagonal / Math.sqrt(2);
+
     const fontSize = (px * a4FontSize) / a4Diagonal;
     return fontSize;
   };
 
   const baseSise = {
+    fontFamily: theme.typography.fontFamily,
     h1FontSize: calculateFontSize(20) + "px",
     h2FontSize: calculateFontSize(18) + "px",
     h3FontSize: calculateFontSize(16) + "px",
     body1FontSize: calculateFontSize(10) + "px",
-    fontFamily: theme.typography.fontFamily,
   };
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+
   const open = Boolean(anchorEl);
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -98,11 +109,11 @@ const MiniDoc = ({
       <Card
         sx={{
           width: "100%",
-          height: "fit-content",
           flexShrink: 0,
-          cursor: "pointer",
-          transition: "all 0.2s ease",
           borderRadius: 1,
+          cursor: "pointer",
+          height: "fit-content",
+          transition: "all 0.2s ease",
         }}
         onClick={() => navigate("/docs/editor/1")}
       >
@@ -116,11 +127,11 @@ const MiniDoc = ({
               sx={{
                 width: 100, // Increased width
                 height: 120, // Increased height
+                flexShrink: 0,
                 borderRadius: 1,
+                overflow: "hidden",
                 backgroundColor: theme.palette.common.white,
                 border: `1px solid ${theme.palette.divider}`,
-                overflow: "hidden",
-                flexShrink: 0,
               }}
             >
               <Box sx={{ p: 1, height: "100%", overflow: "hidden" }}>
@@ -128,28 +139,6 @@ const MiniDoc = ({
                 {/* Increased padding */}
                 <Markdown
                   components={{
-                    h1: ({ node, ...props }) => (
-                      <Typography
-                        fontSize="10px" // Increased font size
-                        lineHeight={1.3}
-                        margin={0}
-                        mb={0.5}
-                        color="text.primary"
-                        fontWeight={600}
-                        {...props}
-                      />
-                    ),
-                    h2: ({ node, ...props }) => (
-                      <Typography
-                        fontSize="9px" // Increased font size
-                        lineHeight={1.3}
-                        margin={0}
-                        mb={0.3}
-                        color="text.primary"
-                        fontWeight={500}
-                        {...props}
-                      />
-                    ),
                     p: ({ node, ...props }) => (
                       <Typography
                         fontSize="8px" // Increased font size
@@ -167,6 +156,28 @@ const MiniDoc = ({
                         margin={0}
                         color="text.primary"
                         component="i"
+                        {...props}
+                      />
+                    ),
+                    h2: ({ node, ...props }) => (
+                      <Typography
+                        fontSize="9px" // Increased font size
+                        lineHeight={1.3}
+                        margin={0}
+                        mb={0.3}
+                        color="text.primary"
+                        fontWeight={500}
+                        {...props}
+                      />
+                    ),
+                    h1: ({ node, ...props }) => (
+                      <Typography
+                        fontSize="10px" // Increased font size
+                        lineHeight={1.3}
+                        margin={0}
+                        mb={0.5}
+                        color="text.primary"
+                        fontWeight={600}
                         {...props}
                       />
                     ),
@@ -241,14 +252,14 @@ const MiniDoc = ({
       sx={{
         width: 250,
         borderRadius: 1,
-        aspectRatio: "210 / 297",
-        overflow: "hidden",
-        position: "relative",
         cursor: "pointer",
-        transition: "all 0.2s ease",
+        overflow: "hidden",
         // boxShadow: 1,
         border: "1px solid",
+        position: "relative",
         borderColor: "divider",
+        aspectRatio: "210 / 297",
+        transition: "all 0.2s ease",
       }}
       onClick={() => navigate("/docs/editor/1")}
     >
@@ -259,10 +270,10 @@ const MiniDoc = ({
           onClick={handleStarToggle}
           sx={{
             p: 0.5,
-            position: "absolute",
             top: 8,
             right: 8,
             zIndex: 2,
+            position: "absolute",
             backgroundColor: "transparent",
             "&:hover": {
               backgroundColor: "transparent",
@@ -270,7 +281,7 @@ const MiniDoc = ({
           }}
         >
           {starred ? (
-            <StarIcon sx={{ color: "warning.main", fontSize: 18 }} />
+            <StarIcon sx={{ fontSize: 18, color: "warning.main" }} />
           ) : (
             <StarBorderIcon sx={{ fontSize: 18 }} />
           )}
@@ -280,16 +291,38 @@ const MiniDoc = ({
       {/* Document Preview */}
       <Box
         sx={{
-          p: 1.5,
           width: "100%",
-          height: "calc(100% - 80px)",
+          p: 1.5,
           overflow: "hidden",
           position: "relative",
+          height: "calc(100% - 80px)",
           backgroundColor: theme.palette.common.white,
         }}
       >
         <Markdown
           components={{
+            p: ({ node, ...props }) => (
+              <Typography
+                lineHeight={1.4}
+                margin={0}
+                mb={0.4}
+                fontSize={baseSise.body1FontSize}
+                color={"#000"}
+                variant="body1"
+                {...props}
+              />
+            ),
+            em: ({ node, ...props }) => (
+              <Typography
+                lineHeight={1.4}
+                margin={0}
+                variant="body1"
+                color={"#000"}
+                component="i"
+                fontSize={baseSise.body1FontSize}
+                {...props}
+              />
+            ),
             h1: ({ node, ...props }) => (
               <Typography
                 lineHeight={1.3}
@@ -314,28 +347,6 @@ const MiniDoc = ({
                 {...props}
               />
             ),
-            p: ({ node, ...props }) => (
-              <Typography
-                lineHeight={1.4}
-                margin={0}
-                mb={0.4}
-                fontSize={baseSise.body1FontSize}
-                color={"#000"}
-                variant="body1"
-                {...props}
-              />
-            ),
-            em: ({ node, ...props }) => (
-              <Typography
-                lineHeight={1.4}
-                margin={0}
-                variant="body1"
-                color={"#000"}
-                component="i"
-                fontSize={baseSise.body1FontSize}
-                {...props}
-              />
-            ),
           }}
         >
           {markdown}
@@ -354,8 +365,8 @@ const MiniDoc = ({
         width={"100%"}
         bgcolor={`${theme?.palette?.background?.paper}`}
         sx={{
-          borderTop: `1px solid ${theme.palette.divider}`,
           minHeight: "80px",
+          borderTop: `1px solid ${theme.palette.divider}`,
         }}
       >
         <Stack gap={0.5} flex={1}>
@@ -399,8 +410,8 @@ const MiniDoc = ({
                       return {
                         id: user,
                         username: user,
-                        firstname: user,
                         lastname: user,
+                        firstname: user,
                       };
                     })}
                     size={22}
@@ -503,8 +514,8 @@ const MiniDoc = ({
           onClick={handleClose}
           sx={{
             "&:hover": {
-              backgroundColor: "error.main",
               color: "white",
+              backgroundColor: "error.main",
             },
           }}
         >

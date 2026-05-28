@@ -1,10 +1,14 @@
+// External
 import { faker } from "@faker-js/faker";
+
+
+// Parent, Sibling, Index
 import type { ReactionType } from "./post.enums";
-import {
-  generateReactionUserInterface,
-  type ReactionUserInterface,
-} from "./postUser.types";
 import { REACTIONS } from "../base/reaction.types";
+import {
+  type ReactionUserInterface,
+  generateReactionUserInterface,
+} from "./postUser.types";
 
 export interface ReactionData {
   has_reacted: boolean;
@@ -19,9 +23,14 @@ export interface ReactionData {
 export const generateReactionData = (): ReactionData => {
   return {
     has_reacted: faker.datatype.boolean(),
-    user_reaction_type: faker.helpers.arrayElement(REACTIONS),
+    has_more_reactions: faker.datatype.boolean(),
     user_reacted_at: faker.date.recent().toISOString(),
     total_count: faker.number.int({ min: 0, max: 100 }),
+    user_reaction_type: faker.helpers.arrayElement(REACTIONS),
+    recent_reactions: Array.from(
+      { length: faker.number.int({ min: 0, max: 10 }) },
+      generateReactionUserInterface
+    ),
     reaction_counts: REACTIONS.reduce(
       (acc, reaction) => ({
         ...acc,
@@ -29,10 +38,5 @@ export const generateReactionData = (): ReactionData => {
       }),
       {} as Record<ReactionType, number>
     ),
-    recent_reactions: Array.from(
-      { length: faker.number.int({ min: 0, max: 10 }) },
-      generateReactionUserInterface
-    ),
-    has_more_reactions: faker.datatype.boolean(),
   };
 };

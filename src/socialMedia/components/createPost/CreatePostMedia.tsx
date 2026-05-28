@@ -1,7 +1,11 @@
-/* eslint-disable operator-linebreak */
+ 
 /* eslint-disable react/no-array-index-key */
+// MUI
 import CloseIcon from "@mui/icons-material/Close";
 import { Box, Paper, IconButton } from "@mui/material";
+
+
+// Context
 import { useCreatePostContext } from "../../context/CreatePostContext";
 
 // PostMedia interface (with id included for this component)
@@ -64,7 +68,7 @@ const CreatePostMedia = () => {
   };
 
   return (
-    <Box sx={{ gap: 2, display: "flex", flexWrap: "wrap",flexGrow: 1 }}>
+    <Box sx={{ gap: 2, flexGrow: 1, display: "flex",flexWrap: "wrap" }}>
       {media &&
         media.map((item: Omit<PostMedia, "id">, index: number) => {
           const { format } = item.metadata;
@@ -154,15 +158,15 @@ const CreatePostMedia = () => {
                   {item.metadata.duration && (
                     <Box
                       sx={{
-                        position: "absolute",
-                        bottom: 4,
                         right: 4,
-                        backgroundColor: "rgba(0, 0, 0, 0.7)",
+                        bottom: 4,
                         color: "white",
-                        padding: "2px 6px",
                         borderRadius: 1,
-                        fontSize: "10px",
                         fontWeight: 500,
+                        fontSize: "10px",
+                        padding: "2px 6px",
+                        position: "absolute",
+                        backgroundColor: "rgba(0, 0, 0, 0.7)",
                       }}
                     >
                       {Math.floor(item.metadata.duration / 60)}:
@@ -179,32 +183,32 @@ const CreatePostMedia = () => {
                 <>
                   <Box
                     sx={{
-                      display: "flex",
-                      flexDirection: "column",
-                      alignItems: "center",
-                      justifyContent: "center",
                       padding: 1,
+                      display: "flex",
                       textAlign: "center",
+                      alignItems: "center",
+                      flexDirection: "column",
+                      justifyContent: "center",
                     }}
                   >
                     <Box
                       sx={{
-                        fontSize: "10px",
-                        fontWeight: 500,
-                        color: "text.secondary",
                         mb: 0.5,
+                        fontWeight: 500,
+                        fontSize: "10px",
+                        color: "text.secondary",
                       }}
                     >
                       {format}
                     </Box>
                     <Box
                       sx={{
-                        fontSize: "8px",
-                        color: "text.disabled",
-                        overflow: "hidden",
-                        textOverflow: "ellipsis",
-                        whiteSpace: "nowrap",
                         maxWidth: "80px",
+                        fontSize: "8px",
+                        overflow: "hidden",
+                        whiteSpace: "nowrap",
+                        color: "text.disabled",
+                        textOverflow: "ellipsis",
                       }}
                     >
                       {item.metadata.filename}

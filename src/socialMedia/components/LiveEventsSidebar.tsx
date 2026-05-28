@@ -1,4 +1,6 @@
-import { Stack, Box, Typography, Chip, Paper } from "@mui/material";
+// MUI
+import { Box, Chip, Stack, Paper, Typography } from "@mui/material";
+
 const LiveEventsSidebar = () => (
   <Paper
     sx={{
@@ -14,15 +16,15 @@ const LiveEventsSidebar = () => (
     <Stack spacing={2}>
       {[
         {
-          title: "Tech Conference 2024",
-          host: "TechCorp",
           viewers: 1234,
+          host: "TechCorp",
+          title: "Tech Conference 2024",
           thumbnail: "/images/tech-conference.png",
         },
         {
-          title: "Cooking with Chef Maria",
-          host: "Chef Maria",
           viewers: 567,
+          host: "Chef Maria",
+          title: "Cooking with Chef Maria",
           thumbnail: "/images/tech-conference.png",
         },
       ].map((event, index) => (
@@ -33,8 +35,8 @@ const LiveEventsSidebar = () => (
           spacing={2}
           justifyContent={"space-between"}
           sx={{
-            gap: 1,
             p: 1,
+            gap: 1,
             cursor: "pointer",
             "&:hover": {
               backgroundColor: "action.hover",
@@ -43,10 +45,10 @@ const LiveEventsSidebar = () => (
         >
           <Box
             sx={{
-              position: "relative",
               width: 40,
               height: 40,
               borderRadius: "50%",
+              position: "relative",
               // overflow: "hidden",
             }}
           >
@@ -63,13 +65,13 @@ const LiveEventsSidebar = () => (
               label="LIVE"
               size="small"
               sx={{
-                position: "absolute",
                 top: -2,
                 right: -10,
-                backgroundColor: "error.main",
+                height: 16,
                 color: "white",
                 fontSize: "8px",
-                height: 16,
+                position: "absolute",
+                backgroundColor: "error.main",
               }}
             />
           </Box>

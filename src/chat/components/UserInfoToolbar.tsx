@@ -1,14 +1,16 @@
+// MUI
 import { Stack, Typography } from "@mui/material";
-import UserAvatar from "../../shared/UserAvatar";
-import ButtonMenu from "../../shared/ButtonMenu";
-
-import MoreVertIcon from "@mui/icons-material/MoreVert";
-
 import BlockIcon from "@mui/icons-material/Block";
 import GroupIcon from "@mui/icons-material/Group";
 import DeleteIcon from "@mui/icons-material/Delete";
 import PersonIcon from "@mui/icons-material/Person";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
 import NotificationsOffIcon from "@mui/icons-material/NotificationsOff";
+
+
+// Shared
+import UserAvatar from "../../shared/UserAvatar";
+import ButtonMenu from "../../shared/ButtonMenu";
 
 const UserInfoToolbar = () => {
   return (

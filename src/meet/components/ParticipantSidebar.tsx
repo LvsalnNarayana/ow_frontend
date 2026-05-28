@@ -1,32 +1,42 @@
+// External
+import moment from "moment";
 import React, { useState } from "react";
+
+
+// MUI
 import {
   Box,
+  Menu,
+  Chip,
   Stack,
+  Paper,
+  Tooltip,
+  MenuItem,
   Typography,
   IconButton,
-  Paper,
-  Menu,
-  MenuItem,
   ListItemIcon,
   ListItemText,
-  Chip,
-  Tooltip,
 } from "@mui/material";
 import {
-  Close as CloseIcon,
-  MoreVert as MoreVertIcon,
   Mic as MicIcon,
-  MicOff as MicOffIcon,
-  Videocam as VideocamIcon,
-  VideocamOff as VideocamOffIcon,
+  Close as CloseIcon,
   PanTool as HandIcon,
-  PersonRemove as RemoveIcon,
+  MicOff as MicOffIcon,
   VolumeOff as MuteIcon,
+  MoreVert as MoreVertIcon,
+  Videocam as VideocamIcon,
+  PersonRemove as RemoveIcon,
+  VideocamOff as VideocamOffIcon,
   AdminPanelSettings as AdminIcon,
 } from "@mui/icons-material";
-import type { Participant } from "../../types/meet/meeting.types";
-import moment from "moment";
+
+
+// Shared
 import UserAvatar from "../../shared/UserAvatar";
+
+
+// Parent, Sibling, Index
+import type { Participant } from "../../types/meet/meeting.types";
 
 interface ParticipantsSidebarProps {
   participants: Participant[];
@@ -37,13 +47,14 @@ interface ParticipantsSidebarProps {
 }
 
 const ParticipantsSidebar: React.FC<ParticipantsSidebarProps> = ({
+  onClose,
   participants,
   currentUserId,
-  onClose,
   onMuteParticipant,
   onRemoveParticipant,
 }) => {
   const [menuAnchor, setMenuAnchor] = useState<null | HTMLElement>(null);
+
   const [selectedParticipant, setSelectedParticipant] =
     useState<Participant | null>(null);
 
@@ -76,6 +87,7 @@ const ParticipantsSidebar: React.FC<ParticipantsSidebarProps> = ({
   };
 
   const currentUser = participants.find((p) => p.id === currentUserId);
+
   const isCurrentUserHost = currentUser?.isHost || false;
 
   return (
@@ -107,9 +119,9 @@ const ParticipantsSidebar: React.FC<ParticipantsSidebarProps> = ({
       {/* Participants List */}
       <Box
         sx={{
+          p: 1,
           flexGrow: 1,
           overflowY: "auto",
-          p: 1,
         }}
       >
         <Stack spacing={1}>
@@ -119,10 +131,10 @@ const ParticipantsSidebar: React.FC<ParticipantsSidebarProps> = ({
               sx={{
                 p: 1,
                 borderRadius: 2,
+                transition: "background-color 0.2s",
                 "&:hover": {
                   backgroundColor: "action.hover",
                 },
-                transition: "background-color 0.2s",
               }}
             >
               <Stack direction="row" alignItems="center" spacing={2}>
@@ -133,33 +145,33 @@ const ParticipantsSidebar: React.FC<ParticipantsSidebarProps> = ({
                   {/* Connection status indicator */}
                   <Box
                     sx={{
-                      position: "absolute",
-                      bottom: -2,
-                      right: -2,
                       width: 12,
+                      right: -2,
+                      bottom: -2,
                       height: 12,
                       borderRadius: "50%",
+                      position: "absolute",
+                      border: "2px solid white",
                       backgroundColor:
                         participant.connectionStatus === "connected"
                           ? "success.main"
                           : participant.connectionStatus === "connecting"
                           ? "warning.main"
                           : "error.main",
-                      border: "2px solid white",
                     }}
                   />
                 </Box>
 
                 {/* Participant Info */}
-                <Box sx={{ flexGrow: 1, minWidth: 0 }}>
+                <Box sx={{ minWidth: 0, flexGrow: 1 }}>
                   <Stack direction="row" alignItems="center" spacing={1}>
                     <Typography
                       variant="body2"
                       fontWeight={600}
                       sx={{
                         overflow: "hidden",
-                        textOverflow: "ellipsis",
                         whiteSpace: "nowrap",
+                        textOverflow: "ellipsis",
                       }}
                     >
                       {participant.id === currentUserId
@@ -174,9 +186,9 @@ const ParticipantsSidebar: React.FC<ParticipantsSidebarProps> = ({
                         icon={<AdminIcon />}
                         sx={{
                           height: 20,
+                          color: "white",
                           fontSize: "0.7rem",
                           backgroundColor: "primary.main",
-                          color: "white",
                         }}
                       />
                     )}
@@ -191,7 +203,7 @@ const ParticipantsSidebar: React.FC<ParticipantsSidebarProps> = ({
                     {participant.isHandRaised && (
                       <Tooltip title="Hand raised">
                         <HandIcon
-                          sx={{ color: "warning.main", fontSize: 16 }}
+                          sx={{ fontSize: 16, color: "warning.main" }}
                         />
                       </Tooltip>
                     )}
@@ -199,10 +211,10 @@ const ParticipantsSidebar: React.FC<ParticipantsSidebarProps> = ({
                     <Tooltip title={participant.isMuted ? "Muted" : "Unmuted"}>
                       {participant.isMuted ? (
                         <MicOffIcon
-                          sx={{ color: "error.main", fontSize: 16 }}
+                          sx={{ fontSize: 16, color: "error.main" }}
                         />
                       ) : (
-                        <MicIcon sx={{ color: "success.main", fontSize: 16 }} />
+                        <MicIcon sx={{ fontSize: 16, color: "success.main" }} />
                       )}
                     </Tooltip>
 
@@ -211,11 +223,11 @@ const ParticipantsSidebar: React.FC<ParticipantsSidebarProps> = ({
                     >
                       {participant.isVideoOn ? (
                         <VideocamIcon
-                          sx={{ color: "success.main", fontSize: 16 }}
+                          sx={{ fontSize: 16, color: "success.main" }}
                         />
                       ) : (
                         <VideocamOffIcon
-                          sx={{ color: "text.secondary", fontSize: 16 }}
+                          sx={{ fontSize: 16, color: "text.secondary" }}
                         />
                       )}
                     </Tooltip>
@@ -226,9 +238,9 @@ const ParticipantsSidebar: React.FC<ParticipantsSidebarProps> = ({
                         size="small"
                         sx={{
                           height: 16,
+                          color: "white",
                           fontSize: "0.6rem",
                           backgroundColor: "primary.main",
-                          color: "white",
                         }}
                       />
                     )}

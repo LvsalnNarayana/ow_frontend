@@ -17,31 +17,31 @@ export type DayOfWeek =
 
 export const DAY_OF_WEEK_OPTIONS: { label: string; value: DayOfWeek }[] = [
   {
-    label: "Sunday",
     value: Sunday,
+    label: "Sunday",
   },
   {
-    label: "Monday",
     value: Monday,
+    label: "Monday",
   },
   {
-    label: "Tuesday",
     value: Tuesday,
+    label: "Tuesday",
   },
   {
-    label: "Wednesday",
     value: Wednesday,
+    label: "Wednesday",
   },
   {
-    label: "Thursday",
     value: Thursday,
+    label: "Thursday",
   },
   {
-    label: "Friday",
     value: Friday,
+    label: "Friday",
   },
   {
-    label: "Saturday",
     value: Saturday,
+    label: "Saturday",
   },
 ];

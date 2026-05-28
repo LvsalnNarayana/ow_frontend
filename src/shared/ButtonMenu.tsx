@@ -1,13 +1,17 @@
+// External
 import React, { useState, type JSX } from "react";
+
+
+// MUI
 import {
+  Menu,
   Button,
-  buttonClasses,
+  MenuItem,
+  useTheme,
   ListItemIcon,
   ListItemText,
-  Menu,
-  MenuItem,
+  buttonClasses,
   svgIconClasses,
-  useTheme,
 } from "@mui/material";
 
 interface MenuItemProps {
@@ -32,19 +36,23 @@ interface ButtonMenuProps {
     horizontal: "left" | "center" | "right";
   };
 }
+
 const ButtonMenu: React.ElementType<ButtonMenuProps> = (
   props: ButtonMenuProps
 ): JSX.Element => {
   const theme = useTheme();
+
   const [menuAnchorEl, setMenuAnchorEl] = useState<null | HTMLElement>(null);
 
   const menuOpen = Boolean(menuAnchorEl);
+
   const handleMenuOpen = (event: React.MouseEvent<HTMLButtonElement>) => {
     setMenuAnchorEl(event.currentTarget);
     if (props.onButtonClick) {
       props.onButtonClick();
     }
   };
+
   const handleMenuClose = () => {
     setMenuAnchorEl(null);
   };
@@ -55,17 +63,17 @@ const ButtonMenu: React.ElementType<ButtonMenuProps> = (
         onClick={handleMenuOpen}
         variant={props?.variant || "text"}
         sx={{
-          px: props?.type === "icon" ? 1 : 2,
-          py: 1,
           minWidth: "fit-content",
-          borderRadius: props?.type === "icon" ? "50%" : 1,
-          height: "100%",
+          py: 1,
           fontSize: 14,
+          height: "100%",
           color: theme.palette.text.primary,
-          [`& .${buttonClasses.startIcon} .${svgIconClasses.root}`]: {
+          px: props?.type === "icon" ? 1 : 2,
+          borderRadius: props?.type === "icon" ? "50%" : 1,
+          [`& .${buttonClasses.endIcon} .${svgIconClasses.root}`]: {
             fontSize: 16,
           },
-          [`& .${buttonClasses.endIcon} .${svgIconClasses.root}`]: {
+          [`& .${buttonClasses.startIcon} .${svgIconClasses.root}`]: {
             fontSize: 16,
           },
         }}
@@ -78,8 +86,8 @@ const ButtonMenu: React.ElementType<ButtonMenuProps> = (
         PaperProps={{
           sx: {
             marginTop: 0.5,
-            border: `1px solid ${theme.palette.divider}`,
             boxShadow: theme.shadows[1],
+            border: `1px solid ${theme.palette.divider}`,
           },
         }}
         onClose={handleMenuClose}

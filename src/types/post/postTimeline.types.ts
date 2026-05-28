@@ -1,3 +1,4 @@
+// Parent, Sibling, Index
 import type { PostUserInterface } from "./postUser.types";
 
 export interface TimelineTarget {
@@ -12,16 +13,11 @@ export interface TimelineTarget {
     custom_visibility?: string[];
   };
 }
-const EVERYONE = "everyone" as const;
-const FRIENDS = "friends" as const;
-const FRIENDS_OF_FRIENDS = "friends_of_friends" as const;
-const NOBODY = "nobody" as const;
-
 type WallPostPermission =
-  | typeof EVERYONE
-  | typeof FRIENDS
-  | typeof FRIENDS_OF_FRIENDS
-  | typeof NOBODY;
+  | "everyone"
+  | "friends"
+  | "friends_of_friends"
+  | "nobody";
 
 export interface WallPostSettings {
   allow_wall_posts: boolean;

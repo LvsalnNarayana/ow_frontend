@@ -1,6 +1,13 @@
-import { Divider, Stack, Typography } from "@mui/material";
-import FriendCard from "../../friends/components/FriendCard";
+// MUI
+import { Stack, Divider, Typography } from "@mui/material";
+
+
+// Shared
 import TextInput from "../../shared/inputs/TextInput";
+
+
+// Parent, Sibling, Index
+import FriendCard from "../../friends/components/FriendCard";
 
 const FriendsDashboard = () => {
   return (
@@ -15,7 +22,7 @@ const FriendsDashboard = () => {
           Friends
         </Typography>
       </Stack>
-      <Divider sx={{ mt: 0.5, mb: 2 }} />
+      <Divider sx={{ mb: 2, mt: 0.5 }} />
       <TextInput
         placeholder="Search"
         value=""

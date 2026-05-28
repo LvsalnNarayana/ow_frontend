@@ -1,6 +1,7 @@
-import { IconButton, Stack, Typography, useTheme } from "@mui/material";
+// MUI
 import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
 import RemoveOutlinedIcon from "@mui/icons-material/RemoveOutlined";
+import { Stack, useTheme, IconButton, Typography } from "@mui/material";
 
 const FontSizer = () => {
   const theme = useTheme();
@@ -30,10 +31,10 @@ const FontSizer = () => {
       <Typography
         fontSize={15}
         sx={{
-          py: 0.4,
           px: 1,
-          border: `1px solid ${theme.palette.divider}`,
+          py: 0.4,
           borderRadius: 1,
+          border: `1px solid ${theme.palette.divider}`,
         }}
       >
         15

@@ -1,6 +1,10 @@
+// External
 import { faker } from "@faker-js/faker";
-import { generateBaseEntity, type BaseEntity } from "../base/base.types";
-import { generateStoryUserInterface, type StoryUserInterface } from "./storyUser.types";
+
+
+// Parent, Sibling, Index
+import { type BaseEntity, generateBaseEntity } from "../base/base.types";
+import { type StoryUserInterface, generateStoryUserInterface } from "./storyUser.types";
 
 export interface Story extends BaseEntity {
   user: StoryUserInterface;
@@ -14,11 +18,11 @@ export interface Story extends BaseEntity {
 export const generateStory = (): Story => {
   return {
     ...generateBaseEntity(),
-    user: generateStoryUserInterface(),
-    mediaUrl: faker.image.url(),
     mediaType: "image",
+    mediaUrl: faker.image.url(),
     timestamp: faker.date.recent(),
-    duration: faker.number.int({ min: 5, max: 30 }),
+    user: generateStoryUserInterface(),
     isViewed: faker.datatype.boolean(),
+    duration: faker.number.int({ min: 5, max: 30 }),
   };
 };

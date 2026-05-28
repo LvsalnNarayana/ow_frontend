@@ -1,6 +1,9 @@
-/* eslint-disable max-lines */
+ 
+// External
 import { useMemo } from "react";
 
+
+// MUI
 import SearchIcon from "@mui/icons-material/Search";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import {
@@ -163,8 +166,8 @@ const CreatePostLocation = () => {
       justifyContent="flex-start"
       alignItems="flex-start"
       sx={{
-        p: 2,
         width: "100%",
+        p: 2,
       }}
     >
       <TextField
@@ -224,8 +227,8 @@ const CreatePostLocation = () => {
         justifyContent="flex-start"
         alignItems="flex-start"
         sx={{
-          my: 2,
           width: "100%",
+          my: 2,
           height: "30vh",
           minHeight: "30vh",
           maxHeight: "50vh",
@@ -240,9 +243,9 @@ const CreatePostLocation = () => {
               variant="body1"
               onClick={() => {}}
               sx={{
+                width: "100%",
                 p: 1,
                 flexShrink: 0,
-                width: "100%",
                 borderRadius: 2,
                 fontSize: "14px",
                 "&:hover": {

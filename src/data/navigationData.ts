@@ -1,15 +1,15 @@
 const navigationData = [
   {
-    name: "Docs",
     id: "docs",
+    name: "Docs",
     href: "docs",
     icon: "documents.png",
-    pageTitle: "One World | Docs",
     pageDescription: "Docs page",
+    pageTitle: "One World | Docs",
     children: [
       {
-        name: "List",
         href: "",
+        name: "List",
         componentName: "DocList",
       },
       {
@@ -20,16 +20,16 @@ const navigationData = [
     ],
   },
   {
-    name: "Flow",
     id: "flow",
+    name: "Flow",
     href: "flow",
     icon: "flow.png",
-    pageTitle: "One World | Flow",
     pageDescription: "Flow page",
+    pageTitle: "One World | Flow",
     children: [
       {
-        name: "FlowDashboard",
         href: "",
+        name: "FlowDashboard",
         componentName: "FlowDashboard",
       },
       {
@@ -40,27 +40,27 @@ const navigationData = [
     ],
   },
   {
-    name: "Calendar",
     id: "calendar",
+    name: "Calendar",
     href: "calendar",
     icon: "calendar.png",
-    pageTitle: "One World | Calendar",
     pageDescription: "Calendar page",
+    pageTitle: "One World | Calendar",
     children: [
       {
-        name: "CalendarDashboard",
         href: "",
+        name: "CalendarDashboard",
         componentName: "CalendarDashboard",
       },
       {
         name: "Day",
-        href: "day/:year/:month/:day",
         componentName: "Day",
+        href: "day/:year/:month/:day",
       },
       {
         name: "Month",
-        href: "month/:year/:month",
         componentName: "Month",
+        href: "month/:year/:month",
       },
       {
         name: "Year",
@@ -69,8 +69,8 @@ const navigationData = [
       },
       {
         name: "Week",
-        href: "week/:year/:week",
         componentName: "Week",
+        href: "week/:year/:week",
       },
       {
         name: "Event",
@@ -78,23 +78,23 @@ const navigationData = [
         componentName: "EventPage",
       },
       {
-        name: "CalendarSettings",
         href: "settings",
+        name: "CalendarSettings",
         componentName: "CalendarSettings",
       }
     ],
   },
   {
-    name: "Feed",
     id: "feed",
+    name: "Feed",
     href: "feed",
     icon: "post.png",
-    pageTitle: "One World | Feed",
     pageDescription: "Feed page",
+    pageTitle: "One World | Feed",
     children: [
       {
-        name: "FeedDashboard",
         href: "",
+        name: "FeedDashboard",
         componentName: "FeedDashboard",
       },
       {
@@ -105,24 +105,24 @@ const navigationData = [
     ],
   },
   {
-    name: "Tools",
     id: "tools",
+    name: "Tools",
     href: "tools",
     icon: "tools.png",
-    pageTitle: "One World | Tools",
     pageDescription: "Tools page",
+    pageTitle: "One World | Tools",
   },
   {
-    name: "Meet",
     id: "meet",
+    name: "Meet",
     href: "meet",
     icon: "videocall.png",
-    pageTitle: "One World | Meet",
     pageDescription: "Meet page",
+    pageTitle: "One World | Meet",
     children: [
       {
-        name: "Dashboard",
         href: "",
+        name: "Dashboard",
         componentName: "MeetDashboard",
       },
       {
@@ -133,16 +133,16 @@ const navigationData = [
     ],
   },
   {
-    name: "Friends",
     id: "friends",
+    name: "Friends",
     href: "friends",
     icon: "friends.png",
-    pageTitle: "One World | Friends",
     pageDescription: "Friends page",
+    pageTitle: "One World | Friends",
     children: [
       {
-        name: "FriendsDashboard",
         href: "",
+        name: "FriendsDashboard",
         componentName: "FriendsDashboard",
       },
       // {
@@ -153,16 +153,16 @@ const navigationData = [
     ],
   },
   {
-    name: "Maps",
     id: "maps",
+    name: "Maps",
     href: "maps",
     icon: "map.png",
-    pageTitle: "One World | Maps",
     pageDescription: "Maps page",
+    pageTitle: "One World | Maps",
     children: [
       {
-        name: "MapsDashboard",
         href: "",
+        name: "MapsDashboard",
         componentName: "MapsDashboard",
       },
       {
@@ -173,11 +173,11 @@ const navigationData = [
     ],
   },
   {
-    name: "Profile",
     id: "profile",
+    name: "Profile",
     href: "profile",
-    pageTitle: "One World | Profile",
     pageDescription: "Profile page",
+    pageTitle: "One World | Profile",
     children: [
       {
         name: "Profile",
@@ -187,12 +187,12 @@ const navigationData = [
     ],
   },
   {
-    name: "Chat",
     id: "chat",
+    name: "Chat",
     href: "chat/",
     icon: "message.png",
-    pageTitle: "One World | Chat",
     pageDescription: "Chat page",
+    pageTitle: "One World | Chat",
     children: [
       {
         name: "ChatRoom",
@@ -202,12 +202,12 @@ const navigationData = [
     ],
   },
   {
-    name: "Settings",
     id: "settings",
+    name: "Settings",
     href: "settings",
     icon: "settings.png",
-    pageTitle: "One World | Settings",
     pageDescription: "Settings page",
+    pageTitle: "One World | Settings",
   },
 ];
 

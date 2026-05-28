@@ -1,15 +1,22 @@
+// External
+import { useRoutes } from "react-router";
 // src/App.tsx
 import {
-  Suspense,
   lazy,
+  Suspense,
   type ComponentType,
   type LazyExoticComponent,
 } from "react";
-import { useRoutes } from "react-router";
-import MainLayout from "./layout/MainLayout";
-import navigationData, { type NavigationDataType } from "./data/navigationData";
+
+
+// Shared
 import PageLoader from "./shared/PageLoader";
 import ComponentLoader from "./shared/ComponentLoader";
+
+
+// Parent, Sibling, Index
+import MainLayout from "./layout/MainLayout";
+import navigationData, { type NavigationDataType } from "./data/navigationData";
 
 // 1. Build a record of `id → React.LazyExoticComponent` before exporting App.
 //    That way, the `lazy(...)` call happens exactly once per module, not on every render.
@@ -61,6 +68,7 @@ export const childComponents: Record<string, RouteComponentMap> =
 function App() {
   const routesConfig = navigationData.map((menu) => {
     const TopPage = routeComponents[menu.id];
+
     const children = (menu.children || []).map((child) => {
       const ChildPage = childComponents[menu.id][child.componentName];
       return {
@@ -75,6 +83,7 @@ function App() {
     });
 
     return {
+      children,
       path: `/${menu.href}`,
       element: (
         <Suspense fallback={<ComponentLoader />}>
@@ -83,9 +92,9 @@ function App() {
           {/* </Await> */}
         </Suspense>
       ),
-      children,
     };
   });
+
   const element = useRoutes([
     {
       element: <MainLayout />,

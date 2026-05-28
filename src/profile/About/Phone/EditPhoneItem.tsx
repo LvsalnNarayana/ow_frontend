@@ -1,33 +1,42 @@
+// External
 import { useState } from "react";
-import {
-  Stack,
-  Button,
-  Box,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
-  IconButton,
-  Typography,
-  Alert,
-  Chip,
-  Autocomplete,
-  TextField,
-  Divider,
-} from "@mui/material";
-import {
-  Close as CloseIcon,
-  VerifiedUser as VerifiedIcon,
-  Phone as PhoneIcon,
-  Send as SendIcon,
-} from "@mui/icons-material";
 import { MuiOtpInput } from "mui-one-time-password-input";
 
-import ChangeAudience from "../../../shared/ChangeAudience";
+
+// MUI
+import {
+  Send as SendIcon,
+  Close as CloseIcon,
+  Phone as PhoneIcon,
+  VerifiedUser as VerifiedIcon,
+} from "@mui/icons-material";
+import {
+  Box,
+  Chip,
+  Stack,
+  Alert,
+  Button,
+  Dialog,
+  Divider,
+  TextField,
+  IconButton,
+  Typography,
+  DialogTitle,
+  Autocomplete,
+  DialogContent,
+  DialogActions,
+} from "@mui/material";
+
+
+// Shared
 import TextInput from "../../../shared/inputs/TextInput";
-import type { Phone } from "../../../types/user/user.types";
-import { countries, type Country } from "../../../data/countries";
+import ChangeAudience from "../../../shared/ChangeAudience";
+
+
+// Parent, Sibling, Index
 import { theme } from "../../../theme";
+import type { Phone } from "../../../types/user/userData.types";
+import { countries, type Country } from "../../../data/countries";
 
 interface EditPhoneItemProps {
   phoneItem?: Phone;
@@ -40,13 +49,13 @@ interface EditPhoneItemProps {
 }
 
 const EditPhoneItem = ({
-  phoneItem,
   type,
   onSave,
   onCancel,
   onVerify,
-  onSendVerification,
+  phoneItem,
   loading = false,
+  onSendVerification,
 }: EditPhoneItemProps) => {
   const [newPhoneItem, setNewPhoneItem] = useState<
     Omit<Phone, "id" | "createdAt" | "updatedAt">
@@ -67,9 +76,13 @@ const EditPhoneItem = ({
 
   // Verification modal state
   const [verificationModal, setVerificationModal] = useState(true);
+
   const [otp, setOtp] = useState("");
+
   const [verificationLoading, setVerificationLoading] = useState(false);
-  const [verificationSent, setVerificationSent] = useState(false);
+
+  const [, setVerificationSent] = useState(false);
+
   const [verificationError, setVerificationError] = useState("");
 
   // Phone validation
@@ -120,8 +133,9 @@ const EditPhoneItem = ({
       }
     }
   };
+
   const getFullPhoneNumber = (): string => {
-    const { countryCode, phone } = newPhoneItem;
+    const { phone, countryCode } = newPhoneItem;
     if (countryCode && phone) {
       return `${countryCode} - ${phone}`;
     }
@@ -183,6 +197,7 @@ const EditPhoneItem = ({
 
     try {
       const fullPhone = getFullPhoneNumber();
+
       const success = await onSendVerification?.(fullPhone);
       if (success) {
         setVerificationSent(true);
@@ -208,6 +223,7 @@ const EditPhoneItem = ({
 
     try {
       const fullPhone = getFullPhoneNumber();
+
       const success = await onVerify?.(fullPhone, otp);
       if (success) {
         setNewPhoneItem((prev) => ({
@@ -412,7 +428,7 @@ const EditPhoneItem = ({
           <Stack
             direction="row"
             spacing={2}
-            sx={{ width: "100%", justifyContent: "flex-end", mt: 2 }}
+            sx={{ width: "100%", mt: 2, justifyContent: "flex-end" }}
           >
             <Button
               variant="outlined"

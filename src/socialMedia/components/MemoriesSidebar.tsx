@@ -1,4 +1,5 @@
-import { Stack, Box, Typography, Paper } from "@mui/material";
+// MUI
+import { Box, Stack, Paper, Typography } from "@mui/material";
 
 const MemoriesSidebar = () => (
   <Paper
@@ -13,12 +14,12 @@ const MemoriesSidebar = () => (
     </Typography>
     <Box
       sx={{
-        display: "flex",
-        alignItems: "center",
-        gap: 1,
         p: 1,
+        gap: 1,
+        display: "flex",
         borderRadius: 1,
         cursor: "pointer",
+        alignItems: "center",
         "&:hover": {
           backgroundColor: "action.hover",
         },

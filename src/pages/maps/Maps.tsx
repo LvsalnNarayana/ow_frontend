@@ -1,4 +1,5 @@
-import React from 'react'
+
+// External
 import { Outlet } from 'react-router'
 
 const Maps = () => {

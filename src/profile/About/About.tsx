@@ -1,36 +1,46 @@
-/* eslint-disable max-lines */
-/* eslint-disable operator-linebreak */
+ 
+ 
+// External
 import { useState } from "react";
 
+
+// MUI
 import MaleIcon from "@mui/icons-material/Male";
 import FemaleIcon from "@mui/icons-material/Female";
+import { Stack, Divider, Typography } from "@mui/material";
 import WorkOutlineIcon from "@mui/icons-material/WorkOutline";
 import CakeOutlinedIcon from "@mui/icons-material/CakeOutlined";
 import ControlPointIcon from "@mui/icons-material/ControlPoint";
-import { Stack, Button, Divider, Typography } from "@mui/material";
 import SchoolOutlinedIcon from "@mui/icons-material/SchoolOutlined";
 import CottageOutlinedIcon from "@mui/icons-material/CottageOutlined";
 import LocalPhoneOutlinedIcon from "@mui/icons-material/LocalPhoneOutlined";
 import MailOutlineOutlinedIcon from "@mui/icons-material/MailOutlineOutlined";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 
+
+// Parent, Sibling, Index
 import AboutItem from "./AboutItem";
+import { user } from "../../sampleData/user";
 import EditEmailItem from "./Email/EditEmailItem";
 import EditPhoneItem from "./Phone/EditPhoneItem";
 import EditPlacesItem from "./Places/EditPlacesItem";
+import type { Work } from "../../types/user/work.types";
 import EditWorkplaceItem from "./Work/EditWorkplaceItem";
 import EditEducationItem from "./School/EditEducationItem";
-import { user } from "../../sampleData/user";
-import type { Email, Phone } from "../../types/user/user.types";
-import type { Work } from "../../types/user/work.types";
+import type { UserPlace } from "../../types/place/place.types";
 import type { Education } from "../../types/user/education.types";
-import type { Place } from "../../types/place/place.types";
+import { generateUserPlace } from "../../types/place/place.types";
+import type { Email, Phone } from "../../types/user/userData.types";
 
 const About = () => {
   const [addEducationOpen, setAddEducationOpen] = useState(false);
+
   const [addWorkOpen, setAddWorkOpen] = useState(false);
+
   const [addPlaceOpen, setAddPlaceOpen] = useState(false);
+
   const [addEmailOpen, setAddEmailOpen] = useState(false);
+
   const [addPhoneOpen, setAddPhoneOpen] = useState(false);
 
   return (
@@ -79,10 +89,10 @@ const About = () => {
               }}
               sx={{
                 gap: 1,
-                color: "dodgerblue",
                 display: "flex",
                 fontSize: "14px",
                 cursor: "pointer",
+                color: "dodgerblue",
                 alignItems: "center",
               }}
             >
@@ -93,11 +103,13 @@ const About = () => {
           <Divider sx={{ width: "100%" }} />
         </Stack>
         {addPlaceOpen && (
-          <>
-            <EditPlacesItem />
-          </>
+          <EditPlacesItem
+            type="add"
+            userPlaceItem={generateUserPlace()}
+            onCancel={() => setAddPlaceOpen(false)}
+          />
         )}
-        {user?.places?.map((placeItem: Place) => {
+        {user?.places?.map((placeItem: UserPlace) => {
           return (
             <AboutItem
               key={placeItem?.id}
@@ -123,10 +135,10 @@ const About = () => {
               }}
               sx={{
                 gap: 1,
-                color: "dodgerblue",
                 display: "flex",
                 fontSize: "14px",
                 cursor: "pointer",
+                color: "dodgerblue",
                 alignItems: "center",
               }}
             >
@@ -137,9 +149,10 @@ const About = () => {
           <Divider sx={{ width: "100%" }} />
         </Stack>
         {addEmailOpen && (
-          <>
-            <EditEmailItem type="email" />
-          </>
+          <EditEmailItem
+            type="add"
+            onCancel={() => setAddEmailOpen(false)}
+          />
         )}
         {user?.email?.map((emailItem: Email) => {
           return (
@@ -167,10 +180,10 @@ const About = () => {
               }}
               sx={{
                 gap: 1,
-                color: "dodgerblue",
                 display: "flex",
                 fontSize: "14px",
                 cursor: "pointer",
+                color: "dodgerblue",
                 alignItems: "center",
               }}
             >
@@ -181,9 +194,10 @@ const About = () => {
           <Divider sx={{ width: "100%" }} />
         </Stack>
         {addPhoneOpen && (
-          <>
-            <EditPhoneItem />
-          </>
+          <EditPhoneItem
+            type="add"
+            onCancel={() => setAddPhoneOpen(false)}
+          />
         )}
         {user?.phone?.map((phoneItem: Phone) => {
           return (
@@ -211,10 +225,10 @@ const About = () => {
               }}
               sx={{
                 gap: 1,
-                color: "dodgerblue",
                 display: "flex",
                 fontSize: "14px",
                 cursor: "pointer",
+                color: "dodgerblue",
                 alignItems: "center",
               }}
             >
@@ -255,10 +269,10 @@ const About = () => {
               }}
               sx={{
                 gap: 1,
-                color: "dodgerblue",
                 display: "flex",
                 fontSize: "14px",
                 cursor: "pointer",
+                color: "dodgerblue",
                 alignItems: "center",
               }}
             >

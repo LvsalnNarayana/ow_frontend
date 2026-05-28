@@ -1,15 +1,25 @@
+// External
+import moment from "moment";
+import { useState } from "react";
+
+
+// MUI
+import { Today, ChevronLeft, ChevronRight } from "@mui/icons-material";
 import {
   Box,
-  Typography,
-  IconButton,
+  Stack,
   Button,
   useTheme,
-  Stack,
+  Typography,
+  IconButton,
 } from "@mui/material";
-import { ChevronLeft, ChevronRight, Today } from "@mui/icons-material";
-import moment from "moment";
+
+
+// Shared
 import SelectInput from "../../shared/inputs/SelectInput";
-import { useState } from "react";
+
+
+// Parent, Sibling, Index
 import { CALENDAR_VIEW_TYPE_OPTIONS } from "../../types/calendar/calendarViewType.types";
 
 const MonthCalendarHeader = () => {
@@ -32,6 +42,7 @@ const DayCalendarHeader = ({
   handleTodayClick: () => void;
 }) => {
   const theme = useTheme();
+
   const [calendarType, setCalendarType] = useState("day");
   return (
     <Stack
@@ -42,9 +53,9 @@ const DayCalendarHeader = ({
       sx={{
         p: 2,
         pr: 6,
-        borderBottom: `1px solid ${theme.palette.divider}`,
-        backgroundColor: theme.palette.background.paper,
         flexShrink: 0, // Prevent header from shrinking
+        backgroundColor: theme.palette.background.paper,
+        borderBottom: `1px solid ${theme.palette.divider}`,
       }}
     >
       <Box display="flex" alignItems="center" gap={2}>
@@ -110,9 +121,9 @@ const CalendarHeader = ({
   };
 }) => {
   return {
-    day: <DayCalendarHeader {...dayProps} />,
     week: <WeekCalendarHeader />,
     month: <MonthCalendarHeader />,
+    day: <DayCalendarHeader {...dayProps} />,
   }[type];
 };
 

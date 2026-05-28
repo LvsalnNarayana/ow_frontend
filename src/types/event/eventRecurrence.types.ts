@@ -1,11 +1,15 @@
+// External
 import { faker } from "@faker-js/faker";
+
+
+// Parent, Sibling, Index
+import { type BaseEntity, generateBaseEntity } from "../base/base.types";
 import {
-  type DayOfWeek,
-  DAY_OF_WEEK_OPTIONS,
   Monday,
   Sunday,
+  type DayOfWeek,
+  DAY_OF_WEEK_OPTIONS,
 } from "../base/dayOfWeek.types";
-import { generateBaseEntity, type BaseEntity } from "../base/base.types";
 
 const Daily = "DAILY" as const;
 const Weekly = "WEEKLY" as const;
@@ -37,24 +41,24 @@ export interface Recurrence extends BaseEntity {
 
 export const RECURRENCE_FREQUENCY_OPTIONS = [
   {
-    label: "Daily",
     value: Daily,
+    label: "Daily",
   },
   {
-    label: "Weekly",
     value: Weekly,
+    label: "Weekly",
   },
   {
-    label: "Monthly",
     value: Monthly,
+    label: "Monthly",
   },
   {
-    label: "Yearly",
     value: Yearly,
+    label: "Yearly",
   },
   {
-    label: "Custom",
     value: Custom,
+    label: "Custom",
   },
 ];
 
@@ -195,16 +199,16 @@ export const generateRecurrency = (): Recurrence => {
 
   return {
     ...generateBaseEntity(),
-    frequency,
-    interval,
-    endType,
     until,
+    endType,
     endDate,
-    daysOfMonth,
-    daysOfWeek,
-    occurrenceCount,
-    exceptions,
+    interval,
     bySetPos,
+    frequency,
+    daysOfWeek,
+    exceptions,
+    daysOfMonth,
+    occurrenceCount,
     weekStart: faker.helpers.arrayElement([Sunday, Monday]),
   };
 };
@@ -218,16 +222,16 @@ export const generateDailyRecurrence = (days: number = 30): Recurrence => {
 
   return {
     ...generateBaseEntity(),
-    frequency: Daily,
     interval: 1,
     endType: "on",
+    daysOfWeek: [],
+    exceptions: [],
+    daysOfMonth: [],
+    frequency: Daily,
+    weekStart: Monday,
+    occurrenceCount: 0,
     until: endDate.toISOString(),
     endDate: endDate.toISOString(),
-    daysOfMonth: [],
-    daysOfWeek: [],
-    occurrenceCount: 0,
-    exceptions: [],
-    weekStart: Monday,
   };
 };
 
@@ -241,16 +245,16 @@ export const generateWeeklyRecurrence = (
 
   return {
     ...generateBaseEntity(),
-    frequency: Weekly,
+    daysOfWeek,
     interval: 1,
     endType: "on",
+    exceptions: [],
+    daysOfMonth: [],
+    frequency: Weekly,
+    weekStart: Monday,
+    occurrenceCount: 0,
     until: endDate.toISOString(),
     endDate: endDate.toISOString(),
-    daysOfMonth: [],
-    daysOfWeek,
-    occurrenceCount: 0,
-    exceptions: [],
-    weekStart: Monday,
   };
 };
 
@@ -264,16 +268,16 @@ export const generateMonthlyRecurrence = (
 
   return {
     ...generateBaseEntity(),
-    frequency: Monthly,
     interval: 1,
     endType: "on",
-    until: endDate.toISOString(),
-    endDate: endDate.toISOString(),
-    daysOfMonth: [dayOfMonth],
     daysOfWeek: [],
-    occurrenceCount: 0,
     exceptions: [],
     weekStart: Monday,
+    frequency: Monthly,
+    occurrenceCount: 0,
+    daysOfMonth: [dayOfMonth],
+    until: endDate.toISOString(),
+    endDate: endDate.toISOString(),
   };
 };
 
@@ -284,16 +288,16 @@ export const generateYearlyRecurrence = (years: number = 5): Recurrence => {
 
   return {
     ...generateBaseEntity(),
-    frequency: Yearly,
     interval: 1,
     endType: "on",
+    daysOfWeek: [],
+    exceptions: [],
+    daysOfMonth: [],
+    frequency: Yearly,
+    weekStart: Monday,
+    occurrenceCount: 0,
     until: endDate.toISOString(),
     endDate: endDate.toISOString(),
-    daysOfMonth: [],
-    daysOfWeek: [],
-    occurrenceCount: 0,
-    exceptions: [],
-    weekStart: Monday,
   };
 };
 
@@ -328,9 +332,12 @@ export const generateRecurrenceWithCount = (
     ...generateBaseEntity(),
     frequency,
     interval: 1,
-    endType: "after",
-    until: endDate.toISOString(),
     endDate: null,
+    exceptions: [],
+    endType: "after",
+    weekStart: Monday,
+    occurrenceCount: count,
+    until: endDate.toISOString(),
     daysOfMonth:
       frequency === Monthly ? [faker.number.int({ min: 1, max: 28 })] : [],
     daysOfWeek:
@@ -346,9 +353,6 @@ export const generateRecurrenceWithCount = (
             2
           )
         : [],
-    occurrenceCount: count,
-    exceptions: [],
-    weekStart: Monday,
   };
 };
 
@@ -363,14 +367,14 @@ export const generateNeverEndingRecurrence = (
     ...generateBaseEntity(),
     frequency,
     interval: 1,
-    endType: "never",
-    until: farFuture.toISOString(),
     endDate: null,
+    exceptions: [],
+    endType: "never",
+    weekStart: Monday,
+    occurrenceCount: 0,
+    until: farFuture.toISOString(),
     daysOfMonth: frequency === Monthly ? [1, 15] : [],
     daysOfWeek: frequency === Weekly ? ["MONDAY", "WEDNESDAY", "FRIDAY"] : [],
-    occurrenceCount: 0,
-    exceptions: [],
-    weekStart: Monday,
   };
 };
 

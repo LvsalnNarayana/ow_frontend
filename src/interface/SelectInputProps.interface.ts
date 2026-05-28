@@ -1,4 +1,5 @@
 // import type { SelectChangeEvent } from "@mui/material";
+// External
 import type { JSX } from "react";
 
 export interface SelectInputProps {

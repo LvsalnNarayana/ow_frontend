@@ -1,11 +1,18 @@
-import React, { useEffect, useRef, useState } from "react";
-import { Stack, Box, Typography, Paper } from "@mui/material";
+// External
+import moment, { type Moment } from "moment";
+import React, { useRef, useState, useEffect } from "react";
+
+
+// MUI
+import { type PickersDayProps } from "@mui/x-date-pickers";
+import { PickersDay } from "@mui/x-date-pickers/PickersDay";
+import { Box, Stack, Paper, Typography } from "@mui/material";
 import { YearCalendar } from "@mui/x-date-pickers/YearCalendar";
 import { DateCalendar } from "@mui/x-date-pickers/DateCalendar";
-import { PickersDay } from "@mui/x-date-pickers/PickersDay";
-import moment, { type Moment } from "moment";
-import { type PickersDayProps } from "@mui/x-date-pickers";
-import { generateMonthlyRecurrence, generateRecurrency } from "../../types/event/eventRecurrence.types";
+
+
+// Parent, Sibling, Index
+import { generateRecurrency, generateMonthlyRecurrence } from "../../types/event/eventRecurrence.types";
 
 interface YearLayoutProps {
   children?: React.ReactNode;
@@ -23,17 +30,20 @@ interface YearLayoutProps {
 }
 
 const YearLayout: React.FC<YearLayoutProps> = ({
-  children,
-  selectedDate = new Date(),
-  onDateSelect = () => {},
-  onYearSelect = () => {},
-  events = [],
   minDate,
   maxDate,
+  children,
+  events = [],
+  onDateSelect = () => {},
+  onYearSelect = () => {},
+  selectedDate = new Date(),
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
+
   const currentYearRef = useRef<HTMLDivElement>(null);
+
   const [currentYear, setCurrentYear] = useState<Moment>(moment(selectedDate));
+
   const [selectedMonth, setSelectedMonth] = useState<Moment | null>(null);
 
   console.log(generateRecurrency());
@@ -42,8 +52,8 @@ const YearLayout: React.FC<YearLayoutProps> = ({
   useEffect(() => {
     if (currentYearRef.current) {
       currentYearRef.current.scrollIntoView({
-        behavior: "smooth",
         block: "center",
+        behavior: "smooth",
       });
     }
   }, [selectedDate]);
@@ -86,10 +96,14 @@ const YearLayout: React.FC<YearLayoutProps> = ({
 
   // Custom Day Component for mini calendars
   const CustomDay = (props: PickersDayProps) => {
-    const { day, outsideCurrentMonth, ...other } = props;
+    const { outsideCurrentMonth, day, ...other } = props;
+
     const hasEventIndicator = hasEvents(day);
+
     const eventColor = getEventColor(day);
+
     const isToday = day.isSame(moment(), "day");
+
     const isSelected = selectedDate && day.isSame(moment(selectedDate), "day");
 
     return (
@@ -100,21 +114,21 @@ const YearLayout: React.FC<YearLayoutProps> = ({
           outsideCurrentMonth={outsideCurrentMonth}
           onClick={() => handleDateSelect(day)}
           sx={{
-            fontSize: "12px",
             width: "28px",
             height: "28px",
+            fontSize: "12px",
             fontWeight: isSelected || isToday ? "bold" : "normal",
             "&.Mui-selected": {
-              backgroundColor: "#4caf50",
               color: "white",
+              backgroundColor: "#4caf50",
               "&:hover": {
                 backgroundColor: "#388e3c",
               },
             },
             "&.MuiPickersDay-today": {
-              border: "2px solid #f44336",
-              backgroundColor: "#ffebee",
               color: "#f44336",
+              backgroundColor: "#ffebee",
+              border: "2px solid #f44336",
               "&:hover": {
                 backgroundColor: "#ffcdd2",
               },
@@ -124,15 +138,15 @@ const YearLayout: React.FC<YearLayoutProps> = ({
         {hasEventIndicator && (
           <Box
             sx={{
-              position: "absolute",
-              bottom: 2,
-              left: "50%",
-              transform: "translateX(-50%)",
               width: 4,
+              bottom: 2,
               height: 4,
-              borderRadius: "50%",
-              backgroundColor: eventColor,
               zIndex: 1,
+              left: "50%",
+              borderRadius: "50%",
+              position: "absolute",
+              backgroundColor: eventColor,
+              transform: "translateX(-50%)",
             }}
           />
         )}
@@ -145,12 +159,12 @@ const YearLayout: React.FC<YearLayoutProps> = ({
       ref={containerRef}
       width="100%"
       sx={{
+        p: 2,
+        gap: 3,
         height: "100%",
         overflowY: "auto",
         overflowX: "hidden",
         position: "relative",
-        p: 2,
-        gap: 3,
       }}
     >
       {/* Year Header */}
@@ -189,8 +203,8 @@ const YearLayout: React.FC<YearLayoutProps> = ({
         <Typography
           variant="h6"
           sx={{
-            fontWeight: 600,
             mb: 2,
+            fontWeight: 600,
             textAlign: "center",
             color: "text.primary",
           }}
@@ -207,18 +221,18 @@ const YearLayout: React.FC<YearLayoutProps> = ({
             width: "100%",
             height: "250px",
             "& .MuiPickersYear-yearButton": {
-              fontSize: "14px",
               fontWeight: 500,
+              fontSize: "14px",
+              "&:hover": {
+                backgroundColor: "action.hover",
+              },
               "&.Mui-selected": {
-                backgroundColor: "#1976d2",
                 color: "white",
                 fontWeight: 700,
+                backgroundColor: "#1976d2",
                 "&:hover": {
                   backgroundColor: "#1565c0",
                 },
-              },
-              "&:hover": {
-                backgroundColor: "action.hover",
               },
             },
           }}
@@ -228,15 +242,16 @@ const YearLayout: React.FC<YearLayoutProps> = ({
       {/* Monthly Grid */}
       <Box
         sx={{
-          display: "grid",
+          width: "100%",
           gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
           gap: 3,
-          width: "100%",
+          display: "grid",
         }}
       >
         {months.map((month, index) => {
           const isCurrentMonth =
             month.isSame(moment(), "month") && month.isSame(moment(), "year");
+
           const isSelectedMonth =
             selectedMonth && month.isSame(selectedMonth, "month");
 
@@ -254,17 +269,17 @@ const YearLayout: React.FC<YearLayoutProps> = ({
                 borderColor: isCurrentMonth ? "primary.main" : "divider",
                 bgcolor: isSelectedMonth ? "primary.light" : "background.paper",
                 "&:hover": {
-                  transform: "translateY(-2px)",
                   boxShadow: 6,
                   borderColor: "primary.main",
+                  transform: "translateY(-2px)",
                 },
               }}
             >
               <Typography
                 variant="h6"
                 sx={{
-                  fontWeight: 600,
                   mb: 1,
+                  fontWeight: 600,
                   textAlign: "center",
                   color: isCurrentMonth ? "primary.main" : "text.primary",
                 }}
@@ -280,23 +295,23 @@ const YearLayout: React.FC<YearLayoutProps> = ({
                 }}
                 sx={{
                   width: "100%",
+                  "& .MuiDayCalendar-monthContainer": {
+                    minHeight: "180px",
+                  },
                   "& .MuiPickersCalendarHeader-root": {
                     display: "none", // Hide header since we show month name above
                   },
-                  "& .MuiDayCalendar-header": {
-                    "& .MuiTypography-root": {
-                      fontSize: "10px",
-                      fontWeight: 600,
-                      color: "text.secondary",
-                    },
-                  },
                   "& .MuiPickersDay-root": {
-                    fontSize: "11px",
                     width: "24px",
                     height: "24px",
+                    fontSize: "11px",
                   },
-                  "& .MuiDayCalendar-monthContainer": {
-                    minHeight: "180px",
+                  "& .MuiDayCalendar-header": {
+                    "& .MuiTypography-root": {
+                      fontWeight: 600,
+                      fontSize: "10px",
+                      color: "text.secondary",
+                    },
                   },
                 }}
               />
@@ -309,13 +324,13 @@ const YearLayout: React.FC<YearLayoutProps> = ({
       {children && (
         <Box
           sx={{
-            position: "absolute",
             top: 0,
             left: 0,
             right: 0,
             bottom: 0,
-            pointerEvents: "none",
             zIndex: 1,
+            position: "absolute",
+            pointerEvents: "none",
             "& > *": {
               pointerEvents: "auto",
             },

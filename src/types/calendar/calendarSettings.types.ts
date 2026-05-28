@@ -1,7 +1,11 @@
+// External
 import { faker } from "@faker-js/faker";
+
+
+// Parent, Sibling, Index
 import {
-  generateEventReminderNotificationSettings,
   type EventReminderNotificationSettings,
+  generateEventReminderNotificationSettings,
 } from "../event/eventReminderNotificationSettings.types";
 
 export interface CalendarSettings {
@@ -18,18 +22,18 @@ export interface CalendarSettings {
 
 export const generateCalendarSettings = (): CalendarSettings => {
   return {
-    defaultEventDuration: faker.number.int({ min: 30, max: 180 }),
-    defaultNotifications: [generateEventReminderNotificationSettings()],
+    defaultEventColor: faker.color.rgb(),
+    defaultEventCategory: faker.lorem.word(),
     autoAcceptInvites: faker.datatype.boolean(),
+    enableNotifications: faker.datatype.boolean(),
+    defaultEventReminder: faker.number.int({ min: 5, max: 120 }),
+    defaultEventDuration: faker.number.int({ min: 30, max: 180 }),
+    defaultEventReminderTime: faker.number.int({ min: 5, max: 60 }),
+    defaultNotifications: [generateEventReminderNotificationSettings()],
     defaultVisibility: faker.helpers.arrayElement([
       "public",
       "private",
       "confidential",
     ]),
-    defaultEventColor: faker.color.rgb(),
-    enableNotifications: faker.datatype.boolean(),
-    defaultEventCategory: faker.lorem.word(),
-    defaultEventReminder: faker.number.int({ min: 5, max: 120 }),
-    defaultEventReminderTime: faker.number.int({ min: 5, max: 60 }),
   };
 };

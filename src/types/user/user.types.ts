@@ -1,41 +1,51 @@
-import { generateBaseEntity, type BaseEntity } from "../base/base.types";
-import { generateEducation, type Education } from "./education.types";
-import { generateGroup, type Group } from "../group/group.types";
+// External
+import { faker } from "@faker-js/faker";
+
+
+// Parent, Sibling, Index
+import { type Work, generateWork } from "./work.types";
+import { type Group, generateGroup } from "../group/group.types";
+import type { PostReference } from "../base/postReference.types";
+import { type Event, generateEvent } from "../event/event.types";
+import { type UserInfo, generateUserInfo } from "./userInfo.types";
+import { type Education, generateEducation } from "./education.types";
 import type { Notification } from "../notification/notification.types";
-import { generateUserPlace, type UserPlace } from "../place/place.types";
-import { generateUserInfo, type UserInfo } from "./userInfo.types";
-import { generateWork, type Work } from "./work.types";
+import { type BaseEntity, generateBaseEntity } from "../base/base.types";
+import { type UserPlace, generateUserPlace } from "../place/place.types";
+import { type UserRole, USER_ROLES_OPTIONS } from "../base/userRole.types";
 import {
-  generateAccountSettings,
   type AccountSettings,
+  generateAccountSettings,
 } from "./accountSettings.types";
 import {
-  generateFriendRequest,
-  type Friend,
-  type FriendRequest,
-} from "../friend/friend.types";
-import {
-  generatePrivacySettings,
   type PrivacySettings,
+  generatePrivacySettings,
 } from "./privacySettings.types";
 import {
-  generateUserReference,
   type UserReference,
+  generateUserReference,
 } from "../base/userReference.types";
-import type { PostReference } from "../base/postReference.types";
-import { USER_ROLES_OPTIONS, type UserRole } from "../base/userRole.types";
 import {
-  generateEmail,
-  generatePhone,
-  generateWebsite,
+  type Friend,
+  type FriendRequest,
+  generateFriendRequest,
+} from "../friend/friend.types";
+import {
   type Email,
   type Phone,
   type Website,
+  generateEmail,
+  generatePhone,
+  generateWebsite,
 } from "./userData.types";
-import { faker } from "@faker-js/faker";
-import { generateEvent, type Event } from "../event/event.types";
 
-export interface PostSubscription extends PostReference {}
+export type { Email, Phone, Website } from "./userData.types";
+export type { Friend, FriendRequest } from "../friend/friend.types";
+export type { UserReference } from "../base/userReference.types";
+export type { Event } from "../event/event.types";
+export type { PrivacySettings } from "./privacySettings.types";
+
+export type PostSubscription = PostReference;
 
 export interface User extends BaseEntity {
   username: string;
@@ -70,15 +80,34 @@ export interface User extends BaseEntity {
 export const generateUser = (): User => {
   return {
     ...generateBaseEntity(),
-    username: faker.internet.username(),
-    role: faker.helpers.arrayElement(
-      USER_ROLES_OPTIONS?.map((option) => option.value)
-    ) as UserRole,
-    firstName: faker.person.firstName(),
-    lastName: faker.person.lastName(),
+    notifications: [],
+    postSubscriptions: [],
     email: [generateEmail()],
     phone: [generatePhone()],
     info: generateUserInfo(),
+    events: [generateEvent()],
+    groups: [generateGroup()],
+    posts: [faker.string.uuid()],
+    websites: [generateWebsite()],
+    workHistory: [generateWork()],
+    places: [generateUserPlace()],
+    sessions: [faker.string.uuid()],
+    education: [generateEducation()],
+    lastName: faker.person.lastName(),
+    isActive: faker.datatype.boolean(),
+    isBanned: faker.datatype.boolean(),
+    username: faker.internet.username(),
+    firstName: faker.person.firstName(),
+    isDeleted: faker.datatype.boolean(),
+    isVerified: faker.datatype.boolean(),
+    blockedUsers: [generateUserReference()],
+    friendRequests: [generateFriendRequest()],
+    privacySettings: generatePrivacySettings(),
+    accountSettings: generateAccountSettings(),
+    lastActive: faker.date.past().toISOString(),
+    role: faker.helpers.arrayElement(
+      USER_ROLES_OPTIONS?.map((option) => option.value)
+    ) as UserRole,
     friends: [
       {
         ...generateUserReference(),
@@ -87,24 +116,5 @@ export const generateUser = (): User => {
         mutualFriendsCount: faker.number.int({ min: 0, max: 100 }),
       },
     ],
-    friendRequests: [generateFriendRequest()],
-    blockedUsers: [generateUserReference()],
-    posts: [faker.string.uuid()],
-    websites: [generateWebsite()],
-    postSubscriptions: [],
-    events: [generateEvent()],
-    workHistory: [generateWork()],
-    education: [generateEducation()],
-    places: [generateUserPlace()],
-    groups: [generateGroup()],
-    notifications: [],
-    privacySettings: generatePrivacySettings(),
-    accountSettings: generateAccountSettings(),
-    isActive: faker.datatype.boolean(),
-    isVerified: faker.datatype.boolean(),
-    isDeleted: faker.datatype.boolean(),
-    isBanned: faker.datatype.boolean(),
-    sessions: [faker.string.uuid()],
-    lastActive: faker.date.past().toISOString(),
   };
 };

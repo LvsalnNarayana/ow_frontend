@@ -1,8 +1,14 @@
+// MUI
 import { Close } from "@mui/icons-material";
 import { Stack, IconButton } from "@mui/material";
 
-import CommentTextArea from "./CommentTextArea";
+
+// Shared
 import UserAvatar from "../../../../shared/UserAvatar";
+
+
+// Parent, Sibling, Index
+import CommentTextArea from "./CommentTextArea";
 
 const CommentInput = ({
   type,

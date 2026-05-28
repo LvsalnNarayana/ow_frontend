@@ -1,18 +1,22 @@
+// External
+import type { JSX, ReactNode } from "react";
+
+
+// MUI
 import { styled } from "@mui/material/styles";
 import { Zoom, Tooltip, tooltipClasses } from "@mui/material";
-import type { JSX, ReactNode } from "react";
 
 const CustomTooltip = styled(
   ({
     open,
-    onClose,
+    title,
     onOpen,
     margin,
+    onClose,
     padding,
-    title,
+    children,
     className,
     position = "top",
-    children,
     ...props
   }: {
     open?: boolean;
@@ -60,20 +64,20 @@ const CustomTooltip = styled(
   return {
     [`& .${tooltipClasses.tooltip}`]: {
       width: "auto",
+      maxWidth: "100% !important",
       borderRadius: "5px",
       padding: padding || 7,
       color: theme?.palette?.text?.primary,
-      backgroundColor: theme?.palette?.background?.paper,
-      maxWidth: "100% !important",
-      border: `1px solid ${theme?.palette?.divider}`,
       fontSize: theme.typography.pxToRem(12),
-      "& .MuiTooltip-arrow:before": {
-        color: theme?.palette?.background?.paper,
-        border: `1px solid ${theme?.palette?.divider}`,
-      },
+      border: `1px solid ${theme?.palette?.divider}`,
+      backgroundColor: theme?.palette?.background?.paper,
       "&.MuiTooltip-tooltip": {
         marginTop: margin || "7px",
         marginBottom: margin || "7px",
+      },
+      "& .MuiTooltip-arrow:before": {
+        color: theme?.palette?.background?.paper,
+        border: `1px solid ${theme?.palette?.divider}`,
       },
     },
   };

@@ -1,29 +1,38 @@
+// External
 import { useState } from "react";
+import { MuiOtpInput } from "mui-one-time-password-input";
+
+
+// MUI
 import {
-  Stack,
-  Button,
+  Send as SendIcon,
+  Close as CloseIcon,
+  Email as EmailIcon,
+  VerifiedUser as VerifiedIcon,
+} from "@mui/icons-material";
+import {
   Box,
+  Chip,
+  Stack,
+  Alert,
+  Button,
   Dialog,
+  Divider,
+  useTheme,
+  IconButton,
+  Typography,
   DialogTitle,
   DialogContent,
   DialogActions,
-  IconButton,
-  Typography,
-  Alert,
-  Chip,
-  useTheme,
-  Divider,
 } from "@mui/material";
-import {
-  Close as CloseIcon,
-  VerifiedUser as VerifiedIcon,
-  Email as EmailIcon,
-  Send as SendIcon,
-} from "@mui/icons-material";
-import { MuiOtpInput } from "mui-one-time-password-input";
 
-import ChangeAudience from "../../../shared/ChangeAudience";
+
+// Shared
 import TextInput from "../../../shared/inputs/TextInput";
+import ChangeAudience from "../../../shared/ChangeAudience";
+
+
+// Parent, Sibling, Index
 import type { Email } from "../../../types/user/userData.types";
 
 interface EditEmailItemProps {
@@ -37,15 +46,16 @@ interface EditEmailItemProps {
 }
 
 const EditEmailItem = ({
-  emailItem,
   type,
   onSave,
   onCancel,
   onVerify,
-  onSendVerification,
+  emailItem,
   loading = false,
+  onSendVerification,
 }: EditEmailItemProps) => {
   const theme = useTheme();
+
   const [newEmailItem, setNewEmailItem] = useState<
     Omit<Email, "id" | "createdAt" | "updatedAt">
   >({
@@ -61,9 +71,13 @@ const EditEmailItem = ({
 
   // Verification modal state
   const [verificationModal, setVerificationModal] = useState(false);
+
   const [otp, setOtp] = useState("");
+
   const [verificationLoading, setVerificationLoading] = useState(false);
-  const [verificationSent, setVerificationSent] = useState(false);
+
+  const [, setVerificationSent] = useState(false);
+
   const [verificationError, setVerificationError] = useState("");
 
   // Email validation
@@ -286,7 +300,7 @@ const EditEmailItem = ({
           <Stack
             direction="row"
             spacing={2}
-            sx={{ width: "100%", justifyContent: "flex-end", mt: 2 }}
+            sx={{ width: "100%", mt: 2, justifyContent: "flex-end" }}
           >
             <Button
               variant="outlined"

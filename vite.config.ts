@@ -8,6 +8,10 @@ export default defineConfig({
     host: true,
     port: 4800,
   },
+  preview: {
+    host: true,
+    port: 4800,
+  },
   resolve: {
     alias: {
       "./runtimeConfig": "./runtimeConfig.browser",

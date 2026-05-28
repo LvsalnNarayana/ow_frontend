@@ -1,5 +1,6 @@
-/* eslint-disable operator-linebreak */
+ 
 
+// MUI
 import { Select, MenuItem, Typography } from "@mui/material";
 
 const SelectDateTime = ({
@@ -14,12 +15,15 @@ const SelectDateTime = ({
   changeValue: (value: string) => void;
 }) => {
   const currentYear = new Date().getFullYear();
+
   const years = Array.from({ length: currentYear - 1950 + 1 }, (_, index) => {
     return 1950 + index;
   });
+
   const monthsInYear = Array.from({ length: 13 }, (_, i) => {
     return (i + 1).toString().padStart(2, "0");
   });
+
   const daysInMonth = Array.from({ length: 31 }, (_, i) => {
     return (i + 1).toString().padStart(2, "0");
   });
@@ -43,8 +47,8 @@ const SelectDateTime = ({
         changeValue(event?.target?.value);
       }}
       sx={{
-        my: 0.5,
         width: "100px",
+        my: 0.5,
         "& .MuiSelect-select": {
           p: 0.85,
         },

@@ -1,4 +1,8 @@
+// External
 import { faker } from "@faker-js/faker";
+
+
+// Parent, Sibling, Index
 import type { Visibility } from "./visibility.types";
 
 export interface BaseEntity {

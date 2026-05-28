@@ -1,34 +1,43 @@
+// External
 import { useState, useEffect } from "react";
+
+
+// MUI
 import {
-  Stack,
-  Checkbox,
-  Typography,
-  FormControlLabel,
-  TextField,
-  Button,
-  Box,
-  Autocomplete,
-  Alert,
-  Divider,
-  Chip,
-  useTheme,
-} from "@mui/material";
-import {
-  LocationOn as LocationIcon,
   Home as HomeIcon,
   Work as WorkIcon,
   School as SchoolIcon,
+  LocationOn as LocationIcon,
 } from "@mui/icons-material";
+import {
+  Box,
+  Chip,
+  Stack,
+  Alert,
+  Button,
+  Divider,
+  Checkbox,
+  useTheme,
+  TextField,
+  Typography,
+  Autocomplete,
+  FormControlLabel,
+} from "@mui/material";
 
-import ChangeAudience from "../../../shared/ChangeAudience";
-import { countries, type Country } from "../../../data/countries";
+
+// Shared
 import TextInput from "../../../shared/inputs/TextInput";
+import ChangeAudience from "../../../shared/ChangeAudience";
 import SelectInput from "../../../shared/inputs/SelectInput";
+
+
+// Parent, Sibling, Index
+import { countries, type Country } from "../../../data/countries";
 import type {
   Place,
+  Address,
   PlaceType,
   UserPlace,
-  Address,
 } from "../../../types/place/place.types";
 
 const placeTypes: {
@@ -70,47 +79,48 @@ interface EditPlacesItemProps {
 }
 
 const EditPlacesItem = ({
-  placeItem,
-  userPlaceItem,
   type,
   onSave,
   onCancel,
   onDelete,
+  placeItem,
+  userPlaceItem,
   loading = false,
   userId = "current-user",
 }: EditPlacesItemProps) => {
   const theme = useTheme();
+
   // Separate Place data from UserPlace data
   const [placeData, setPlaceData] = useState<Partial<Place>>({
     id: placeItem?.id || "",
     name: placeItem?.name || "",
     placeTag: placeItem?.placeTag || "",
+    timezone: placeItem?.timezone || "",
+    isActive: placeItem?.isActive ?? true,
+    coordinates: {
+      accuracy: placeItem?.coordinates?.accuracy,
+      latitude: placeItem?.coordinates?.latitude || 0,
+      longitude: placeItem?.coordinates?.longitude || 0,
+    },
     address: {
-      street: placeItem?.address?.street || "",
       city: placeItem?.address?.city || "",
       state: placeItem?.address?.state || "",
+      street: placeItem?.address?.street || "",
       country: placeItem?.address?.country || "",
       postalCode: placeItem?.address?.postalCode || "",
       countryCode: placeItem?.address?.countryCode || "",
     },
-    coordinates: {
-      latitude: placeItem?.coordinates?.latitude || 0,
-      longitude: placeItem?.coordinates?.longitude || 0,
-      accuracy: placeItem?.coordinates?.accuracy,
-    },
-    timezone: placeItem?.timezone || "",
-    isActive: placeItem?.isActive ?? true,
   });
 
   const [userPlaceData, setUserPlaceData] = useState<Partial<UserPlace>>({
-    placeId: userPlaceItem?.id || "",
     userId: userId,
-    visibility: userPlaceItem?.visibility || "public",
-    placeType: userPlaceItem?.placeType || "other",
+    placeId: userPlaceItem?.id || "",
+    notes: userPlaceItem?.notes || "",
     isCurrent: userPlaceItem?.isCurrent || false,
+    placeType: userPlaceItem?.placeType || "other",
     isHometown: userPlaceItem?.isHometown || false,
     isFavorite: userPlaceItem?.isFavorite || false,
-    notes: userPlaceItem?.notes || "",
+    visibility: userPlaceItem?.visibility || "public",
   });
 
   const [errors, setErrors] = useState<{
@@ -127,6 +137,7 @@ const EditPlacesItem = ({
   useEffect(() => {
     const generatePlaceTag = () => {
       const { name, address } = placeData;
+
       const parts = [name, address?.city, address?.state, address?.country]
         .filter(Boolean)
         .map((part) => part?.toLowerCase().replace(/[^a-z0-9]/g, ""))
@@ -231,9 +242,9 @@ const EditPlacesItem = ({
 
     const finalPlaceData: Partial<Place> = {
       ...placeData,
+      updatedAt: new Date().toISOString(),
       createdAt:
         type === "add" ? new Date().toISOString() : placeItem?.createdAt,
-      updatedAt: new Date().toISOString(),
     };
 
     const finalUserPlaceData: Partial<UserPlace> = {
@@ -304,7 +315,7 @@ const EditPlacesItem = ({
           />
 
           {/* City and State Row */}
-          <Stack direction={{ xs: "column", sm: "row" }} spacing={2}>
+          <Stack direction={{ sm: "row", xs: "column" }} spacing={2}>
             <TextInput
               name={`city_${type}_${placeItem?.id || "new"}`}
               size="small"
@@ -334,7 +345,7 @@ const EditPlacesItem = ({
           </Stack>
 
           {/* Country and Postal Code Row */}
-          <Stack direction={{ xs: "column", sm: "row" }} spacing={2}>
+          <Stack direction={{ sm: "row", xs: "column" }} spacing={2}>
             <Stack width="100%" gap={1}>
               <Typography fontSize={16}>Country</Typography>
               <Autocomplete
@@ -515,8 +526,8 @@ const EditPlacesItem = ({
           sx={{
             width: "100%",
             p: 2,
-            backgroundColor: theme?.palette?.background?.paper,
             borderRadius: 1,
+            backgroundColor: theme?.palette?.background?.paper,
           }}
         >
           <Typography variant="subtitle2" sx={{ mb: 2, fontWeight: 600 }}>
@@ -525,7 +536,7 @@ const EditPlacesItem = ({
 
           <Stack spacing={2}>
             {/* Coordinates */}
-            <Stack direction={{ xs: "column", sm: "row" }} spacing={2}>
+            <Stack direction={{ sm: "row", xs: "column" }} spacing={2}>
               <TextInput
                 name={`latitude_${type}_${placeItem?.id || "new"}`}
                 size="small"
@@ -607,8 +618,8 @@ const EditPlacesItem = ({
         spacing={2}
         sx={{
           width: "100%",
-          justifyContent: "flex-end",
           alignItems: "center",
+          justifyContent: "flex-end",
         }}
       >
         {/* Delete Button (for edit mode) */}

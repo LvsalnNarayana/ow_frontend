@@ -1,16 +1,20 @@
+// External
+import moment from "moment";
 import React, { useState } from "react";
+
+
+// MUI
+import { ChevronLeft, ChevronRight, CalendarToday } from "@mui/icons-material";
 import {
   Box,
-  Button,
   Grid,
-  IconButton,
   Paper,
-  Typography,
+  Button,
   Popover,
   TextField,
+  IconButton,
+  Typography,
 } from "@mui/material";
-import { ChevronLeft, ChevronRight, CalendarToday } from "@mui/icons-material";
-import moment from "moment";
 
 interface CustomDatePickerProps {
   value?: Date;
@@ -23,11 +27,12 @@ interface CustomDatePickerProps {
 const CustomDatePicker: React.FC<CustomDatePickerProps> = ({
   value,
   onChange,
+  disabled = false,
   label = "Select Date",
   placeholder = "Click to select date",
-  disabled = false,
 }) => {
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
+
   const [currentMonth, setCurrentMonth] = useState(moment(value || new Date()));
 
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -55,18 +60,24 @@ const CustomDatePicker: React.FC<CustomDatePickerProps> = ({
 
   const renderCalendar = () => {
     const startOfMonth = currentMonth.clone().startOf("month");
+
     const endOfMonth = currentMonth.clone().endOf("month");
+
     const startDate = startOfMonth.clone().startOf("week");
+
     const endDate = endOfMonth.clone().endOf("week");
 
     const rows = [];
     let days = [];
-    let day = startDate.clone();
+
+    const day = startDate.clone();
 
     while (day.isSameOrBefore(endDate, "day")) {
       for (let i = 0; i < 7; i++) {
         const isCurrentMonth = day.isSame(currentMonth, "month");
+
         const isSelected = value && day.isSame(moment(value), "day");
+
         const isToday = day.isSame(moment(), "day");
 
         days.push(
@@ -79,8 +90,8 @@ const CustomDatePicker: React.FC<CustomDatePickerProps> = ({
                 minWidth: 32,
                 height: 32,
                 borderRadius: "50%",
-                opacity: isCurrentMonth ? 1 : 0.3,
                 fontSize: "0.875rem",
+                opacity: isCurrentMonth ? 1 : 0.3,
                 fontWeight: isSelected ? "bold" : "normal",
               }}
             >
@@ -135,7 +146,7 @@ const CustomDatePicker: React.FC<CustomDatePickerProps> = ({
           horizontal: "left",
         }}
       >
-        <Paper sx={{ p: 2, minWidth: 280 }}>
+        <Paper sx={{ minWidth: 280, p: 2 }}>
           <Box
             display="flex"
             justifyContent="space-between"
@@ -158,7 +169,7 @@ const CustomDatePicker: React.FC<CustomDatePickerProps> = ({
                 <Typography
                   variant="body2"
                   align="center"
-                  sx={{ fontWeight: "bold", color: "text.secondary", mb: 1 }}
+                  sx={{ mb: 1, fontWeight: "bold", color: "text.secondary" }}
                 >
                   {day}
                 </Typography>

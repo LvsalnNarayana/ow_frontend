@@ -1,11 +1,14 @@
-/* eslint-disable no-negated-condition */
-/* eslint-disable multiline-ternary */
+ 
+ 
 /* eslint-disable react/jsx-key */
-/* eslint-disable arrow-body-style */
-/* eslint-disable implicit-arrow-linebreak */
+ 
+ 
+// External
 import moment from "moment";
 import { useState } from "react";
 
+
+// MUI
 import {
   Stack,
   Select,
@@ -15,23 +18,30 @@ import {
   FormControlLabel,
 } from "@mui/material";
 
+
+// Shared
+import TextInput from "../../../shared/inputs/TextInput";
 // import InputField from "../../shared/InputField";
 import ChangeAudience from "../../../shared/ChangeAudience";
-import TextInput from "../../../shared/inputs/TextInput";
+
+
+// Parent, Sibling, Index
 import type { Work } from "../../../types/user/work.types";
 
 const EditWorkplaceItem = ({ workItem }: { workItem?: Work }) => {
   const [newWorkItem, setNewWorkItem] = useState({
     id: workItem?.id || "new",
-    city: workItem?.city || "",
     company: workItem?.company || "",
     endDate: workItem?.endDate || "",
     position: workItem?.position || "",
     current: workItem?.current || false,
     startDate: workItem?.startDate || "",
     description: workItem?.description || "",
+    city: workItem?.place?.address?.city || "",
   });
+
   const currentYear = new Date().getFullYear();
+
   const years = Array.from(
     { length: currentYear - 1950 + 1 },
     (_, index) => 1950 + index
@@ -73,7 +83,7 @@ const EditWorkplaceItem = ({ workItem }: { workItem?: Work }) => {
         placeholder="Description"
         value={newWorkItem?.description}
       />
-      <Typography sx={{ fontWeight: 600, fontSize: 15 }}>
+      <Typography sx={{ fontSize: 15, fontWeight: 600 }}>
         Time period
       </Typography>
       <Stack
@@ -109,8 +119,8 @@ const EditWorkplaceItem = ({ workItem }: { workItem?: Work }) => {
             });
           }}
           sx={{
-            my: 0.5,
             width: "100px",
+            my: 0.5,
             "& .MuiSelect-select": {
               p: 0.85,
             },
@@ -161,8 +171,8 @@ const EditWorkplaceItem = ({ workItem }: { workItem?: Work }) => {
             });
           }}
           sx={{
-            my: 0.5,
             width: "100px",
+            my: 0.5,
             "& .MuiSelect-select": {
               p: 0.85,
             },

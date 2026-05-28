@@ -1,15 +1,22 @@
+// External
 import React from "react";
+import moment from "moment";
+
+
+// MUI
 import {
+  Box,
+  Card,
+  Chip,
   Stack,
   Typography,
-  Card,
   CardContent,
   CardActionArea,
-  Chip,
-  Box,
 } from "@mui/material";
+
+
+// Parent, Sibling, Index
 import type { MeetingRoom } from "../../types/meet/meeting.types";
-import moment from "moment";
 
 interface RecentMeetingsProps {
   meetings: MeetingRoom[];

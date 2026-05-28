@@ -1,3 +1,4 @@
+// Parent, Sibling, Index
 import type { CalendarViewType } from "./calendarViewType.types";
 
 // User's calendar view preferences
@@ -17,15 +18,15 @@ export interface CalendarViewPreferences {
 
 // Default calendar view preferences
 export const defaultCalendarViewPreferences: CalendarViewPreferences = {
-  defaultView: "month",
+  dayEndHour: 12,
+  dayStartHour: 12,
   compactMode: false,
+  showTimeZone: true,
+  colorBy: "calendar",
+  defaultView: "month",
+  timeSlotDuration: 30,
+  showWeatherInfo: true,
   showAllDayEvents: true,
   showEventDetails: true,
-  colorBy: "calendar",
-  timeSlotDuration: 30,
-  dayStartHour: 12,
-  dayEndHour: 12,
-  showTimeZone: true,
-  showWeatherInfo: true,
   showLunarCalendar: false,
 };

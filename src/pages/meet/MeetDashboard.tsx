@@ -1,51 +1,59 @@
-import React, { useEffect } from "react";
+// External
+import { useEffect } from "react";
+
+
+// MUI
 import {
   Box,
   Stack,
-  Container,
   Paper,
   useTheme,
+  Container,
   useMediaQuery,
 } from "@mui/material";
+
+
+// Parent, Sibling, Index
 import UserGreeting from "../../meet/components/UserGreetings";
 import MeetingActions from "../../meet/components/MeetingActions";
 import RecentMeetings from "../../meet/components/RecentMeetings";
+import { generatePosts } from "../../scripts/GeneratePost.script";
 import { useMeetingOperations } from "../../meet/hooks/useMeetingOperations";
 import type { MeetingRoom, MeetingUser } from "../../types/meet/meeting.types";
-import { generatePosts } from "../../scripts/GeneratePost.script";
 
 // Mock data - replace with real data from your auth/API
 const mockUser: MeetingUser = {
   id: "1",
-  username: "test_username",
-  firstName: "John",
   lastName: "Doe",
+  firstName: "John",
+  username: "test_username",
 };
 
 const mockRecentMeetings: MeetingRoom[] = [
   {
     id: "room_1",
-    name: "Team Standup",
-    createdBy: "user1",
-    createdAt: new Date(Date.now() - 2 * 60 * 60 * 1000), // 2 hours ago
-    participants: 5,
     isActive: true,
+    participants: 5,
+    createdBy: "user1",
+    name: "Team Standup",
+    createdAt: new Date(Date.now() - 2 * 60 * 60 * 1000), // 2 hours ago
   },
   {
     id: "room_2",
-    name: "Project Review",
-    createdBy: "user2",
-    createdAt: new Date(Date.now() - 24 * 60 * 60 * 1000), // 1 day ago
     participants: 3,
     isActive: false,
+    createdBy: "user2",
+    name: "Project Review",
+    createdAt: new Date(Date.now() - 24 * 60 * 60 * 1000), // 1 day ago
   },
 ];
 
 const MeetDashboard: React.FC = () => {
   const theme = useTheme();
+
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
-  const { state, createMeeting, joinMeeting, setRoomId, clearError } =
+  const { state, setRoomId, clearError, joinMeeting, createMeeting } =
     useMeetingOperations();
 
   // Load recent meetings on component mount
@@ -57,7 +65,7 @@ const MeetDashboard: React.FC = () => {
   console.log(generatePosts(1));
 
   return (
-    <Container maxWidth="xl" sx={{ height: "100%", py: 2 }}>
+    <Container maxWidth="xl" sx={{ py: 2, height: "100%" }}>
       <Stack
         direction={isMobile ? "column" : "row"}
         width="100%"
@@ -131,13 +139,13 @@ const MeetDashboard: React.FC = () => {
           {/* Overlay with gradient */}
           <Box
             sx={{
-              position: "absolute",
               top: 0,
               left: 0,
               right: 0,
               bottom: 0,
-              background: `linear-gradient(135deg, ${theme.palette.primary.main}20 0%, transparent 50%)`,
+              position: "absolute",
               pointerEvents: "none",
+              background: `linear-gradient(135deg, ${theme.palette.primary.main}20 0%, transparent 50%)`,
             }}
           />
         </Stack>

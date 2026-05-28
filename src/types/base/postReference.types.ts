@@ -1,7 +1,11 @@
+// External
 import { faker } from "@faker-js/faker";
+
+
+// Parent, Sibling, Index
 import {
-  generatePostAuthorInterface,
   type PostAuthorInterface,
+  generatePostAuthorInterface,
 } from "../post/postUser.types";
 
 export interface PostReference {

@@ -1,15 +1,24 @@
-/* eslint-disable complexity */
-/* eslint-disable max-lines */
-/* eslint-disable no-undefined */
-/* eslint-disable no-negated-condition */
-/* eslint-disable multiline-ternary */
+ 
+ 
+ 
+ 
+ 
+// External
 import moment from "moment";
 import { useState } from "react";
 
+
+// MUI
 import { Stack, Checkbox, Typography, FormControlLabel } from "@mui/material";
+
+
+// Shared
+import TextInput from "../../../shared/inputs/TextInput";
 import ChangeAudience from "../../../shared/ChangeAudience";
 import SelectDateTime from "../../../shared/SelectDateTime";
-import TextInput from "../../../shared/inputs/TextInput";
+
+
+// Parent, Sibling, Index
 import type { Education } from "../../../types/user/education.types";
 
 const EditEducationItem = ({
@@ -18,28 +27,6 @@ const EditEducationItem = ({
   educationItem?: Education;
 }) => {
   const [newSchoolItem, setNewSchoolItem] = useState<Omit<Education, "id">>({
-    place: {
-      id: "",
-      name: "",
-      placeTag: "",
-      address: {
-        street: "",
-        city: "",
-        state: "",
-        country: "",
-        postalCode: "",
-        countryCode: "",
-      },
-      coordinates: {
-        latitude: 0,
-        longitude: 0,
-        accuracy: 0,
-      },
-      timezone: "",
-      createdAt: "",
-      updatedAt: "",
-      isActive: false,
-    },
     school: educationItem?.school || "",
     degree: educationItem?.degree || "",
     endDate: educationItem?.endDate || "",
@@ -47,6 +34,28 @@ const EditEducationItem = ({
     startDate: educationItem?.startDate || "",
     description: educationItem?.description || "",
     visibility: educationItem?.visibility || "public",
+    place: {
+      id: "",
+      name: "",
+      placeTag: "",
+      timezone: "",
+      createdAt: "",
+      updatedAt: "",
+      isActive: false,
+      coordinates: {
+        latitude: 0,
+        accuracy: 0,
+        longitude: 0,
+      },
+      address: {
+        city: "",
+        state: "",
+        street: "",
+        country: "",
+        postalCode: "",
+        countryCode: "",
+      },
+    },
   });
 
   return (

@@ -1,14 +1,23 @@
+// External
 import React, { useState } from "react";
+
+
+// MUI
 import { Stack } from "@mui/material";
-import AboutItemContent from "./AnoutItemContent";
-import VerificationStatus from "./VerificationStatus";
-import AboutItemActions from "./AboutItemActions";
+
+
+// Parent, Sibling, Index
 import AboutItemMenu from "./AboutItemMenu";
 import AboutItemEditor from "./AboutItemEditor";
-import type { AboutItemProps, AboutItemType } from "../../types/aboutMenu.types";
+import AboutItemContent from "./AnoutItemContent";
+import AboutItemActions from "./AboutItemActions";
+import VerificationStatus from "./VerificationStatus";
+import type { Email, Phone } from "../../types/user/userData.types";
+import type { AboutItemType, AboutItemProps } from "../../types/aboutMenu.types";
 
 const AboutItem: React.FC<AboutItemProps> = ({ type, Icon, data }) => {
   const [editItem, setEditItem] = useState(false);
+
   const [menuAnchor, setMenuAnchor] = useState<HTMLElement | null>(null);
 
   const menuOpen = Boolean(menuAnchor);
@@ -62,7 +71,10 @@ const AboutItem: React.FC<AboutItemProps> = ({ type, Icon, data }) => {
         justifyContent="flex-start"
         alignItems="center"
       >
-        <VerificationStatus type={type as AboutItemType} data={data} />
+        <VerificationStatus
+          type={type as AboutItemType}
+          data={data as Email | Phone}
+        />
 
         <AboutItemActions
           type={type as AboutItemType}

@@ -1,9 +1,13 @@
+// External
 import { faker } from "@faker-js/faker";
+
+
+// Parent, Sibling, Index
+import { type ReactionData, generateReactionData } from "./reactionData.types";
 import {
-  generatePostUserInterface,
   type PostUserInterface,
+  generatePostUserInterface,
 } from "./postUser.types";
-import { generateReactionData, type ReactionData } from "./reactionData.types";
 
 export interface PostEngagement {
   reactions: ReactionData;
@@ -20,7 +24,15 @@ export interface PostEngagement {
 export const generatePostEngagement = (): PostEngagement => {
   return {
     reactions: generateReactionData(),
+    comment_count: faker.number.int({ min: 0, max: 100 }),
+    engagement_score: faker.number.float({ min: 0, max: 100 }),
+    views: {
+      count: faker.number.int({ min: 0, max: 100 }),
+      last_viewed_at: faker.date.recent().toISOString(),
+      unique_views: faker.number.int({ min: 0, max: 100 }),
+    },
     shares: {
+      has_more_shares: faker.datatype.boolean(),
       count: faker.number.int({ min: 0, max: 100 }),
       recent_shares: Array.from(
         { length: faker.number.int({ min: 0, max: 10 }) },
@@ -29,14 +41,6 @@ export const generatePostEngagement = (): PostEngagement => {
             ...generatePostUserInterface(),
           } as PostUserInterface)
       ),
-      has_more_shares: faker.datatype.boolean(),
     },
-    views: {
-      count: faker.number.int({ min: 0, max: 100 }),
-      unique_views: faker.number.int({ min: 0, max: 100 }),
-      last_viewed_at: faker.date.recent().toISOString(),
-    },
-    comment_count: faker.number.int({ min: 0, max: 100 }),
-    engagement_score: faker.number.float({ min: 0, max: 100 }),
   };
 };

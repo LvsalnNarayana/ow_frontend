@@ -1,5 +1,8 @@
+// MUI
 import { Stack } from "@mui/material";
 
+
+// Parent, Sibling, Index
 import Comment from "./Comment";
 import CommentInput from "./CommentInput";
 import type { PostInterface } from "../../../../types/post/post.types";
@@ -24,7 +27,7 @@ const CommentContainer = ({
         justifyContent="flex-start"
         alignItems="flex-start"
         gap={2}
-        sx={{ my: 2, width: "100%" }}
+        sx={{ width: "100%", my: 2 }}
       >
         {post?.comments?.items?.map((comment, index) => {
           // eslint-disable-next-line react/no-array-index-key

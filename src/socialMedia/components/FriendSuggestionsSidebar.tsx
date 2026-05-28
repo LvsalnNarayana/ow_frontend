@@ -1,4 +1,5 @@
-import { Stack, Box, Typography, Avatar, Chip, Paper } from "@mui/material";
+// MUI
+import { Box, Chip, Stack, Paper, Avatar, Typography } from "@mui/material";
 
 const FriendSuggestionsSidebar = () => (
   <Paper
@@ -13,23 +14,23 @@ const FriendSuggestionsSidebar = () => (
     </Typography>
     <Stack spacing={2}>
       {[
-        { name: "Alex Smith", avatar: "/avatars/alex.jpg", mutualFriends: 5 },
-        { name: "Lisa Chen", avatar: "/avatars/lisa.jpg", mutualFriends: 3 },
+        { mutualFriends: 5, name: "Alex Smith", avatar: "/avatars/alex.jpg" },
+        { mutualFriends: 3, name: "Lisa Chen", avatar: "/avatars/lisa.jpg" },
         {
+          mutualFriends: 8,
           name: "David Brown",
           avatar: "/avatars/david.jpg",
-          mutualFriends: 8,
         },
       ].map((person, index) => (
         <Box
           key={index}
           sx={{
-            display: "flex",
-            alignItems: "center",
-            gap: 1,
             p: 1,
+            gap: 1,
+            display: "flex",
             borderRadius: 1,
             cursor: "pointer",
+            alignItems: "center",
             "&:hover": {
               backgroundColor: "action.hover",
             },

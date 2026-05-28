@@ -1,16 +1,23 @@
+// External
 import React from "react";
-import { Box, IconButton, Stack, Typography, useTheme } from "@mui/material";
+import { useNavigate } from "react-router";
+
+
+// MUI
+import StarIcon from "@mui/icons-material/Star";
 import MessageIcon from "@mui/icons-material/Message";
 import VisibilityIcon from "@mui/icons-material/Visibility";
-import StarIcon from "@mui/icons-material/Star";
 import StarBorderIcon from "@mui/icons-material/StarBorder";
-import UserAvatar from "../../shared/UserAvatar";
-import QrCode2OutlinedIcon from "@mui/icons-material/QrCode2Outlined";
-import ButtonMenu from "../../shared/ButtonMenu";
-import MoreVertOutlinedIcon from "@mui/icons-material/MoreVertOutlined";
 import BlockOutlinedIcon from "@mui/icons-material/BlockOutlined";
+import QrCode2OutlinedIcon from "@mui/icons-material/QrCode2Outlined";
+import MoreVertOutlinedIcon from "@mui/icons-material/MoreVertOutlined";
+import { Box, Stack, useTheme, IconButton, Typography } from "@mui/material";
 import RemoveCircleOutlineOutlinedIcon from "@mui/icons-material/RemoveCircleOutlineOutlined";
-import { useNavigate } from "react-router";
+
+
+// Shared
+import UserAvatar from "../../shared/UserAvatar";
+import ButtonMenu from "../../shared/ButtonMenu";
 interface FriendCardProps {
   id: string;
   fullName: string;
@@ -23,21 +30,23 @@ interface FriendCardProps {
 }
 
 const statusColorMap: Record<string, string> = {
+  busy: "red",
+  away: "orange",
   online: "green",
   offline: "gray",
-  away: "orange",
-  busy: "red",
 };
 
 const FriendCard: React.FC<FriendCardProps> = ({
   fullName,
   username,
-  onlineStatus = "offline",
   mutualFriendsCount,
   isFavorite = false,
+  onlineStatus = "offline",
 }) => {
   const theme = useTheme();
+
   const navigate = useNavigate();
+
   const menu = [
     {
       value: "View Profile",
@@ -46,23 +55,23 @@ const FriendCard: React.FC<FriendCardProps> = ({
     },
     {
       value: "Share",
-      icon: <QrCode2OutlinedIcon />,
       onClick: () => {},
+      icon: <QrCode2OutlinedIcon />,
     },
     {
       value: "Message",
-      icon: <MessageIcon />,
       onClick: () => {},
+      icon: <MessageIcon />,
     },
     {
       value: "Block",
-      icon: <BlockOutlinedIcon />,
       onClick: () => {},
+      icon: <BlockOutlinedIcon />,
     },
     {
       value: "Remove",
-      icon: <RemoveCircleOutlineOutlinedIcon />,
       onClick: () => {},
+      icon: <RemoveCircleOutlineOutlinedIcon />,
     },
   ];
   return (
@@ -103,12 +112,12 @@ const FriendCard: React.FC<FriendCardProps> = ({
               variant="body1"
               color="text.primary"
               sx={{
-                overflow: "hidden",
-                textOverflow: "ellipsis",
-                whiteSpace: "nowrap",
                 maxWidth: 200,
-                display: "inline-block",
                 cursor: "pointer",
+                overflow: "hidden",
+                whiteSpace: "nowrap",
+                display: "inline-block",
+                textOverflow: "ellipsis",
                 "&:hover": {
                   textDecoration: "underline",
                 },

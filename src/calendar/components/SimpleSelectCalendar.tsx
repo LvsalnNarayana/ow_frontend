@@ -1,25 +1,29 @@
+// External
+import moment, { type Moment } from "moment";
 import React, { useRef, useState } from "react";
-import {
-  Box,
-  Button,
-  IconButton,
-  useTheme,
-  Popover,
-  Stack,
-} from "@mui/material";
+
+
+// MUI
+import { PickersDay } from "@mui/x-date-pickers/PickersDay";
+import { dateCalendarClasses } from "@mui/x-date-pickers/DateCalendar";
+import { StaticDatePicker, type PickersDayProps } from "@mui/x-date-pickers";
 import {
   ChevronLeft,
   ChevronRight,
   KeyboardArrowDown,
 } from "@mui/icons-material";
-import { PickersDay } from "@mui/x-date-pickers/PickersDay";
-import { dateCalendarClasses } from "@mui/x-date-pickers/DateCalendar";
 import {
   YearCalendar,
   yearCalendarClasses,
 } from "@mui/x-date-pickers/YearCalendar";
-import moment, { type Moment } from "moment";
-import { type PickersDayProps, StaticDatePicker } from "@mui/x-date-pickers";
+import {
+  Box,
+  Stack,
+  Button,
+  Popover,
+  useTheme,
+  IconButton,
+} from "@mui/material";
 
 interface SimpleSelectCalendarProps {
   selectedDate?: Date;
@@ -36,18 +40,21 @@ interface SimpleSelectCalendarProps {
 }
 
 const SimpleSelectCalendar: React.FC<SimpleSelectCalendarProps> = ({
-  selectedDate,
-  onDateSelect,
-  highlightedDates = [],
   minDate,
   maxDate,
   events = [],
+  selectedDate,
+  onDateSelect,
+  highlightedDates = [],
 }) => {
   const theme = useTheme();
+
   const [currentDate, setCurrentDate] = useState<Moment>(
     moment(selectedDate || new Date())
   );
+
   const yearButtonRef = useRef<HTMLButtonElement>(null);
+
   const [showYearPicker, setShowYearPicker] = useState(false);
 
   const handleDateChange = (date: Moment | null) => {
@@ -98,11 +105,16 @@ const SimpleSelectCalendar: React.FC<SimpleSelectCalendarProps> = ({
 
   // Custom Day Component
   const CustomDay = (props: PickersDayProps) => {
-    const { day, outsideCurrentMonth, ...other } = props;
+    const { outsideCurrentMonth, day, ...other } = props;
+
     const isHighlighted = isDateHighlighted(day);
+
     const hasEventIndicator = hasEvents(day);
+
     const eventColor = getEventColor(day);
+
     const isToday = day.isSame(moment(), "day");
+
     const isSelected = selectedDate && day.isSame(moment(selectedDate), "day");
 
     return (
@@ -113,11 +125,6 @@ const SimpleSelectCalendar: React.FC<SimpleSelectCalendarProps> = ({
           outsideCurrentMonth={outsideCurrentMonth}
           sx={{
             fontWeight: isSelected || isToday ? "bold" : "normal",
-            backgroundColor: isHighlighted
-              ? theme.palette.secondary.main
-              : isToday
-              ? `${theme.palette.primary.main}30`
-              : undefined,
             border: isHighlighted
               ? `1px solid ${theme.palette.secondary.main}`
               : undefined,
@@ -126,20 +133,25 @@ const SimpleSelectCalendar: React.FC<SimpleSelectCalendarProps> = ({
                 ? `${theme.palette.secondary.main}30`
                 : theme.palette.action.hover,
             },
+            backgroundColor: isHighlighted
+              ? theme.palette.secondary.main
+              : isToday
+              ? `${theme.palette.primary.main}30`
+              : undefined,
           }}
         />
         {hasEventIndicator && (
           <Box
             sx={{
-              position: "absolute",
-              bottom: 2,
-              left: "50%",
-              transform: "translateX(-50%)",
               width: 6,
+              bottom: 2,
               height: 6,
-              borderRadius: "50%",
-              backgroundColor: eventColor,
               zIndex: 1,
+              left: "50%",
+              borderRadius: "50%",
+              position: "absolute",
+              backgroundColor: eventColor,
+              transform: "translateX(-50%)",
             }}
           />
         )}
@@ -157,12 +169,12 @@ const SimpleSelectCalendar: React.FC<SimpleSelectCalendarProps> = ({
       <Box
         width="100%"
         sx={{
-          position: "relative",
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
           px: 2,
           py: 1,
+          display: "flex",
+          position: "relative",
+          alignItems: "center",
+          justifyContent: "space-between",
           borderBottom: `1px solid ${theme.palette.divider}`,
         }}
       >
@@ -184,11 +196,11 @@ const SimpleSelectCalendar: React.FC<SimpleSelectCalendarProps> = ({
           variant="text"
           onClick={handleYearPickerOpen}
           sx={{
-            fontSize: theme.typography.body1.fontSize,
-            color: theme.palette.text.primary,
-            fontWeight: theme.typography.fontWeightMedium,
-            textTransform: "none",
             minWidth: "auto",
+            textTransform: "none",
+            color: theme.palette.text.primary,
+            fontSize: theme.typography.body1.fontSize,
+            fontWeight: theme.typography.fontWeightMedium,
             "&:hover": {
               backgroundColor: theme.palette.action.hover,
             },
@@ -228,9 +240,9 @@ const SimpleSelectCalendar: React.FC<SimpleSelectCalendarProps> = ({
           PaperProps={{
             elevation: 0,
             sx: {
-              mt: 1,
               width: "auto",
               maxWidth: "100%",
+              mt: 1,
               border: `1px solid ${theme.palette.divider}`,
             },
           }}
@@ -277,6 +289,10 @@ const SimpleSelectCalendar: React.FC<SimpleSelectCalendarProps> = ({
         minDate={minDate ? moment(minDate) : undefined}
         maxDate={maxDate ? moment(maxDate) : undefined}
         slots={{
+          day: CustomDay,
+          toolbar: () => null,
+          actionBar: () => null,
+          calendarHeader: CustomCalendarHeader,
           layout: ({ children }) => (
             <Stack
               spacing={2}
@@ -290,10 +306,6 @@ const SimpleSelectCalendar: React.FC<SimpleSelectCalendarProps> = ({
               {children}
             </Stack>
           ),
-          calendarHeader: CustomCalendarHeader,
-          actionBar: () => null,
-          toolbar: () => null,
-          day: CustomDay,
         }}
       />
     </Stack>

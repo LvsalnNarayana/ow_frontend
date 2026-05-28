@@ -1,16 +1,20 @@
-import React, { useEffect, useRef } from "react";
-import { Stack, Box, Typography } from "@mui/material";
+// External
 import moment from "moment";
+import React, { useRef, useEffect } from "react";
+
+
+// MUI
+import { Box, Stack, Typography } from "@mui/material";
 
 // Weather icons mapping
 const weatherIcons = {
   sunny: "☀️",
+  snowy: "❄️",
+  windy: "💨",
   cloudy: "☁️",
   rainy: "🌧️",
   stormy: "⛈️",
-  snowy: "❄️",
   foggy: "🌫️",
-  windy: "💨",
   partlyCloudy: "⛅",
 } as const;
 
@@ -30,6 +34,7 @@ interface MonthLayoutProps {
 // Mock weather data generator for 10 days forecast
 const generateWeatherForecast = (): WeatherData[] => {
   const forecast: WeatherData[] = [];
+
   const today = moment();
 
   const weatherTypes: WeatherType[] = [
@@ -47,8 +52,8 @@ const generateWeatherForecast = (): WeatherData[] => {
     const date = today.clone().add(i, "days");
     forecast.push({
       date: date.format("YYYY-MM-DD"),
-      type: weatherTypes[Math.floor(Math.random() * weatherTypes.length)],
       temp: Math.floor(Math.random() * 30) + 10, // Random temp between 10-40°C
+      type: weatherTypes[Math.floor(Math.random() * weatherTypes.length)],
     });
   }
 
@@ -60,6 +65,7 @@ const MonthLayout: React.FC<MonthLayoutProps> = ({
   selectedDate = new Date(),
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
+
   const currentWeekRef = useRef<HTMLDivElement>(null);
 
   // Generate weather forecast for 10 days
@@ -68,20 +74,24 @@ const MonthLayout: React.FC<MonthLayoutProps> = ({
   useEffect(() => {
     if (currentWeekRef.current) {
       currentWeekRef.current.scrollIntoView({
-        behavior: "smooth",
         block: "center",
+        behavior: "smooth",
       });
     }
   }, [selectedDate]);
 
   // Get the start of the month and create calendar grid
   const startOfMonth = moment(selectedDate).startOf("month");
+
   const endOfMonth = moment(selectedDate).endOf("month");
+
   const startOfCalendar = startOfMonth.clone().startOf("week");
+
   const endOfCalendar = endOfMonth.clone().endOf("week");
 
   // Generate all days for the calendar grid
   const calendarDays = [];
+
   const current = startOfCalendar.clone();
 
   while (current.isSameOrBefore(endOfCalendar)) {
@@ -113,6 +123,7 @@ const MonthLayout: React.FC<MonthLayoutProps> = ({
   // Check if date is within 10 days from today
   const isWithinForecastRange = (date: moment.Moment): boolean => {
     const today = moment();
+
     const daysDiff = date.diff(today, "days");
     return daysDiff >= 0 && daysDiff < 10;
   };
@@ -135,22 +146,22 @@ const MonthLayout: React.FC<MonthLayoutProps> = ({
       <Stack
         direction="row"
         sx={{
-          position: "sticky",
           top: 0,
           zIndex: 2,
-          bgcolor: "background.paper",
           borderBottom: 1,
+          position: "sticky",
           borderColor: "divider",
+          bgcolor: "background.paper",
         }}
       >
         {daysOfWeek.map((day) => (
           <Box
             key={day}
             sx={{
-              flex: 1,
               p: 1,
-              textAlign: "center",
+              flex: 1,
               borderRight: 1,
+              textAlign: "center",
               borderColor: "divider",
               "&:last-child": {
                 borderRight: 0,
@@ -184,22 +195,26 @@ const MonthLayout: React.FC<MonthLayoutProps> = ({
               ref={isCurrentWeekRow ? currentWeekRef : null}
               sx={{
                 flex: 1,
-                minHeight: "120px",
                 borderBottom: 1,
+                minHeight: "120px",
                 borderColor: "divider",
                 "&:last-child": {
                   borderBottom: 0,
                 },
               }}
             >
-              {week.map((day, dayIndex) => {
+              {week.map((day) => {
                 const isToday = day.isSame(moment(), "day");
+
                 const isCurrentMonth = day.isSame(
                   moment(selectedDate),
                   "month"
                 );
+
                 const isSelected = day.isSame(moment(selectedDate), "day");
+
                 const weatherData = getWeatherForDate(day);
+
                 const showWeather = isWithinForecastRange(day) && weatherData;
 
                 return (
@@ -208,7 +223,9 @@ const MonthLayout: React.FC<MonthLayoutProps> = ({
                     onClick={(event) => {
                       // Similar click handling as DayHoursLayout
                       const target = event.currentTarget;
+
                       const rect = target.getBoundingClientRect();
+
                       const yPosition = event.clientY - rect.top;
 
                       // You can add event creation logic here
@@ -221,12 +238,15 @@ const MonthLayout: React.FC<MonthLayoutProps> = ({
                     }}
                     sx={{
                       flex: 1,
-                      minHeight: "120px",
                       borderRight: 1,
-                      borderColor: "divider",
-                      position: "relative",
                       cursor: "pointer",
+                      minHeight: "120px",
                       userSelect: "none",
+                      position: "relative",
+                      borderColor: "divider",
+                      "&:last-child": {
+                        borderRight: 0,
+                      },
                       bgcolor: isCurrentMonth
                         ? "background.paper"
                         : "action.hover",
@@ -235,45 +255,42 @@ const MonthLayout: React.FC<MonthLayoutProps> = ({
                           ? "action.hover"
                           : "action.selected",
                       },
-                      "&:last-child": {
-                        borderRight: 0,
-                      },
                     }}
                   >
                     {/* Date number and weather container */}
                     <Box
                       sx={{
+                        width: "100%",
                         p: 1,
                         display: "flex",
-                        justifyContent: "space-between",
                         alignItems: "flex-start",
-                        width: "100%",
+                        justifyContent: "space-between",
                       }}
                     >
                       {/* Date number */}
                       <Typography
                         variant="body2"
                         sx={{
+                          minWidth: "24px",
+                          width: isToday ? "24px" : "auto",
+                          display: "flex",
+                          fontSize: "14px",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          borderRadius: isToday ? "50%" : 0,
+                          height: isToday ? "24px" : "auto",
+                          bgcolor: isToday ? "primary.main" : "transparent",
+                          color: isToday
+                            ? "white"
+                            : isCurrentMonth
+                            ? "text.primary"
+                            : "text.disabled",
                           fontWeight:
                             isToday || isSelected
                               ? 700
                               : isCurrentMonth
                               ? 600
                               : 400,
-                          fontSize: "14px",
-                          color: isToday
-                            ? "white"
-                            : isCurrentMonth
-                            ? "text.primary"
-                            : "text.disabled",
-                          bgcolor: isToday ? "primary.main" : "transparent",
-                          borderRadius: isToday ? "50%" : 0,
-                          width: isToday ? "24px" : "auto",
-                          height: isToday ? "24px" : "auto",
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "center",
-                          minWidth: "24px",
                         }}
                       >
                         {day.format("D")}
@@ -283,17 +300,17 @@ const MonthLayout: React.FC<MonthLayoutProps> = ({
                       {showWeather && (
                         <Box
                           sx={{
-                            display: "flex",
-                            flexDirection: "column",
-                            alignItems: "center",
                             gap: 0.5,
+                            display: "flex",
+                            alignItems: "center",
+                            flexDirection: "column",
                           }}
                         >
                           <Typography
                             variant="body2"
                             sx={{
-                              fontSize: "16px",
                               lineHeight: 1,
+                              fontSize: "16px",
                             }}
                           >
                             {weatherIcons[weatherData.type]}
@@ -301,9 +318,9 @@ const MonthLayout: React.FC<MonthLayoutProps> = ({
                           <Typography
                             variant="caption"
                             sx={{
+                              fontWeight: 500,
                               fontSize: "10px",
                               color: "text.secondary",
-                              fontWeight: 500,
                             }}
                           >
                             {weatherData.temp}°
@@ -315,12 +332,12 @@ const MonthLayout: React.FC<MonthLayoutProps> = ({
                     {/* Events container - where children/events will be rendered */}
                     <Box
                       sx={{
-                        position: "absolute",
-                        top: showWeather ? "40px" : "32px", // Adjust top position if weather is shown
                         left: "4px",
                         right: "4px",
                         bottom: "4px",
                         overflow: "hidden",
+                        position: "absolute",
+                        top: showWeather ? "40px" : "32px", // Adjust top position if weather is shown
                       }}
                     >
                       {/* This is where events for this specific day would be rendered */}
@@ -337,13 +354,13 @@ const MonthLayout: React.FC<MonthLayoutProps> = ({
       {children && (
         <Box
           sx={{
-            position: "absolute",
             top: 0,
             left: 0,
             right: 0,
             bottom: 0,
-            pointerEvents: "none",
             zIndex: 1,
+            position: "absolute",
+            pointerEvents: "none",
             "& > *": {
               pointerEvents: "auto",
             },

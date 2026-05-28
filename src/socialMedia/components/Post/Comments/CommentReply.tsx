@@ -1,16 +1,20 @@
+// MUI
 import { Stack, Typography } from "@mui/material";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 
+
+// Shared
 import UserAvatar from "../../../../shared/UserAvatar";
 import CustomTooltip from "../../../../shared/CustomTooltip";
-import type {
-  PostCommentReply,
-  ReactionUserInterface,
-} from "../../../../types/post.types";
+
+
+// Parent, Sibling, Index
+import type { ReactionUserInterface } from "../../../../types/post/postUser.types";
+import type { PostCommentReply } from "../../../../types/post/postCommentReply.types";
 
 const CommentReply = ({ reply }: { reply: PostCommentReply }) => {
   const handleCommentReplyLike = () => {
-    // eslint-disable-next-line no-console
+     
     console.log("Liked Comment Reply");
   };
 
@@ -35,7 +39,7 @@ const CommentReply = ({ reply }: { reply: PostCommentReply }) => {
           justifyContent="flex-start"
           alignItems="center"
           direction="row"
-          sx={{ my: 1, width: "100%" }}
+          sx={{ width: "100%", my: 1 }}
           gap={1.5}
         >
           <UserAvatar username={reply?.user?.username} width={30} height={30} />

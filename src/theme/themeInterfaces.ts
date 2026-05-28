@@ -1,3 +1,4 @@
+// MUI
 import { type Palette } from "@mui/material";
 
 export interface ThemeColors {

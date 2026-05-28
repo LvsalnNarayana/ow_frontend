@@ -1,12 +1,22 @@
+// External
 import { StrictMode } from "react";
-import { createRoot } from "react-dom/client";
-import "./index.css";
-import App from "./App.tsx";
 import { BrowserRouter } from "react-router";
+
+
+// Parent, Sibling, Index
+import "./index.css";
+import { createRoot } from "react-dom/client";
+
+
+// MUI
 import { CssBaseline, ThemeProvider } from "@mui/material";
-import { theme } from "./theme/index.ts";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterMoment } from "@mui/x-date-pickers/AdapterMoment";
+
+
+// Parent, Sibling, Index
+import App from "./App.tsx";
+import { theme } from "./theme/index.ts";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>

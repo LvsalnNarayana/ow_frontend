@@ -1,28 +1,21 @@
+// External
 import React from "react";
+
+
+// MUI
 import { Menu, MenuItem, ListItemIcon } from "@mui/material";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import ReportProblemIcon from "@mui/icons-material/ReportProblem";
-import type { AboutItemType } from "../../types/aboutMenu.types";
-import type { Work } from "../../types/user/work.types";
-import type { Education } from "../../types/user/education.types";
-import type { Email, Phone } from "../../types/user/user.types";
-import type { Place, UserPlace } from "../../types/place/place.types";
-import type { Gender } from "../../types/base/gender.types";
-import type { Birthdate, Relationship } from "../../types/user/userInfo.types";
+
+
+// Parent, Sibling, Index
+import type { Email, Phone } from "../../types/user/userData.types";
+import type { AboutItemData, AboutItemType } from "../../types/aboutMenu.types";
 
 interface AboutItemMenuProps {
   type: AboutItemType;
-  data:
-    | Work
-    | Education
-    | Email
-    | Place
-    | Phone
-    | Gender
-    | Birthdate
-    | Relationship
-    | UserPlace;
+  data: AboutItemData;
   anchorEl: HTMLElement | null;
   open: boolean;
   onClose: () => void;
@@ -34,10 +27,10 @@ interface AboutItemMenuProps {
 const AboutItemMenu: React.FC<AboutItemMenuProps> = ({
   type,
   data,
-  anchorEl,
   open,
-  onClose,
   onEdit,
+  onClose,
+  anchorEl,
   onDelete,
   onVerify,
 }) => {
@@ -70,8 +63,8 @@ const AboutItemMenu: React.FC<AboutItemMenuProps> = ({
       PaperProps={{
         elevation: 0,
         sx: {
-          mt: 1,
           width: "auto",
+          mt: 1,
           overflow: "visible",
         },
       }}

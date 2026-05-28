@@ -1,6 +1,19 @@
+// External
 import React from "react";
 import moment from "moment";
-import { Typography, Stack } from "@mui/material";
+
+
+// MUI
+import { Stack, Typography } from "@mui/material";
+
+
+// Parent, Sibling, Index
+import type { Work } from "../../types/user/work.types";
+import type { Gender } from "../../types/base/gender.types";
+import type { UserPlace } from "../../types/place/place.types";
+import type { Education } from "../../types/user/education.types";
+import type { Email, Phone } from "../../types/user/userData.types";
+import type { Birthdate, Relationship } from "../../types/user/userInfo.types";
 import type { AboutItemData, AboutItemType } from "../../types/aboutMenu.types";
 
 interface AboutItemContentProps {
@@ -16,70 +29,93 @@ const AboutItemContent: React.FC<AboutItemContentProps> = ({
 }) => {
   const renderContent = () => {
     switch (type) {
-      case "workplace":
+      case "workplace": {
+        const work = data as Work;
         return (
           <>
             <Typography sx={{ fontSize: "14px" }}>
-              {data?.current ? "working" : "Worked"}{" "}
-              {data.position && `as ${data.position}`} at <b>{data.company}</b>
+              {work.current ? "working" : "Worked"}{" "}
+              {work.position && `as ${work.position}`} at{" "}
+              <b>{work.company}</b>
             </Typography>
             <Typography sx={{ fontSize: "12px" }}>
-              from {moment(data.startDate).format("YYYY")} to{" "}
-              {data.current ? "current" : moment(data.endDate).format("YYYY")}
+              from {moment(work.startDate).format("YYYY")} to{" "}
+              {work.current ? "current" : moment(work.endDate).format("YYYY")}
             </Typography>
           </>
         );
+      }
 
-      case "birthday":
+      case "birthday": {
+        const birthdate = data as Birthdate;
         return (
           <>
             <Typography sx={{ fontSize: "14px" }}>
-              {moment(data.date).format("DD MMMM")}
+              {moment(birthdate.date).format("DD MMMM")}
             </Typography>
             <Typography sx={{ fontSize: "12px" }}>Birth date</Typography>
           </>
         );
+      }
 
-      case "school":
+      case "school": {
+        const education = data as Education;
         return (
           <>
             <Typography sx={{ fontSize: "14px" }}>
-              {data?.graduated ? "Studied" : "Studying"} at <b>{data.school}</b>
+              {education.current ? "Studying" : "Studied"} at{" "}
+              <b>{education.school}</b>
             </Typography>
             <Typography sx={{ fontSize: "12px" }}>
-              from {moment(data.startDate).format("YYYY")} to{" "}
-              {data.graduated ? moment(data.endDate).format("YYYY") : "current"}
+              from {moment(education.startDate).format("YYYY")} to{" "}
+              {education.current
+                ? "current"
+                : moment(education.endDate).format("YYYY")}
             </Typography>
           </>
         );
+      }
 
       case "email":
-        return <Typography sx={{ fontSize: "14px" }}>{data.email}</Typography>;
+        return (
+          <Typography sx={{ fontSize: "14px" }}>
+            {(data as Email).email}
+          </Typography>
+        );
 
       case "gender":
         return (
           <>
-            <Typography sx={{ fontSize: "14px" }}>{data.value}</Typography>
+            <Typography sx={{ fontSize: "14px" }}>{data as Gender}</Typography>
             <Typography sx={{ fontSize: "12px" }}>Gender</Typography>
           </>
         );
 
-      case "phone":
+      case "phone": {
+        const phone = data as Phone;
         return (
           <Typography sx={{ fontSize: "14px" }}>
-            {data.countryCode} {data.phone}
+            {phone.countryCode} {phone.phone}
           </Typography>
         );
+      }
 
-      case "place":
+      case "place": {
+        const place = data as UserPlace;
         return (
           <Typography sx={{ fontSize: "14px" }}>
-            {data.current && "Lives in"} {data.address?.city}
+            {place.isCurrent && "Lives in "}
+            {place.placeType}
           </Typography>
         );
+      }
 
       case "relationship":
-        return <Typography sx={{ fontSize: "14px" }}>{data.status}</Typography>;
+        return (
+          <Typography sx={{ fontSize: "14px" }}>
+            {(data as Relationship).status}
+          </Typography>
+        );
 
       default:
         return null;

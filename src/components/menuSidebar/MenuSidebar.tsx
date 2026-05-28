@@ -1,16 +1,26 @@
+// External
+import { type JSX } from "react";
+import { useLocation } from "react-router";
+
+
+// MUI
 import {
   Box,
+  Stack,
   Collapse,
   MenuList,
-  Stack,
-  Typography,
   useTheme,
+  Typography,
 } from "@mui/material";
-import { useLocation } from "react-router";
-import SidebarMenuItem from "./SidebarMenuItem";
+
+
+// Shared
 import UserAvatar from "../../shared/UserAvatar";
+
+
+// Parent, Sibling, Index
+import SidebarMenuItem from "./SidebarMenuItem";
 import navigationData from "../../data/navigationData";
-import { type JSX } from "react";
 
 const MenuSidebar = ({
   open,
@@ -22,6 +32,7 @@ const MenuSidebar = ({
   handleClose: () => void;
 }): JSX.Element => {
   const theme = useTheme();
+
   const { pathname } = useLocation();
   return (
     <Stack
@@ -34,8 +45,8 @@ const MenuSidebar = ({
       alignItems={"flex-start"}
       justifyContent="space-between"
       sx={{
-        overflowX: "hidden",
         userSelect: "none",
+        overflowX: "hidden",
         transition: theme.transitions.create("padding", {
           easing: theme.transitions.easing.sharp,
           duration: theme.transitions.duration.enteringScreen,

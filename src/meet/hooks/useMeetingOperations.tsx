@@ -1,15 +1,20 @@
-import { useState, useCallback } from "react";
-import type { MeetDashboardState } from "../../types/meet/meeting.types";
+// External
 import { useNavigate } from "react-router";
+import { useState, useCallback } from "react";
+
+
+// Parent, Sibling, Index
+import type { MeetDashboardState } from "../../types/meet/meeting.types";
 
 export const useMeetingOperations = () => {
   const navigate = useNavigate();
+
   const [state, setState] = useState<MeetDashboardState>({
     roomId: "",
-    isCreatingMeeting: false,
-    isJoiningMeeting: false,
     error: null,
     recentMeetings: [],
+    isJoiningMeeting: false,
+    isCreatingMeeting: false,
   });
 
   const updateState = useCallback((updates: Partial<MeetDashboardState>) => {
@@ -17,7 +22,7 @@ export const useMeetingOperations = () => {
   }, []);
 
   const createMeeting = useCallback(async () => {
-    updateState({ isCreatingMeeting: true, error: null });
+    updateState({ error: null, isCreatingMeeting: true });
 
     try {
       // Simulate API call
@@ -29,8 +34,8 @@ export const useMeetingOperations = () => {
       navigate(`/meet/room/${newRoomId}`);
     } catch (error) {
       updateState({
-        error: "Failed to create meeting. Please try again.",
         isCreatingMeeting: false,
+        error: "Failed to create meeting. Please try again.",
       });
     }
   }, [navigate, updateState]);
@@ -42,7 +47,7 @@ export const useMeetingOperations = () => {
         return;
       }
 
-      updateState({ isJoiningMeeting: true, error: null });
+      updateState({ error: null, isJoiningMeeting: true });
 
       try {
         // Simulate API call to validate room
@@ -52,8 +57,8 @@ export const useMeetingOperations = () => {
         navigate(`/meet/room/${roomId.trim()}`);
       } catch (error) {
         updateState({
-          error: "Room not found or invalid room ID",
           isJoiningMeeting: false,
+          error: "Room not found or invalid room ID",
         });
       }
     },
@@ -73,9 +78,9 @@ export const useMeetingOperations = () => {
 
   return {
     state,
-    createMeeting,
-    joinMeeting,
     setRoomId,
     clearError,
+    joinMeeting,
+    createMeeting,
   };
 };

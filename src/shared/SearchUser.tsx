@@ -1,15 +1,20 @@
 /* eslint-disable import/no-duplicates */
+// External
 import { useMemo } from "react";
 
+
+// MUI
 import {
   Chip,
   Stack,
+  useTheme,
   TextField,
   Typography,
   Autocomplete,
-  useTheme,
 } from "@mui/material";
 
+
+// Parent, Sibling, Index
 import UserAvatar from "./UserAvatar";
 import type { UserReference } from "../types/base/userReference.types";
 import type { FriendshipStatus } from "../types/base/friendshipStatus.types";
@@ -22,6 +27,7 @@ const SearchUser = ({
   setSelectedUsers: (users: UserReference[]) => void;
 }) => {
   const theme = useTheme();
+
   const friends = useMemo(() => {
     return [
       {
@@ -29,14 +35,14 @@ const SearchUser = ({
         lastName: "Smith",
         firstName: "Jane",
         username: "jane_smith",
-        mutual_friends_count: 10,
+        mutualFriendsCount: 10,
         friendship_status: "friends" as FriendshipStatus,
       },
       {
         id: "user_1236",
         firstName: "John",
         lastName: "Johnson",
-        mutual_friends_count: 8,
+        mutualFriendsCount: 8,
         username: "john_johnson",
         friendship_status: "friends" as FriendshipStatus,
       },
@@ -44,7 +50,7 @@ const SearchUser = ({
         id: "user_1237",
         firstName: "Emily",
         lastName: "Williams",
-        mutual_friends_count: 12,
+        mutualFriendsCount: 12,
         username: "emily_williams",
         friendship_status: "friends" as FriendshipStatus,
       },
@@ -52,7 +58,7 @@ const SearchUser = ({
         id: "user_1238",
         lastName: "Brown",
         firstName: "Michael",
-        mutual_friends_count: 5,
+        mutualFriendsCount: 5,
         username: "michael_brown",
         friendship_status: "friends" as FriendshipStatus,
       },
@@ -60,15 +66,15 @@ const SearchUser = ({
         id: "user_1239",
         lastName: "Jones",
         firstName: "Sarah",
+        mutualFriendsCount: 7,
         username: "sarah_jones",
-        mutual_friends_count: 7,
         friendship_status: "friends" as FriendshipStatus,
       },
       {
         id: "user_1240",
         lastName: "Garcia",
         firstName: "David",
-        mutual_friends_count: 9,
+        mutualFriendsCount: 9,
         username: "david_garcia",
         friendship_status: "friends" as FriendshipStatus,
       },
@@ -76,7 +82,7 @@ const SearchUser = ({
         id: "user_1241",
         firstName: "Laura",
         lastName: "Martinez",
-        mutual_friends_count: 11,
+        mutualFriendsCount: 11,
         username: "laura_martinez",
         friendship_status: "friends" as FriendshipStatus,
       },
@@ -84,15 +90,15 @@ const SearchUser = ({
         id: "user_1242",
         lastName: "Davis",
         firstName: "James",
+        mutualFriendsCount: 6,
         username: "james_davis",
-        mutual_friends_count: 6,
         friendship_status: "friends" as FriendshipStatus,
       },
       {
         id: "user_1243",
         firstName: "Anna",
         lastName: "Rodriguez",
-        mutual_friends_count: 10,
+        mutualFriendsCount: 10,
         username: "anna_rodriguez",
         friendship_status: "friends" as FriendshipStatus,
       },
@@ -100,7 +106,7 @@ const SearchUser = ({
         id: "user_1244",
         firstName: "Carlos",
         lastName: "Martinez",
-        mutual_friends_count: 13,
+        mutualFriendsCount: 13,
         username: "carlos_martinez",
         friendship_status: "friends" as FriendshipStatus,
       },
@@ -108,7 +114,7 @@ const SearchUser = ({
         id: "user_1245",
         lastName: "Lopez",
         firstName: "Sophia",
-        mutual_friends_count: 4,
+        mutualFriendsCount: 4,
         username: "sophia_lopez",
         friendship_status: "friends" as FriendshipStatus,
       },
@@ -116,7 +122,7 @@ const SearchUser = ({
         id: "user_1246",
         firstName: "Daniel",
         lastName: "Gonzalez",
-        mutual_friends_count: 14,
+        mutualFriendsCount: 14,
         username: "daniel_gonzalez",
         friendship_status: "friends" as FriendshipStatus,
       },
@@ -124,7 +130,7 @@ const SearchUser = ({
         id: "user_1247",
         lastName: "Wilson",
         firstName: "Olivia",
-        mutual_friends_count: 6,
+        mutualFriendsCount: 6,
         username: "olivia_wilson",
         friendship_status: "friends" as FriendshipStatus,
       },
@@ -132,7 +138,7 @@ const SearchUser = ({
         id: "user_1248",
         lastName: "Anderson",
         firstName: "William",
-        mutual_friends_count: 10,
+        mutualFriendsCount: 10,
         username: "william_anderson",
         friendship_status: "friends" as FriendshipStatus,
       },
@@ -140,15 +146,15 @@ const SearchUser = ({
         id: "user_1249",
         firstName: "Emma",
         lastName: "Thomas",
+        mutualFriendsCount: 7,
         username: "emma_thomas",
-        mutual_friends_count: 7,
         friendship_status: "friends" as FriendshipStatus,
       },
       {
         id: "user_1250",
         lastName: "Taylor",
         firstName: "Ethan",
-        mutual_friends_count: 8,
+        mutualFriendsCount: 8,
         username: "ethan_taylor",
         friendship_status: "friends" as FriendshipStatus,
       },
@@ -157,22 +163,22 @@ const SearchUser = ({
         firstName: "Mia",
         lastName: "Moore",
         username: "mia_moore",
-        mutual_friends_count: 5,
+        mutualFriendsCount: 5,
         friendship_status: "friends" as FriendshipStatus,
       },
       {
         id: "user_1252",
         firstName: "Ava",
         lastName: "Jackson",
+        mutualFriendsCount: 9,
         username: "ava_jackson",
-        mutual_friends_count: 9,
         friendship_status: "friends" as FriendshipStatus,
       },
       {
         id: "user_1253",
         lastName: "Martin",
         firstName: "Alexander",
-        mutual_friends_count: 11,
+        mutualFriendsCount: 11,
         username: "alexander_martin",
         friendship_status: "friends" as FriendshipStatus,
       },
@@ -180,7 +186,7 @@ const SearchUser = ({
         id: "user_1254",
         lastName: "Lee",
         firstName: "Isabella",
-        mutual_friends_count: 6,
+        mutualFriendsCount: 6,
         username: "isabella_lee",
         friendship_status: "friends" as FriendshipStatus,
       },
@@ -204,7 +210,7 @@ const SearchUser = ({
         limitTags={3}
         filterSelectedOptions
         value={selectedUsers || []}
-        onChange={(event: React.SyntheticEvent, newValue: UserReference[]) => {
+        onChange={(_event: React.SyntheticEvent, newValue: UserReference[]) => {
           setSelectedUsers(newValue);
         }}
         getOptionLabel={(option) => {
@@ -288,7 +294,7 @@ const SearchUser = ({
                     {option?.firstName} {option?.lastName}
                   </Typography>
                   <Typography variant="body1" sx={{ fontSize: "11px" }}>
-                    {option?.mutual_friends_count} Mutual Friends
+                    {option?.mutualFriendsCount} Mutual Friends
                   </Typography>
                 </Stack>
               </Stack>
@@ -296,25 +302,13 @@ const SearchUser = ({
           );
         }}
         slots={{
-          popper: ({ children }) => {
-            return (
-              <Stack
-                direction="column"
-                justifyContent="flex-start"
-                alignItems="flex-start"
-                width={"100%"}
-              >
-                {children}
-              </Stack>
-            );
-          },
           paper: ({ children }) => {
             return (
               <Stack
                 sx={{
+                  width: "100%",
                   p: 0,
                   mt: 2,
-                  width: "100%",
                   flexGrow: 1,
                   overflowY: "auto",
                   borderRadius: "4px",

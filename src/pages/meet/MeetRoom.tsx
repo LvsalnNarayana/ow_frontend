@@ -1,33 +1,40 @@
+// External
 import React from "react";
+import { useParams } from "react-router";
+
+
+// MUI
 import { Box, Stack, useTheme, Typography } from "@mui/material";
 
+
+// Parent, Sibling, Index
 import VideoGrid from "../../meet/components/VideoGrid";
-import MeetingControls from "../../meet/components/MeetingControls";
 import ChatSidebar from "../../meet/components/ChatSidebar";
-import ParticipantsSidebar from "../../meet/components/ParticipantSidebar";
-import { useParams } from "react-router";
-import { useMeetingRoom } from "../../meet/hooks/UseMeetingRoom";
 import MeetingHeader from "../../meet/components/MeetingHeader";
+import { useMeetingRoom } from "../../meet/hooks/UseMeetingRoom";
+import MeetingControls from "../../meet/components/MeetingControls";
+import ParticipantsSidebar from "../../meet/components/ParticipantSidebar";
 
 const MeetRoom: React.FC = () => {
   const theme = useTheme();
+
   const { roomId } = useParams<{ roomId: string }>();
 
   const {
-    participants,
-    chatMessages,
-    currentUser,
-    meetingInfo,
+    toggleVideo,
     settings,
     toggleMute,
-    toggleVideo,
-    toggleScreenShare,
-    toggleRecording,
     toggleChat,
-    toggleParticipants,
+    currentUser,
+    meetingInfo,
     sendMessage,
-    leaveMeeting,
     setSettings,
+    participants,
+    chatMessages,
+    leaveMeeting,
+    toggleRecording,
+    toggleScreenShare,
+    toggleParticipants,
   } = useMeetingRoom(roomId || "");
 
   const handleLayoutChange = (layout: "grid" | "spotlight" | "sidebar") => {
@@ -60,13 +67,13 @@ const MeetRoom: React.FC = () => {
   return (
     <Box
       sx={{
-        p: 2,
-        borderRadius: theme?.shape?.radius?.xs,
         width: "100%",
+        p: 2,
         height: "100%",
-        backgroundColor: "grey.900",
-        position: "relative",
         overflow: "hidden",
+        position: "relative",
+        backgroundColor: "grey.900",
+        borderRadius: theme?.shape?.radius?.xs,
       }}
     >
       {/* Meeting Header */}
@@ -83,11 +90,11 @@ const MeetRoom: React.FC = () => {
         {/* Video Area */}
         <Box
           sx={{
+            pb: 5, // Space for controls
             flexGrow: 1,
             height: "100%",
             position: "relative",
             pt: settings.isChatOpen || settings.isParticipantsOpen ? 3 : 3,
-            pb: 5, // Space for controls
           }}
         >
           <VideoGrid

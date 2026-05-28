@@ -1,17 +1,26 @@
+// External
+import { useParams, useNavigate } from "react-router";
+
+
+// MUI
 import {
-  ListItemIcon,
-  Stack,
-  Typography,
-  useTheme,
   Box,
+  Stack,
+  useTheme,
+  Typography,
+  ListItemIcon,
   ListItemButton,
 } from "@mui/material";
+
+
+// Shared
 import UserAvatar from "../../shared/UserAvatar";
-import { useNavigate, useParams } from "react-router";
 
 const ChatItem = ({ username }: { username: string }) => {
   const theme = useTheme();
+
   const { chatId } = useParams();
+
   const navigate = useNavigate();
 
   return (
@@ -21,13 +30,13 @@ const ChatItem = ({ username }: { username: string }) => {
       onClick={() => navigate(`/chat/${username}`)}
       sx={{
         width: "100%",
-        boxSizing: "border-box",
-        px: 1.5,
         py: 1,
-        backgroundColor: theme.palette.background.paper,
-        color: theme.palette.text.primary,
+        px: 1.5,
         borderRadius: 1,
         overflow: "hidden",
+        boxSizing: "border-box",
+        color: theme.palette.text.primary,
+        backgroundColor: theme.palette.background.paper,
       }}
     >
       <ListItemIcon sx={{ mr: 2 }}>
@@ -54,9 +63,9 @@ const ChatItem = ({ username }: { username: string }) => {
             fontSize={14}
             noWrap
             sx={{
-              textOverflow: "ellipsis",
               overflow: "hidden",
               whiteSpace: "nowrap",
+              textOverflow: "ellipsis",
             }}
           >
             hello world!! this is amazing and awesome at the same time

@@ -1,3 +1,4 @@
+// Parent, Sibling, Index
 import type { Feeling } from "../types/base/feelings.type";
 
 export const feelings: {

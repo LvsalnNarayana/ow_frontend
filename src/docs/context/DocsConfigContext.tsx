@@ -1,8 +1,9 @@
+// External
 import React, {
-  createContext,
-  useContext,
   useMemo,
   useState,
+  useContext,
+  createContext,
   type ReactNode,
 } from "react";
 
@@ -43,17 +44,17 @@ interface UpdateSettingKey {
 // Initial State
 // ----------------------
 const initialSettingsState: DocSettings = {
-  layout: {
-    tableOfContents: false,
-    pageSetup: false,
-    comments: true,
+  editor: {
+    spellingGrammar: true,
   },
   document: {
     zoom: 100,
     wordCount: false,
   },
-  editor: {
-    spellingGrammar: true,
+  layout: {
+    comments: true,
+    pageSetup: false,
+    tableOfContents: false,
   },
 };
 
@@ -84,7 +85,7 @@ export const DocConfigProvider: React.FC<{ children: ReactNode }> = ({
   const [settings, setSettings] = useState<DocSettings>(initialSettingsState);
 
   const updateSetting = (
-    { section, key }: UpdateSettingKey,
+    { key, section }: UpdateSettingKey,
     value: boolean | string | number
   ) => {
     setSettings((prev) => ({

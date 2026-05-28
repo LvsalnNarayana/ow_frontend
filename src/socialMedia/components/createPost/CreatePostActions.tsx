@@ -1,24 +1,34 @@
+// External
 import React from "react";
 
+
+// MUI
 import TagFacesIcon from "@mui/icons-material/TagFaces";
 import LocalOfferIcon from "@mui/icons-material/LocalOffer";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
+import PhotoCameraFrontIcon from "@mui/icons-material/PhotoCameraFront";
+import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
 import {
   Stack,
   Tooltip,
+  useTheme,
   Typography,
   IconButton,
-  useTheme,
 } from "@mui/material";
-import PhotoCameraFrontIcon from "@mui/icons-material/PhotoCameraFront";
-import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
+
+
+// Context
 import { useCreatePostContext } from "../../context/CreatePostContext";
+
+
+// Parent, Sibling, Index
 import type { PostMedia } from "../../../types/post/postMedia.types";
 
 // PostMedia interface (omitting id as requested)
 
 const CreatePostActions = () => {
   const theme = useTheme();
+
   const {
     actions: { addMedia, setCreatePostScreen },
   } = useCreatePostContext();
@@ -67,18 +77,18 @@ const CreatePostActions = () => {
   // Helper function to get file format from MIME type
   const getFileFormat = (mimeType: string): string => {
     const formatMap: Record<string, string> = {
-      "image/jpeg": "JPEG",
-      "image/jpg": "JPG",
-      "image/png": "PNG",
-      "image/gif": "GIF",
-      "image/webp": "WEBP",
-      "image/svg+xml": "SVG",
       "video/mp4": "MP4",
-      "video/webm": "WEBM",
       "video/ogg": "OGG",
       "video/avi": "AVI",
       "video/mov": "MOV",
+      "video/webm": "WEBM",
       "video/quicktime": "MOV",
+      "image/jpg": "JPG",
+      "image/png": "PNG",
+      "image/gif": "GIF",
+      "image/jpeg": "JPEG",
+      "image/webp": "WEBP",
+      "image/svg+xml": "SVG",
     };
 
     return (
@@ -98,19 +108,21 @@ const CreatePostActions = () => {
     const mediaPromises = fileArray.map(
       async (file): Promise<Omit<PostMedia, "id">> => {
         const url = URL.createObjectURL(file);
+
         const dimensions = await getMediaDimensions(file);
+
         const duration = await getVideoDuration(file);
 
         return {
           url,
+          is_processed: false, // Initially not processed
           metadata: {
-            filename: file.name,
-            size: file.size,
             duration,
             dimensions,
+            size: file.size,
+            filename: file.name,
             format: getFileFormat(file.type),
           },
-          is_processed: false, // Initially not processed
         };
       }
     );
@@ -131,10 +143,10 @@ const CreatePostActions = () => {
   return (
     <Stack
       sx={{
+        width: "100%",
         p: 1,
         px: 2,
         mb: 2,
-        width: "100%",
         borderRadius: theme?.shape?.radius?.xs,
         border: `1px solid ${theme?.palette?.divider}`,
       }}

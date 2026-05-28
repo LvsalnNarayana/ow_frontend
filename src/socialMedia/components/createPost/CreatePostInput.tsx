@@ -1,16 +1,15 @@
  
 /* eslint-disable import/no-extraneous-dependencies */
  
-// External
-import { useState, useEffect } from "react";
-
-
 // MUI
 import { TextField } from "@mui/material";
 
 
 // Context
 import { useCreatePostContext } from "../../context/CreatePostContext";
+
+
+// Parent, Sibling, Index
 import { generateUser } from "../../../types/user/user.types";
 
 const CreatePostInput = () => {
@@ -20,29 +19,6 @@ const CreatePostInput = () => {
       content: { text },
     },
   } = useCreatePostContext();
-
-  const [mentions, setMentions] = useState<string[]>([]);
-
-  const [hashtags, setHashtags] = useState<string[]>([]);
-
-  useEffect(() => {
-    const extractEntities = (text: string) => {
-      const mentionRegex = /@\w+/g;
-
-      const hashtagRegex = /#\w+/g;
-
-      const mentionsArray = text.match(mentionRegex) || [];
-
-      const hashtagsArray = text.match(hashtagRegex) || [];
-
-      setMentions(mentionsArray);
-      setHashtags(hashtagsArray);
-    };
-
-    if (text) {
-      extractEntities(text);
-    }
-  }, [text]);
 
   return (
     <TextField

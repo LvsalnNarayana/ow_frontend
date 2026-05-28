@@ -1,14 +1,18 @@
+// External
 import { faker } from "@faker-js/faker";
-import { generateBaseEntity, type BaseEntity } from "../base/base.types";
+
+
+// Parent, Sibling, Index
+import { type BaseEntity, generateBaseEntity } from "../base/base.types";
+import { type ReactionData, generateReactionData } from "./reactionData.types";
 import {
-  generatePostCommentReply,
-  type PostCommentReply,
-} from "./postCommentReply.types";
-import {
-  generatePostUserInterface,
   type PostUserInterface,
+  generatePostUserInterface,
 } from "./postUser.types";
-import { generateReactionData, type ReactionData } from "./reactionData.types";
+import {
+  type PostCommentReply,
+  generatePostCommentReply,
+} from "./postCommentReply.types";
 
 export interface PostComment extends BaseEntity {
   content: string;
@@ -35,6 +39,9 @@ export const generatePostComment = (): PostComment => {
   return {
     ...generateBaseEntity(),
     content: faker.lorem.sentence(),
+    reactions: generateReactionData(),
+    is_edited: faker.datatype.boolean(),
+    edited_at: faker.date.recent().toISOString(),
     commented_at: faker.date.recent().toISOString(),
     user: {
       ...generatePostUserInterface(),
@@ -46,24 +53,21 @@ export const generatePostComment = (): PostComment => {
           ...generatePostUserInterface(),
         } as PostUserInterface)
     ),
-    reactions: generateReactionData(),
+    status: {
+      is_hidden: faker.datatype.boolean(),
+      is_pinned: faker.datatype.boolean(),
+      is_deleted: faker.datatype.boolean(),
+      is_reported: faker.datatype.boolean(),
+    },
     replies: {
+      has_more: faker.datatype.boolean(),
+      total_count: faker.number.int({ min: 0, max: 100 }),
       items: Array.from(
         { length: faker.number.int({ min: 0, max: 10 }) },
         () => ({
           ...generatePostCommentReply(),
         })
       ),
-      total_count: faker.number.int({ min: 0, max: 100 }),
-      has_more: faker.datatype.boolean(),
-    },
-    is_edited: faker.datatype.boolean(),
-    edited_at: faker.date.recent().toISOString(),
-    status: {
-      is_deleted: faker.datatype.boolean(),
-      is_reported: faker.datatype.boolean(),
-      is_hidden: faker.datatype.boolean(),
-      is_pinned: faker.datatype.boolean(),
     },
   };
 };

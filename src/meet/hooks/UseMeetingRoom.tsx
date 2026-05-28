@@ -1,41 +1,49 @@
-import { useState, useCallback, useEffect } from "react";
+// External
+import { useState, useEffect, useCallback } from "react";
+
+
+// Parent, Sibling, Index
 import type {
   Participant,
   ChatMessage,
-  MeetingSettings,
   MeetingInfo,
+  MeetingSettings,
 } from "../../types/meet/meeting.types";
 
 export const useMeetingRoom = (roomId: string) => {
   const [participants, setParticipants] = useState<Participant[]>([]);
+
   const [chatMessages, setChatMessages] = useState<ChatMessage[]>([]);
+
   const [currentUser, setCurrentUser] = useState<Participant | null>(null);
+
   const [meetingInfo, setMeetingInfo] = useState<MeetingInfo | null>(null);
+
   const [settings, setSettings] = useState<MeetingSettings>({
-    isMuted: false,
     isVideoOn: true,
-    isScreenSharing: false,
-    isRecording: false,
-    isChatOpen: false,
-    isParticipantsOpen: false,
-    isFullScreen: false,
+    isMuted: false,
     layout: "grid",
+    isChatOpen: false,
+    isRecording: false,
+    isFullScreen: false,
     backgroundBlur: false,
+    isScreenSharing: false,
+    isParticipantsOpen: false,
   });
 
   // Mock data initialization
   useEffect(() => {
     // Initialize mock data
     const mockCurrentUser: Participant = {
+      isVideoOn: true,
       id: "current-user",
       name: "You",
-      email: "you@example.com",
       isHost: true,
       isMuted: false,
-      isVideoOn: true,
-      isScreenSharing: false,
       isHandRaised: false,
       joinedAt: new Date(),
+      isScreenSharing: false,
+      email: "you@example.com",
       connectionStatus: "connected",
     };
 
@@ -43,37 +51,37 @@ export const useMeetingRoom = (roomId: string) => {
       mockCurrentUser,
       {
         id: "user-1",
-        name: "John Doe",
-        email: "john@example.com",
+        isVideoOn: true,
         isHost: false,
         isMuted: true,
-        isVideoOn: true,
-        isScreenSharing: false,
+        name: "John Doe",
         isHandRaised: false,
-        joinedAt: new Date(Date.now() - 300000),
+        isScreenSharing: false,
+        email: "john@example.com",
         connectionStatus: "connected",
+        joinedAt: new Date(Date.now() - 300000),
       },
       {
         id: "user-2",
-        name: "Jane Smith",
-        email: "jane@example.com",
+        isVideoOn: false,
         isHost: false,
         isMuted: false,
-        isVideoOn: false,
-        isScreenSharing: false,
+        name: "Jane Smith",
         isHandRaised: true,
-        joinedAt: new Date(Date.now() - 600000),
+        isScreenSharing: false,
+        email: "jane@example.com",
         connectionStatus: "connected",
+        joinedAt: new Date(Date.now() - 600000),
       },
     ];
 
     const mockMeetingInfo: MeetingInfo = {
       id: roomId,
-      title: "Team Meeting",
-      startTime: new Date(Date.now() - 900000),
       duration: 0,
-      hostId: "current-user",
       isRecording: false,
+      title: "Team Meeting",
+      hostId: "current-user",
+      startTime: new Date(Date.now() - 900000),
     };
 
     setCurrentUser(mockCurrentUser);
@@ -122,16 +130,16 @@ export const useMeetingRoom = (roomId: string) => {
   const toggleChat = useCallback(() => {
     setSettings((prev) => ({
       ...prev,
-      isChatOpen: !prev.isChatOpen,
       isParticipantsOpen: false,
+      isChatOpen: !prev.isChatOpen,
     }));
   }, []);
 
   const toggleParticipants = useCallback(() => {
     setSettings((prev) => ({
       ...prev,
-      isParticipantsOpen: !prev.isParticipantsOpen,
       isChatOpen: false,
+      isParticipantsOpen: !prev.isParticipantsOpen,
     }));
   }, []);
 
@@ -141,11 +149,11 @@ export const useMeetingRoom = (roomId: string) => {
 
       const newMessage: ChatMessage = {
         id: Date.now().toString(),
+        type: "text",
+        timestamp: new Date(),
+        message: message.trim(),
         senderId: currentUser.id,
         senderName: currentUser.name,
-        message: message.trim(),
-        timestamp: new Date(),
-        type: "text",
       };
 
       setChatMessages((prev) => [...prev, newMessage]);
@@ -159,19 +167,19 @@ export const useMeetingRoom = (roomId: string) => {
   }, []);
 
   return {
-    participants,
-    chatMessages,
-    currentUser,
-    meetingInfo,
+    toggleVideo,
     settings,
     toggleMute,
-    toggleVideo,
-    toggleScreenShare,
-    toggleRecording,
     toggleChat,
-    toggleParticipants,
+    currentUser,
+    meetingInfo,
     sendMessage,
-    leaveMeeting,
     setSettings,
+    participants,
+    chatMessages,
+    leaveMeeting,
+    toggleRecording,
+    toggleScreenShare,
+    toggleParticipants,
   };
 };

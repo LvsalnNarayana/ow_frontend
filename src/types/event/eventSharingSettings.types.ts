@@ -1,3 +1,4 @@
+// External
 import { faker } from "@faker-js/faker";
 
 export interface EventSharingSettings {
@@ -14,8 +15,8 @@ export const generateEventSharingSettings = (): EventSharingSettings => {
     isPublic: faker.datatype.boolean(),
     shareableLink: faker.internet.url(),
     allowGuestInvites: faker.datatype.boolean(),
-    allowGuestModifications: faker.datatype.boolean(),
     expiresAt: faker.date.future().toISOString(),
+    allowGuestModifications: faker.datatype.boolean(),
     accessLevel: faker.helpers.arrayElement(["view", "edit", "admin"]),
   };
 };

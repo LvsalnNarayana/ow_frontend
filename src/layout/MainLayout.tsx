@@ -1,41 +1,48 @@
-import { styled } from "@mui/material/styles";
+// External
+import { useState } from "react";
+import { Outlet } from "react-router";
+
+
+// MUI
 import Box from "@mui/material/Box";
 import MuiDrawer from "@mui/material/Drawer";
-import { Drawer, Stack, type Theme, Typography } from "@mui/material";
-import { Outlet } from "react-router";
-import { useState } from "react";
+import { styled } from "@mui/material/styles";
+import { Stack, Drawer, type Theme, Typography } from "@mui/material";
+
+
+// Parent, Sibling, Index
 import MenuSidebar from "../components/menuSidebar/MenuSidebar";
-import MainHeader from "../components/MainHeader";
+
 const drawerWidth = 240;
 
 const openedMixin = (theme: Theme) => ({
   width: drawerWidth,
+  overflowX: "hidden",
   position: "relative",
   transition: theme?.transitions?.create("width", {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.enteringScreen,
   }),
-  overflowX: "hidden",
 });
 
 const closedMixin = (theme: Theme) => ({
   width: "60px",
+  overflowX: "hidden",
   position: "relative",
   transition: theme?.transitions?.create("width", {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.leavingScreen,
   }),
-  overflowX: "hidden",
 });
 
 const MenuDrawer = styled(MuiDrawer, {
   shouldForwardProp: (prop) => prop !== "open",
 })(({ theme }) => ({
-  flexShrink: 0,
   width: "fit-content",
+  flexShrink: 0,
+  overflow: "hidden",
   borderTopRightRadius: 20,
   borderBottomRightRadius: 20,
-  overflow: "hidden",
   variants: [
     {
       props: ({ open }) => open,
@@ -52,8 +59,8 @@ const MenuDrawer = styled(MuiDrawer, {
       style: {
         ...closedMixin(theme),
         "& .MuiDrawer-paper": {
-          backgroundColor: theme.palette.background.paper,
           border: "none",
+          backgroundColor: theme.palette.background.paper,
           ...closedMixin(theme),
         },
       },
@@ -63,21 +70,17 @@ const MenuDrawer = styled(MuiDrawer, {
 
 export default function MainLayout() {
   const [mainMenuOpen, setMainMenuOpen] = useState(false);
+
   const [notificationMenuOpen, setNotificationMenuOpen] = useState(false);
 
   const handleMainDrawerOpen = () => {
     setMainMenuOpen(true);
   };
+
   const handleMainDrawerClose = () => {
     setMainMenuOpen(false);
   };
-  const handleNotificationDrawerOpen = () => {
-    if (notificationMenuOpen) {
-      setNotificationMenuOpen(false);
-    } else {
-      setNotificationMenuOpen(true);
-    }
-  };
+
   const handleNotificationDrawerClose = () => {
     setNotificationMenuOpen(false);
   };
@@ -94,7 +97,7 @@ export default function MainLayout() {
           handleClose={handleMainDrawerClose}
         />
       </MenuDrawer>
-      <Box component="main" sx={{ flexGrow: 1, p: 2, overflowY: "hidden" }}>
+      <Box component="main" sx={{ p: 2, flexGrow: 1, overflowY: "hidden" }}>
         <Stack
           direction={"column"}
           sx={{ height: "100%" }}

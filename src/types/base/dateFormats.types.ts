@@ -133,33 +133,33 @@ export const REGIONAL_FORMATS: {
   example: string;
 }[] = [
   { label: "US Format", value: US_DATE_FORMAT, example: "12/31/2023" },
-  { label: "European Format", value: EU_DATE_FORMAT, example: "31/12/2023" },
+  { value: EU_DATE_FORMAT, example: "31/12/2023", label: "European Format" },
   { label: "UK Format", value: UK_DATE_FORMAT, example: "31/12/2023" },
   {
+    example: "31/12/2023",
     label: "Canadian Format",
     value: CANADIAN_DATE_FORMAT,
-    example: "31/12/2023",
   },
   {
+    example: "2023/12/31",
     label: "Japanese Format",
     value: JAPANESE_DATE_FORMAT,
-    example: "2023/12/31",
   },
-  { label: "German Format", value: GERMAN_DATE_FORMAT, example: "31.12.2023" },
+  { example: "31.12.2023", label: "German Format", value: GERMAN_DATE_FORMAT },
 ];
 
 export const TIME_FORMATS = [
-  { label: "12 Hour", value: TIME_12_FORMAT, example: "2:30 PM" },
-  { label: "24 Hour", value: TIME_24_FORMAT, example: "14:30" },
+  { label: "12 Hour", example: "2:30 PM", value: TIME_12_FORMAT },
+  { label: "24 Hour", example: "14:30", value: TIME_24_FORMAT },
   {
+    example: "2:30:45 PM",
     label: "12 Hour with Seconds",
     value: TIME_12_SECONDS_FORMAT,
-    example: "2:30:45 PM",
   },
   {
+    example: "14:30:45",
     label: "24 Hour with Seconds",
     value: TIME_24_SECONDS_FORMAT,
-    example: "14:30:45",
   },
 ];
 
@@ -170,7 +170,7 @@ export const DISPLAY_FORMATS = [
     example: "Monday, December 31st, 2023",
   },
   { label: "Long", value: LONG_DATE_FORMAT, example: "December 31st, 2023" },
-  { label: "Medium", value: MEDIUM_DATE_FORMAT, example: "Dec 31, 2023" },
-  { label: "Short", value: SHORT_DATE_FORMAT, example: "12/31/23" },
-  { label: "Compact", value: COMPACT_DATE_FORMAT, example: "12/31/23" },
+  { label: "Medium", example: "Dec 31, 2023", value: MEDIUM_DATE_FORMAT },
+  { label: "Short", example: "12/31/23", value: SHORT_DATE_FORMAT },
+  { label: "Compact", example: "12/31/23", value: COMPACT_DATE_FORMAT },
 ];

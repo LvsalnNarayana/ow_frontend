@@ -1,37 +1,44 @@
+// External
 import React, { useState, useEffect } from "react";
+
+
+// MUI
 import {
-  Stack,
-  IconButton,
-  useTheme,
-  Switch,
   Box,
-  Tooltip,
-  Badge,
-  Divider,
   Menu,
+  Stack,
+  Badge,
+  Switch,
+  Select,
+  styled,
+  Tooltip,
+  Divider,
+  useTheme,
   MenuItem,
+  IconButton,
+  Typography,
+  FormControl,
   ListItemIcon,
   ListItemText,
-  Typography,
-  Select,
-  FormControl,
-  styled,
 } from "@mui/material";
 import {
   CloseOutlined,
-  Notifications as NotificationsIcon,
+  Sync as SyncIcon,
+  Tune as TuneIcon,
   Search as SearchIcon,
-  LocationOn as LocationOnIcon,
-  LocationOff as LocationOffIcon,
+  Public as PublicIcon,
   Schedule as ScheduleIcon,
   Language as LanguageIcon,
-  Sync as SyncIcon,
+  LocationOn as LocationOnIcon,
+  LocationOff as LocationOffIcon,
   SyncDisabled as SyncDisabledIcon,
-  Tune as TuneIcon,
-  Public as PublicIcon,
-  NotificationsActive as NotificationsActiveIcon,
+  Notifications as NotificationsIcon,
   NotificationsOff as NotificationsOffIcon,
+  NotificationsActive as NotificationsActiveIcon,
 } from "@mui/icons-material";
+
+
+// Shared
 import TextInput from "../shared/inputs/TextInput";
 
 interface MainHeaderProps {
@@ -40,10 +47,19 @@ interface MainHeaderProps {
   isDarkMode?: boolean;
   onSearch?: (query: string) => void;
 }
+
 const ThemeSwitch = styled(Switch)(({ theme }) => ({
   width: 62,
   height: 34,
   padding: 7,
+  "& .MuiSwitch-track": {
+    opacity: 1,
+    borderRadius: 20 / 2,
+    backgroundColor: "#aab4be",
+    ...theme.applyStyles("dark", {
+      backgroundColor: "#8796A5",
+    }),
+  },
   "& .MuiSwitch-switchBase": {
     margin: 1,
     padding: 0,
@@ -51,11 +67,6 @@ const ThemeSwitch = styled(Switch)(({ theme }) => ({
     "&.Mui-checked": {
       color: "#fff",
       transform: "translateX(22px)",
-      "& .MuiSwitch-thumb:before": {
-        backgroundImage: `url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" height="20" width="20" viewBox="0 0 20 20"><path fill="${encodeURIComponent(
-          "#fff"
-        )}" d="M4.2 2.5l-.7 1.8-1.8.7 1.8.7.7 1.8.6-1.8L6.7 5l-1.9-.7-.6-1.8zm15 8.3a6.7 6.7 0 11-6.6-6.6 5.8 5.8 0 006.6 6.6z"/></svg>')`,
-      },
       "& + .MuiSwitch-track": {
         opacity: 1,
         backgroundColor: "#aab4be",
@@ -63,21 +74,26 @@ const ThemeSwitch = styled(Switch)(({ theme }) => ({
           backgroundColor: "#8796A5",
         }),
       },
+      "& .MuiSwitch-thumb:before": {
+        backgroundImage: `url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" height="20" width="20" viewBox="0 0 20 20"><path fill="${encodeURIComponent(
+          "#fff"
+        )}" d="M4.2 2.5l-.7 1.8-1.8.7 1.8.7.7 1.8.6-1.8L6.7 5l-1.9-.7-.6-1.8zm15 8.3a6.7 6.7 0 11-6.6-6.6 5.8 5.8 0 006.6 6.6z"/></svg>')`,
+      },
     },
   },
   "& .MuiSwitch-thumb": {
-    backgroundColor: "#001e3c",
     width: 32,
     height: 32,
+    backgroundColor: "#001e3c",
     "&::before": {
-      content: "''",
-      position: "absolute",
       width: "100%",
-      height: "100%",
-      left: 0,
       top: 0,
-      backgroundRepeat: "no-repeat",
+      left: 0,
+      content: "''",
+      height: "100%",
+      position: "absolute",
       backgroundPosition: "center",
+      backgroundRepeat: "no-repeat",
       backgroundImage: `url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" height="20" width="20" viewBox="0 0 20 20"><path fill="${encodeURIComponent(
         "#fff"
       )}" d="M9.305 1.667V3.75h1.389V1.667h-1.39zm-4.707 1.95l-.982.982L5.09 6.072l.982-.982-1.473-1.473zm10.802 0L13.927 5.09l.982.982 1.473-1.473-.982-.982zM10 5.139a4.872 4.872 0 00-4.862 4.86A4.872 4.872 0 0010 14.862 4.872 4.872 0 0014.86 10 4.872 4.872 0 0010 5.139zm0 1.389A3.462 3.462 0 0113.471 10a3.462 3.462 0 01-3.473 3.472A3.462 3.462 0 016.527 10 3.462 3.462 0 0110 6.528zM1.665 9.305v1.39h2.083v-1.39H1.666zm14.583 0v1.39h2.084v-1.39h-2.084zM5.09 13.928L3.616 15.4l.982.982 1.473-1.473-.982-.982zm9.82 0l-.982.982 1.473 1.473.982-.982-1.473-1.473zM9.305 16.25v2.083h1.389V16.25h-1.39z"/></svg>')`,
@@ -86,32 +102,32 @@ const ThemeSwitch = styled(Switch)(({ theme }) => ({
       backgroundColor: theme?.palette?.primary?.main,
     }),
   },
-  "& .MuiSwitch-track": {
-    opacity: 1,
-    backgroundColor: "#aab4be",
-    borderRadius: 20 / 2,
-    ...theme.applyStyles("dark", {
-      backgroundColor: "#8796A5",
-    }),
-  },
 }));
+
 const MainHeader: React.FC<MainHeaderProps> = ({
+  onSearch,
+  isDarkMode = false,
   notificationMenuOpen,
   openNotificationMenu,
-  isDarkMode = false,
-  onSearch,
 }) => {
   const theme = useTheme();
+
   const [searchQuery, setSearchQuery] = useState("");
+
   const [currentTime, setCurrentTime] = useState(new Date());
+
   const [quickAccessAnchor, setQuickAccessAnchor] =
     useState<null | HTMLElement>(null);
 
   // Quick access states for web app
   const [locationEnabled, setLocationEnabled] = useState(false);
+
   const [autoSync, setAutoSync] = useState(true);
+
   const [browserNotifications, setBrowserNotifications] = useState(false);
+
   const [selectedTimezone, setSelectedTimezone] = useState("America/New_York");
+
   const [selectedLanguage, setSelectedLanguage] = useState("en-US");
 
   // Common timezones for quick access
@@ -128,11 +144,11 @@ const MainHeader: React.FC<MainHeaderProps> = ({
   ];
 
   const languages = [
-    { label: "English", value: "en-US" },
-    { label: "Spanish", value: "es-ES" },
-    { label: "French", value: "fr-FR" },
-    { label: "German", value: "de-DE" },
-    { label: "Japanese", value: "ja-JP" },
+    { value: "en-US", label: "English" },
+    { value: "es-ES", label: "Spanish" },
+    { value: "fr-FR", label: "French" },
+    { value: "de-DE", label: "German" },
+    { value: "ja-JP", label: "Japanese" },
   ];
 
   // Update time every second
@@ -192,17 +208,17 @@ const MainHeader: React.FC<MainHeaderProps> = ({
       hour: "2-digit",
       minute: "2-digit",
       second: "2-digit",
-      hour12: selectedLanguage === "en-US",
       timeZone: selectedTimezone,
+      hour12: selectedLanguage === "en-US",
     });
   };
 
   const formatDate = (date: Date) => {
     return date.toLocaleDateString(selectedLanguage, {
-      weekday: "short",
       month: "short",
       day: "numeric",
       year: "numeric",
+      weekday: "short",
       timeZone: selectedTimezone,
     });
   };
@@ -220,11 +236,11 @@ const MainHeader: React.FC<MainHeaderProps> = ({
       sx={{
         px: 3,
         py: 1,
-        bgcolor: theme.palette.background.paper,
-        borderBottom: `1px solid ${theme.palette.divider}`,
         boxShadow: theme.shadows[1],
         zIndex: theme.zIndex.appBar,
         borderRadius: theme.shape.radius.xs,
+        bgcolor: theme.palette.background.paper,
+        borderBottom: `1px solid ${theme.palette.divider}`,
       }}
     >
       {/* Date & Time Display with Timezone */}
@@ -239,10 +255,10 @@ const MainHeader: React.FC<MainHeaderProps> = ({
           <Typography
             variant="body2"
             sx={{
-              fontWeight: 600,
               fontSize: 14,
-              color: theme.palette.text.primary,
               lineHeight: 1,
+              fontWeight: 600,
+              color: theme.palette.text.primary,
             }}
           >
             {formatTime(currentTime)}
@@ -251,8 +267,8 @@ const MainHeader: React.FC<MainHeaderProps> = ({
             variant="caption"
             sx={{
               fontSize: 12,
-              color: theme.palette.text.secondary,
               lineHeight: 1,
+              color: theme.palette.text.secondary,
             }}
           >
             {formatDate(currentTime)}
@@ -262,8 +278,8 @@ const MainHeader: React.FC<MainHeaderProps> = ({
           variant="caption"
           sx={{
             fontSize: 16,
-            color: theme.palette.primary.main,
             lineHeight: 1,
+            color: theme.palette.primary.main,
           }}
         >
           {getCurrentTimezone()}
@@ -290,25 +306,25 @@ const MainHeader: React.FC<MainHeaderProps> = ({
             startAdornment: (
               <SearchIcon
                 sx={{
-                  color: theme.palette.text.secondary,
                   mr: 1,
                   fontSize: "20px",
+                  color: theme.palette.text.secondary,
                 }}
               />
             ),
             sx: {
+              border: "none",
               borderRadius: "20px",
               backgroundColor: theme.palette.action.hover,
-              border: "none",
+              "& .MuiOutlinedInput-notchedOutline": {
+                border: "none",
+              },
               "&:hover": {
                 backgroundColor: theme.palette.action.selected,
               },
               "&.Mui-focused": {
-                backgroundColor: theme.palette.background.paper,
                 boxShadow: theme.shadows[2],
-              },
-              "& .MuiOutlinedInput-notchedOutline": {
-                border: "none",
+                backgroundColor: theme.palette.background.paper,
               },
             },
           }}
@@ -383,9 +399,9 @@ const MainHeader: React.FC<MainHeaderProps> = ({
               invisible={notificationMenuOpen}
               sx={{
                 "& .MuiBadge-badge": {
-                  fontSize: "10px",
-                  height: "16px",
                   minWidth: "16px",
+                  height: "16px",
+                  fontSize: "10px",
                 },
               }}
             >
@@ -409,8 +425,8 @@ const MainHeader: React.FC<MainHeaderProps> = ({
         }}
         PaperProps={{
           sx: {
-            mt: 1,
             minWidth: 280,
+            mt: 1,
             maxHeight: 400,
             boxShadow: theme.shadows[3],
             border: `1px solid ${theme.palette.divider}`,

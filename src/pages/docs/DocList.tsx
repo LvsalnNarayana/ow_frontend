@@ -1,44 +1,56 @@
+// External
+import { useState } from "react";
+
+
+// MUI
 import {
-  Divider,
-  Stack,
-  Typography,
   Box,
-  TextField,
-  InputAdornment,
-  Chip,
-  IconButton,
-  Menu,
-  MenuItem,
   Fab,
-  Tooltip,
+  Chip,
+  Menu,
+  Stack,
   Paper,
+  Divider,
+  Tooltip,
+  MenuItem,
   Collapse,
+  TextField,
+  Typography,
+  IconButton,
+  InputAdornment,
 } from "@mui/material";
 import {
-  Search as SearchIcon,
-  FilterList as FilterIcon,
-  ViewModule as GridViewIcon,
-  ViewList as ListViewIcon,
   Add as AddIcon,
   Sort as SortIcon,
   Clear as ClearIcon,
+  Search as SearchIcon,
+  FilterList as FilterIcon,
+  ViewList as ListViewIcon,
+  ViewModule as GridViewIcon,
 } from "@mui/icons-material";
-import { useState } from "react";
+
+
+// Parent, Sibling, Index
 import MiniDoc from "../../docs/components/MiniDoc";
 
 const DocList = () => {
   const [searchQuery, setSearchQuery] = useState("");
+
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
+
   const [filterAnchor, setFilterAnchor] = useState<null | HTMLElement>(null);
+
   const [sortAnchor, setSortAnchor] = useState<null | HTMLElement>(null);
+
   const [selectedFilter, setSelectedFilter] = useState("all");
+
   const [selectedSort, setSelectedSort] = useState("recent");
 
   const filters = [
-    { key: "all", label: "All Documents", count: 24 },
-    { key: "recent", label: "Recent", count: 8 },
-    { key: "shared", label: "Shared with me", count: 5 },
-    { key: "starred", label: "Starred", count: 3 },
+    { count: 24, key: "all", label: "All Documents" },
+    { count: 8, key: "recent", label: "Recent" },
+    { count: 5, key: "shared", label: "Shared with me" },
+    { count: 3, key: "starred", label: "Starred" },
   ];
 
   const sortOptions = [
@@ -49,9 +61,9 @@ const DocList = () => {
 
   // Mock search results
   const mockDocResults = [
-    { id: 1, title: "Project Proposal", type: "document" },
-    { id: 2, title: "Marketing Strategy", type: "document" },
-    { id: 3, title: "Budget Planning", type: "document" },
+    { id: 1, type: "document", title: "Project Proposal" },
+    { id: 2, type: "document", title: "Marketing Strategy" },
+    { id: 3, type: "document", title: "Budget Planning" },
   ];
 
   const mockUserResults = [
@@ -64,11 +76,13 @@ const DocList = () => {
   ];
 
   const hasSearchResults = searchQuery.length > 0;
+
   const showDocResults =
     hasSearchResults &&
     mockDocResults.some((doc) =>
       doc.title.toLowerCase().includes(searchQuery.toLowerCase())
     );
+
   const showUserResults =
     hasSearchResults &&
     mockUserResults.some((user) =>
@@ -80,7 +94,7 @@ const DocList = () => {
   };
 
   return (
-    <Stack sx={{ width: "100%", height: "100%", px: 1, py: 1 }}>
+    <Stack sx={{ width: "100%", px: 1, py: 1, height: "100%" }}>
       {/* Header */}
       <Stack
         direction="row"
@@ -98,11 +112,11 @@ const DocList = () => {
           <Paper
             elevation={0}
             sx={{
-              display: "flex",
               border: 1,
-              borderColor: "divider",
+              display: "flex",
               borderRadius: 1,
               overflow: "hidden",
+              borderColor: "divider",
             }}
           >
             <Tooltip title="Grid view">
@@ -151,11 +165,11 @@ const DocList = () => {
           <Paper
             elevation={0}
             sx={{
-              display: "flex",
               border: 1,
-              borderColor: "divider",
+              display: "flex",
               borderRadius: 1,
               overflow: "hidden",
+              borderColor: "divider",
             }}
           >
             <Tooltip title="Sort">
@@ -231,20 +245,20 @@ const DocList = () => {
               </Typography>
               <Box
                 sx={{
-                  display: "grid",
+                  gridAutoRows:
+                    viewMode === "grid" ? "minmax(280px, auto)" : "auto",
                   gridTemplateColumns:
                     viewMode === "grid"
                       ? "repeat(auto-fill, minmax(220px, 1fr))"
                       : "1fr",
-                  gridAutoRows:
-                    viewMode === "grid" ? "minmax(280px, auto)" : "auto",
-                  gap: viewMode === "grid" ? 3 : 2,
                   p: 2,
-                  backgroundColor: "background.paper",
+                  mb: 2,
+                  display: "grid",
                   borderRadius: 2,
                   border: `1px solid`,
                   borderColor: "divider",
-                  mb: 2,
+                  gap: viewMode === "grid" ? 3 : 2,
+                  backgroundColor: "background.paper",
                 }}
               >
                 {mockDocResults
@@ -297,15 +311,15 @@ const DocList = () => {
                       </Typography>
                       <Box
                         sx={{
-                          display: "grid",
-                          gridTemplateColumns:
-                            viewMode === "grid"
-                              ? "repeat(auto-fill, minmax(220px, 1fr))"
-                              : "1fr",
                           gridAutoRows:
                             viewMode === "grid"
                               ? "minmax(280px, auto)"
                               : "auto",
+                          gridTemplateColumns:
+                            viewMode === "grid"
+                              ? "repeat(auto-fill, minmax(220px, 1fr))"
+                              : "1fr",
+                          display: "grid",
                           gap: viewMode === "grid" ? 2 : 1,
                         }}
                       >
@@ -335,7 +349,7 @@ const DocList = () => {
           direction="row"
           spacing={1}
           mb={2}
-          sx={{ overflowX: "auto", pb: 1 }}
+          sx={{ pb: 1, overflowX: "auto" }}
         >
           {filters.map((filter) => (
             <Chip
@@ -364,10 +378,10 @@ const DocList = () => {
             display={"grid"}
             flexShrink={0}
             sx={{
-              height: "fit-content",
               gridTemplateColumns: viewMode === "grid" ? "repeat(auto-fill, minmax(250px, 1fr))" : "1fr",
               gap: 4,
-              overflowX:"hidden"
+              overflowX:"hidden",
+              height: "fit-content"
             }}
           >
             {Array.from({ length: 11 }).map((_, index) => (
@@ -427,9 +441,9 @@ const DocList = () => {
       <Fab
         color="primary"
         sx={{
-          position: "fixed",
-          bottom: 24,
           right: 24,
+          bottom: 24,
+          position: "fixed",
         }}
         onClick={() => console.log("Create new document")}
       >

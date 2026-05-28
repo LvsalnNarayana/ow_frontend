@@ -1,19 +1,26 @@
+// External
+import moment from "moment";
 import React, { useState, useEffect } from "react";
-import { useNavigate, useParams } from "react-router";
+import { useParams, useNavigate } from "react-router";
+
+
+// MUI
+import { Add } from "@mui/icons-material";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import {
   Box,
-  Typography,
+  Stack,
   Button,
   useTheme,
-  Stack,
+  Typography,
   IconButton,
 } from "@mui/material";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import { Add } from "@mui/icons-material";
-import moment from "moment";
-import SimpleSelectCalendar from "../../calendar/components/SimpleSelectCalendar";
+
+
+// Parent, Sibling, Index
 import DayHoursLayout from "../../calendar/layouts/DayHoursLayout";
 import CalendarHeader from "../../calendar/components/CalendarHeader";
+import SimpleSelectCalendar from "../../calendar/components/SimpleSelectCalendar";
 import {
   generateTimeSlots,
   PIXEL_RATIO_CONSTANTS,
@@ -21,14 +28,19 @@ import {
 
 const Day: React.FC = () => {
   const theme = useTheme();
+
   const navigate = useNavigate();
+
   const params = useParams<{ year?: string; month?: string; day?: string }>();
+
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
 
   useEffect(() => {
     if (params.year && params.month && params.day) {
       const year = parseInt(params.year, 10);
+
       const month = parseInt(params.month, 10) - 1;
+
       const day = parseInt(params.day, 10);
 
       if (!isNaN(year) && !isNaN(month) && !isNaN(day)) {
@@ -42,7 +54,9 @@ const Day: React.FC = () => {
 
   const updateUrl = (date: Date) => {
     const year = date.getFullYear();
+
     const month = date.getMonth() + 1;
+
     const day = date.getDate();
     navigate(`/calendar/day/${year}/${month}/${day}`, { replace: true });
   };
@@ -75,7 +89,9 @@ const Day: React.FC = () => {
     if (!now.isSame(moment(selectedDate), "day")) return null;
 
     const hours = now.hours();
+
     const minutes = now.minutes();
+
     const totalMinutes = hours * 60 + minutes;
     console.log(
       "Hours:",
@@ -92,26 +108,26 @@ const Day: React.FC = () => {
     return (
       <Box
         sx={{
+          left: 0,
+          right: 0,
+          zIndex: 10,
+          height: "2px",
           position: "absolute",
+          backgroundColor: theme.palette.error.main,
           top: `${
             PIXEL_RATIO_CONSTANTS.RATIOS["60min"].pixelsPerMinute *
               totalMinutes +
             8
           }px`,
-          left: 0,
-          right: 0,
-          height: "2px",
-          backgroundColor: theme.palette.error.main,
-          zIndex: 10,
           "&::before": {
-            content: '""',
-            position: "absolute",
-            left: "-6px",
-            top: "-5px",
             width: "12px",
+            top: "-5px",
+            left: "-6px",
+            content: '""',
             height: "12px",
-            backgroundColor: theme.palette.error.main,
             borderRadius: "50%",
+            position: "absolute",
+            backgroundColor: theme.palette.error.main,
           },
         }}
       />
@@ -131,8 +147,8 @@ const Day: React.FC = () => {
         <Stack
           sx={{
             width: 320,
-            borderRight: `1px solid ${theme.palette.divider}`,
             backgroundColor: theme.palette.background.paper,
+            borderRight: `1px solid ${theme.palette.divider}`,
           }}
         >
           {/* Header */}

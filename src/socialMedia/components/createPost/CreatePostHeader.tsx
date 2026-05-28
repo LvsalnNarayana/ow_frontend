@@ -1,8 +1,12 @@
-/* eslint-disable multiline-ternary */
+ 
 
+// MUI
 import { Close } from "@mui/icons-material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import { Stack, Typography, IconButton, useTheme } from "@mui/material";
+import { Stack, useTheme, Typography, IconButton } from "@mui/material";
+
+
+// Parent, Sibling, Index
 import type { PostScreen } from "../../../types/createPost/createPost.types";
 
 const CreatePostHeader = ({
@@ -20,7 +24,7 @@ const CreatePostHeader = ({
       direction="row"
       justifyContent="space-between"
       alignItems="center"
-      sx={{ p: 1.5, px: 2, width: "100%" }}
+      sx={{ width: "100%", px: 2, p: 1.5 }}
     >
       <Stack
         direction="row"
@@ -37,7 +41,7 @@ const CreatePostHeader = ({
             <ArrowBackIcon />
           </IconButton>
         )}
-        <Typography variant="body1" sx={{ fontWeight: 500, fontSize: 20 }}>
+        <Typography variant="body1" sx={{ fontSize: 20, fontWeight: 500 }}>
           {createPostScreen === "draft"
             ? "Create a new post"
             : createPostScreen === "location"

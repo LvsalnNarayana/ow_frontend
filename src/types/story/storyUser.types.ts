@@ -1,6 +1,7 @@
+// Parent, Sibling, Index
 import {
-  generateUserReference,
   type UserReference,
+  generateUserReference,
 } from "../base/userReference.types";
 
 export interface StoryUserInterface extends UserReference {

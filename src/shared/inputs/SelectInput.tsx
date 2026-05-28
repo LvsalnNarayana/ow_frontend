@@ -1,12 +1,19 @@
+// External
 import { useState } from "react";
+
+
+// MUI
 import {
   Stack,
-  MenuItem,
   Select,
+  MenuItem,
   Typography,
   FormHelperText,
   type SelectChangeEvent,
 } from "@mui/material";
+
+
+// Parent, Sibling, Index
 import type { SelectInputProps } from "../../interface/SelectInputProps.interface";
 
 const SelectInput: React.FC<SelectInputProps> = ({
@@ -14,14 +21,14 @@ const SelectInput: React.FC<SelectInputProps> = ({
   label,
   onChange,
   options = [],
-  value: initialValue = "",
-  placeholder = "",
-  helperText = "",
   error = false,
+  helperText = "",
+  placeholder = "",
   disabled = false,
   fontSize = "14px",
   helperFontSize = "12px",
   optionFontSize = "14px",
+  value: initialValue = "",
 }) => {
   const [value, setValue] = useState(initialValue);
 
@@ -53,16 +60,35 @@ const SelectInput: React.FC<SelectInputProps> = ({
         variant="outlined"
         margin="none"
         sx={(theme) => ({
-          color: theme.palette.text.primary,
-          borderRadius: "6px",
-          outline: "none",
           p: 0,
-          "& .MuiOutlinedInput-notchedOutline": {
-            outline: "none",
-            borderWidth: 1,
-            borderColor: error
-              ? theme.palette.error.main
-              : theme.palette.divider,
+          outline: "none",
+          borderRadius: "6px",
+          color: theme.palette.text.primary,
+          "&.Mui-disabled": {
+            backgroundColor: theme.palette.action.disabledBackground,
+          },
+          "&.Mui-error .MuiOutlinedInput-notchedOutline": {
+            borderColor: theme.palette.error.main,
+          },
+          "& .MuiInputBase-input.MuiSelect-select": {
+            height: "20px",
+            minHeight: "20px",
+          },
+          "&.Mui-error:hover .MuiOutlinedInput-notchedOutline": {
+            borderColor: theme.palette.error.main,
+          },
+          "&.Mui-error.Mui-focused .MuiOutlinedInput-notchedOutline": {
+            borderColor: theme.palette.error.main,
+          },
+          "& .MuiInputBase-input::placeholder": {
+            opacity: 0.8,
+            color: theme.palette.text.primary,
+          },
+          "&.Mui-disabled.Mui-focused .MuiOutlinedInput-notchedOutline": {
+            borderColor: theme.palette.text.disabled,
+          },
+          "&.Mui-disabled:hover .MuiOutlinedInput-notchedOutline": {
+            backgroundColor: theme.palette.action.disabledBackground,
           },
           "&:hover .MuiOutlinedInput-notchedOutline": {
             borderColor: error
@@ -75,46 +101,28 @@ const SelectInput: React.FC<SelectInputProps> = ({
               ? theme.palette.error.main
               : theme.palette.primary.main,
           },
-          "&.Mui-disabled": {
-            backgroundColor: theme.palette.action.disabledBackground,
-          },
-          "&.Mui-disabled:hover .MuiOutlinedInput-notchedOutline": {
-            backgroundColor: theme.palette.action.disabledBackground,
-          },
-          "&.Mui-disabled.Mui-focused .MuiOutlinedInput-notchedOutline": {
-            borderColor: theme.palette.text.disabled,
-          },
-          "&.Mui-error .MuiOutlinedInput-notchedOutline": {
-            borderColor: theme.palette.error.main,
-          },
-          "&.Mui-error:hover .MuiOutlinedInput-notchedOutline": {
-            borderColor: theme.palette.error.main,
-          },
-          "&.Mui-error.Mui-focused .MuiOutlinedInput-notchedOutline": {
-            borderColor: theme.palette.error.main,
-          },
-          "& .MuiInputBase-input::placeholder": {
-            color: theme.palette.text.primary,
-            opacity: 0.8,
+          "& .MuiOutlinedInput-notchedOutline": {
+            borderWidth: 1,
+            outline: "none",
+            borderColor: error
+              ? theme.palette.error.main
+              : theme.palette.divider,
           },
           "& .MuiInputBase-input": {
+            borderWidth: 1,
+            lineHeight: 1,
+            display: "flex",
+            fontSize: fontSize,
+            padding: "8px 12px",
+            alignItems: "center",
+            verticalAlign: "middle",
             color: value
               ? theme.palette.text.primary
               : `${theme.palette.text.primary}80`,
-            fontSize: fontSize,
-            verticalAlign: "middle",
-            display: "flex",
-            alignItems: "center",
-            lineHeight: 1,
-            padding: "8px 12px",
-            borderWidth: 1,
-          },
-          "& .MuiInputBase-input.MuiSelect-select": {
-            height: "20px",
-            minHeight: "20px",
           },
         })}
         MenuProps={{
+          disableAutoFocusItem: true,
           PaperProps: {
             elevation: 0,
             sx: (theme) => ({
@@ -128,13 +136,12 @@ const SelectInput: React.FC<SelectInputProps> = ({
               },
             }),
           },
-          disableAutoFocusItem: true,
         }}
         autoFocus={false}
         inputProps={{
-          "aria-label": `${name}_input`,
           id: `input_${name}`,
           name,
+          "aria-label": `${name}_input`,
         }}
         displayEmpty
       >

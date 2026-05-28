@@ -1,8 +1,18 @@
+// External
 import React from "react";
+
+
+// MUI
 import { Stack, IconButton } from "@mui/material";
-import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
+import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
+
+
+// Shared
 import ChangeAudience from "../../shared/ChangeAudience";
+
+
+// Parent, Sibling, Index
 import type { AboutItemType } from "../../types/aboutMenu.types";
 
 interface AboutItemActionsProps {

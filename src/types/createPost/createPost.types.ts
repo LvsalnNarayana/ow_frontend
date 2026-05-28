@@ -1,13 +1,14 @@
-import type { Feeling } from "../base/feelings.type";
-import type { Visibility } from "../base/visibility.types";
+// Parent, Sibling, Index
 import type { Event } from "../event/event.types";
 import type { Place } from "../place/place.types";
 import type { PollData } from "../post/poll.types";
+import type { Feeling } from "../base/feelings.type";
 import type { PostPrivacy } from "../post/post.enums";
 import type { PostMedia } from "../post/postMedia.types";
+import type { Visibility } from "../base/visibility.types";
 import type {
-  PostAuthorInterface,
   PostUserInterface,
+  PostAuthorInterface,
 } from "../post/postUser.types";
 
 export type PostScreen = "draft" | "location" | "tags" | "feelings";

@@ -1,6 +1,10 @@
+// External
 import type React from "react";
 import type { JSX } from "react";
 import { Outlet } from "react-router";
+
+
+// Parent, Sibling, Index
 import { DocConfigProvider } from "../../docs/context/DocsConfigContext";
 
 const Docs: React.ElementType = (): JSX.Element => {

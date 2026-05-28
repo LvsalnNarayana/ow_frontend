@@ -1,11 +1,15 @@
+// External
+import { useState } from "react";
+
+
+// MUI
 import {
-  Divider,
   Stack,
-  Typography,
+  Divider,
   useTheme,
+  Typography,
   type Theme,
 } from "@mui/material";
-import { useState } from "react";
 
 const sections = [
   "Introduction",
@@ -18,21 +22,22 @@ const sections = [
 
 const TableOfContents = () => {
   const theme: Theme = useTheme();
+
   const [activeIndex, setActiveIndex] = useState(0); // Simulate active
 
   return (
     <Stack
       spacing={1}
       sx={{
-        p: 1,
         width: "100%",
-        maxHeight: "100%",
-        backgroundColor: theme.palette.background.paper,
-        borderRadius: theme.shape.radius.xs,
-        position: "sticky",
-        flexGrow: 1,
+        p: 1,
         top: 0,
+        flexGrow: 1,
         zIndex: 100,
+        maxHeight: "100%",
+        position: "sticky",
+        borderRadius: theme.shape.radius.xs,
+        backgroundColor: theme.palette.background.paper,
       }}
     >
       <Typography variant="h6" textAlign="center">
@@ -45,9 +50,9 @@ const TableOfContents = () => {
           width="2px"
           bgcolor={`${theme.palette.primary.light}60`}
           sx={{
-            position: "absolute",
-            left: 0,
             top: 0,
+            left: 0,
+            position: "absolute",
             borderRadius: theme.shape.radius.xs,
           }}
         >
@@ -56,11 +61,11 @@ const TableOfContents = () => {
             height={32}
             bgcolor={theme.palette.primary.main}
             sx={{
-              position: "absolute",
-              top: `${activeIndex * 32}px`,
               left: 0,
-              borderRadius: theme.shape.radius.xs,
+              position: "absolute",
               transition: "top 0.3s ease",
+              top: `${activeIndex * 32}px`,
+              borderRadius: theme.shape.radius.xs,
             }}
           />
         </Stack>
@@ -76,14 +81,14 @@ const TableOfContents = () => {
               variant="body1"
               onClick={() => setActiveIndex(index)}
               sx={{
-                cursor: "pointer",
                 zIndex: 1,
                 fontSize: 14,
+                cursor: "pointer",
+                fontWeight: activeIndex === index ? 600 : 400,
                 color:
                   activeIndex === index
                     ? theme.palette.primary.main
                     : theme.palette.text.primary,
-                fontWeight: activeIndex === index ? 600 : 400,
               }}
             >
               {title}

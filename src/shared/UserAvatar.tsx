@@ -1,7 +1,9 @@
-import { useRef, useEffect, type JSX } from 'react';
-
+// External
+import { useRef, type JSX, useEffect } from 'react';
 import multiavatar from '@multiavatar/multiavatar/esm';
 
+
+// MUI
 import { Avatar } from '@mui/material';
 
 export const UserAvatar = (props: {
@@ -10,6 +12,7 @@ export const UserAvatar = (props: {
   username: string;
 }): JSX.Element => {
   const { width, height, username } = props;
+
   const avatarRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -37,11 +40,11 @@ export const UserAvatar = (props: {
       ) : (
         <Avatar
           sx={{
+            width: width + 2,
             p: 0.5,
             flexShrink: 0,
-            width: width + 2,
-            height: (height || width) + 2,
             backgroundColor: '#00000040',
+            height: (height || width) + 2,
           }}
           src="/ape.png"
         />

@@ -1,11 +1,15 @@
+// External
 import { faker } from "@faker-js/faker";
+
+
+// Parent, Sibling, Index
+import { type Visibility, VISIBILITY_OPTIONS } from "../base/visibility.types";
 import {
-  generateBaseEntity,
   type BaseEntity,
+  generateBaseEntity,
   type VerifiableMixin,
   type VisibilityMixin,
 } from "../base/base.types";
-import { VISIBILITY_OPTIONS, type Visibility } from "../base/visibility.types";
 
 export interface Email extends BaseEntity, VisibilityMixin, VerifiableMixin {
   email: string;
@@ -26,9 +30,9 @@ export const generateEmail = (): Email => {
   return {
     ...generateBaseEntity(),
     email: faker.internet.email(),
+    verified: faker.datatype.boolean(),
     visibility: faker.helpers.arrayElement(VISIBILITY_OPTIONS)
       .value as Visibility,
-    verified: faker.datatype.boolean(),
   };
 };
 
@@ -36,11 +40,11 @@ export const generatePhone = (): Phone => {
   return {
     ...generateBaseEntity(),
     phone: faker.phone.number(),
-    countryCode: faker.location.countryCode(),
     country: faker.location.country(),
+    verified: faker.datatype.boolean(),
+    countryCode: faker.location.countryCode(),
     visibility: faker.helpers.arrayElement(VISIBILITY_OPTIONS)
       .value as Visibility,
-    verified: faker.datatype.boolean(),
   };
 };
 export const generateWebsite = (): Website => {

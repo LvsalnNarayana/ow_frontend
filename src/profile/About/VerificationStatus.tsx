@@ -1,8 +1,15 @@
+// External
 import React from "react";
+
+
+// MUI
 import { Typography } from "@mui/material";
 import ReportProblemIcon from "@mui/icons-material/ReportProblem";
+
+
+// Parent, Sibling, Index
 import type { AboutItemType } from "../../types/aboutMenu.types";
-import type { Email, Phone } from "../../types/user/user.types";
+import type { Email, Phone } from "../../types/user/userData.types";
 
 interface VerificationStatusProps {
   type: AboutItemType;
@@ -24,8 +31,8 @@ const VerificationStatus: React.FC<VerificationStatusProps> = ({
         gap: 0.5,
         display: "flex",
         fontSize: "14px",
-        alignItems: "center",
         color: "#ff000090",
+        alignItems: "center",
       }}
     >
       <ReportProblemIcon fontSize="small" /> Not-verified

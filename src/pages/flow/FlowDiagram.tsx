@@ -1,4 +1,3 @@
-import React from "react";
 
 const FlowDiagram = () => {
   return <div>FlowDiagram</div>;

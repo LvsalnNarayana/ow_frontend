@@ -5,91 +5,91 @@ export const typeScale = (exponent: number) =>
   `${(BASE_FONT_SIZE / 16) * Math.pow(TYPE_SCALE, exponent)}rem`;
 
 export const fontConstants = {
-  htmlFontSize: BASE_FONT_SIZE,
-  fontWeightRegular: 400,
-  fontWeightMedium: 500,
-  fontWeightBold: 700,
   lineHeight: 1.5,
+  fontWeightBold: 700,
+  fontWeightMedium: 500,
+  fontWeightRegular: 400,
+  htmlFontSize: BASE_FONT_SIZE,
 };
 
 export default function themeTypography() {
   return {
     fontFamily: ["Montserrat", "sans-serif"].join(","),
-    // Heading hierarchy
-    h1: {
-      fontSize: typeScale(4),
-      fontWeight: 700,
-      lineHeight: fontConstants.lineHeight,
-      margin: 0,
-    },
-    h2: {
-      fontSize: typeScale(3),
-      fontWeight: 700,
-      lineHeight: fontConstants.lineHeight,
-      margin: 0,
-    },
-    h3: {
-      fontSize: typeScale(2),
-      fontWeight: 600,
-      lineHeight: fontConstants.lineHeight,
-      margin: 0,
-    },
-    h4: {
-      fontSize: typeScale(1),
-      fontWeight: 600,
-      lineHeight: fontConstants.lineHeight,
-      margin: 0,
-    },
-    h5: {
-      fontSize: typeScale(0.5),
-      fontWeight: 500,
-      lineHeight: fontConstants.lineHeight,
-      margin: 0,
-    },
-    h6: {
-      fontSize: typeScale(0),
-      fontWeight: 500,
-      lineHeight: fontConstants.lineHeight,
-    },
-
     // Body text variants
     body1: {
+      margin: 0,
       fontSize: typeScale(-1),
       lineHeight: fontConstants.lineHeight,
-      margin: 0,
+    },
+    h6: {
+      fontWeight: 500,
+      fontSize: typeScale(0),
+      lineHeight: fontConstants.lineHeight,
     },
     body2: {
+      margin: 0,
       fontSize: typeScale(-1.25),
       lineHeight: fontConstants.lineHeight,
+    },
+    // Heading hierarchy
+    h1: {
       margin: 0,
+      fontWeight: 700,
+      fontSize: typeScale(4),
+      lineHeight: fontConstants.lineHeight,
+    },
+    h2: {
+      margin: 0,
+      fontWeight: 700,
+      fontSize: typeScale(3),
+      lineHeight: fontConstants.lineHeight,
+    },
+    h3: {
+      margin: 0,
+      fontWeight: 600,
+      fontSize: typeScale(2),
+      lineHeight: fontConstants.lineHeight,
     },
 
-    // Subtitle variants
-    subtitle1: {
-      fontSize: typeScale(0.25),
-      fontWeight: 500,
-      lineHeight: fontConstants.lineHeight,
+    h4: {
       margin: 0,
+      fontWeight: 600,
+      fontSize: typeScale(1),
+      lineHeight: fontConstants.lineHeight,
     },
-    subtitle2: {
-      fontSize: typeScale(-0.125),
-      fontWeight: 400,
-      lineHeight: fontConstants.lineHeight,
+    h5: {
       margin: 0,
+      fontWeight: 500,
+      fontSize: typeScale(0.5),
+      lineHeight: fontConstants.lineHeight,
     },
 
     // Caption and overline
     caption: {
-      fontSize: typeScale(-0.5),
+      margin: 0,
       fontWeight: 400,
+      fontSize: typeScale(-0.5),
       lineHeight: fontConstants.lineHeight,
-      margin: 0,
     },
-    overline: {
-      fontSize: typeScale(-0.75),
-      fontWeight: 500,
-      lineHeight: fontConstants.lineHeight,
+    // Subtitle variants
+    subtitle1: {
       margin: 0,
+      fontWeight: 500,
+      fontSize: typeScale(0.25),
+      lineHeight: fontConstants.lineHeight,
+    },
+
+    overline: {
+      margin: 0,
+      fontWeight: 500,
+      fontSize: typeScale(-0.75),
+      lineHeight: fontConstants.lineHeight,
+    },
+    subtitle2: {
+      margin: 0,
+      fontWeight: 400,
+      fontSize: typeScale(-0.125),
+      lineHeight: fontConstants.lineHeight,
     },
   };
 }

@@ -1,12 +1,19 @@
+// External
 import React from "react";
-import { Box, Stack, Typography, IconButton, Tooltip } from "@mui/material";
+import moment from "moment";
+
+
+// MUI
+import { Box, Stack, Tooltip, Typography, IconButton } from "@mui/material";
 import {
-  ContentCopy as CopyIcon,
   Info as InfoIcon,
+  ContentCopy as CopyIcon,
   // Security as SecurityIcon,
 } from "@mui/icons-material";
+
+
+// Parent, Sibling, Index
 import type { MeetingInfo } from "../../types/meet/meeting.types";
-import moment from "moment";
 
 interface MeetingHeaderProps {
   meetingInfo: MeetingInfo;
@@ -17,11 +24,11 @@ interface MeetingHeaderProps {
 }
 
 const MeetingHeader: React.FC<MeetingHeaderProps> = ({
-  meetingInfo,
   roomId,
+  onShowInfo,
+  meetingInfo,
   isRecording,
   onCopyRoomId,
-  onShowInfo,
 }) => {
   const getDuration = () => {
     const duration = moment().diff(meetingInfo.startTime);
@@ -31,16 +38,16 @@ const MeetingHeader: React.FC<MeetingHeaderProps> = ({
   return (
     <Box
       sx={{
+        pt: 1,
+        pl: 3,
+        pr: 7,
         top: 0,
         left: 0,
         right: 0,
         zIndex: 100,
+        position: "absolute",
         background:
           "linear-gradient(180deg, rgba(0,0,0,0.8) 0%, transparent 100%)",
-        position: "absolute",
-        pt: 1,
-        pl: 3,
-        pr: 7,
       }}
     >
       <Stack direction="row" justifyContent="space-between" alignItems="center">
@@ -57,14 +64,14 @@ const MeetingHeader: React.FC<MeetingHeaderProps> = ({
           {isRecording && (
             <Box
               sx={{
-                display: "flex",
-                alignItems: "center",
-                gap: 1,
-                backgroundColor: "error.main",
-                color: "white",
                 px: 2,
+                gap: 1,
                 py: 0.5,
+                color: "white",
+                display: "flex",
                 borderRadius: 2,
+                alignItems: "center",
+                backgroundColor: "error.main",
               }}
             >
               <Box

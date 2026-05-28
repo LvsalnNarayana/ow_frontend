@@ -1,33 +1,41 @@
-import { Stack, Box, Typography } from "@mui/material";
+// MUI
 import { Add as AddIcon } from "@mui/icons-material";
-import type { Story } from "../../types/story/story.types";
+import { Box, Stack, Typography } from "@mui/material";
+
+
+// Shared
 import UserAvatar from "../../shared/UserAvatar";
+
+
+// Parent, Sibling, Index
+import type { Story } from "../../types/story/story.types";
+
 const StoriesContainer = ({ stories }: { stories: Story[] }) => (
   <Stack
     sx={{
       width: "100%",
       p: 2,
-      backgroundColor: "background.paper",
-      borderRadius: 2,
       boxShadow: 1,
+      borderRadius: 2,
+      backgroundColor: "background.paper",
     }}
   >
     <Typography variant="h6" sx={{ mb: 2, fontWeight: 600 }}>
       Stories
     </Typography>
-    <Stack direction="row" spacing={2} sx={{ overflowX: "auto", pb: 1 }}>
+    <Stack direction="row" spacing={2} sx={{ pb: 1, overflowX: "auto" }}>
       {/* Add Story Button */}
       <Stack alignItems="center" spacing={1} sx={{ minWidth: 80 }}>
         <Box
           sx={{
             width: 64,
             height: 64,
-            borderRadius: "50%",
-            backgroundColor: "primary.main",
             display: "flex",
+            cursor: "pointer",
+            borderRadius: "50%",
             alignItems: "center",
             justifyContent: "center",
-            cursor: "pointer",
+            backgroundColor: "primary.main",
             "&:hover": {
               backgroundColor: "primary.dark",
             },
@@ -38,14 +46,14 @@ const StoriesContainer = ({ stories }: { stories: Story[] }) => (
         </Box>
         <Typography
           variant="caption"
-          sx={{ textAlign: "center", maxWidth: 80 }}
+          sx={{ maxWidth: 80, textAlign: "center" }}
         >
           Your Story
         </Typography>
       </Stack>
 
       {/* Stories */}
-      {stories.map((story, index) => (
+      {stories.map((story) => (
         <Stack
           key={story.id}
           alignItems="center"
@@ -56,16 +64,16 @@ const StoriesContainer = ({ stories }: { stories: Story[] }) => (
             sx={{
               width: 64,
               height: 64,
-              borderRadius: "50%",
               padding: "2px",
-              background: story.isViewed
-                ? "linear-gradient(45deg, #ccc, #999)"
-                : "linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%)",
               cursor: "pointer",
+              borderRadius: "50%",
+              transition: "transform 0.2s ease",
               "&:hover": {
                 transform: "scale(1.05)",
               },
-              transition: "transform 0.2s ease",
+              background: story.isViewed
+                ? "linear-gradient(45deg, #ccc, #999)"
+                : "linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%)",
             }}
             onClick={() => {}}
           >
@@ -74,11 +82,11 @@ const StoriesContainer = ({ stories }: { stories: Story[] }) => (
           <Typography
             variant="caption"
             sx={{
-              textAlign: "center",
               maxWidth: 80,
               overflow: "hidden",
-              textOverflow: "ellipsis",
+              textAlign: "center",
               whiteSpace: "nowrap",
+              textOverflow: "ellipsis",
             }}
           >
             {story.user.username}

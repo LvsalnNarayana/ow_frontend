@@ -1,19 +1,29 @@
 /* eslint-disable import/no-extraneous-dependencies */
-/* eslint-disable max-lines */
+ 
 
+// External
 import React, { useState, useEffect } from "react";
 
+
+// MUI
 import { Stack, TextField, Typography } from "@mui/material";
 
+
+// Context
+import { useCreatePostContext } from "../../context/CreatePostContext";
+
+
+// Parent, Sibling, Index
 import { feelings } from "../../../data/feelings";
 import type { Feeling } from "../../../types/base/feelings.type";
-import { useCreatePostContext } from "../../context/CreatePostContext";
 
 const CreatePostFeelings = () => {
   const {
     actions: { setFeeling, setCreatePostScreen },
   } = useCreatePostContext();
+
   const [searchTerm, setSearchTerm] = useState("");
+
   const [filteredFeelings, setFilteredFeelings] = useState<
     {
       feeling: Feeling;
@@ -46,7 +56,7 @@ const CreatePostFeelings = () => {
       direction="column"
       justifyContent="fleex-start"
       alignItems="flex-start"
-      sx={{ p: 2, width: "100%" }}
+      sx={{ width: "100%", p: 2 }}
     >
       <TextField
         size="small"
@@ -87,9 +97,9 @@ const CreatePostFeelings = () => {
         gap={1}
         flexWrap="wrap"
         sx={{
+          width: "100%",
           p: 1,
           mt: 2,
-          width: "100%",
           height: "50vh",
           maxHeight: "50vh",
           overflowY: "auto",
@@ -106,8 +116,8 @@ const CreatePostFeelings = () => {
               justifyContent="flex-start"
               alignItems="center"
               sx={{
-                p: 1,
                 width: "48%",
+                p: 1,
                 borderRadius: 2,
                 cursor: "pointer",
                 "&:hover": { backgroundColor: "#00000010" },
@@ -122,8 +132,8 @@ const CreatePostFeelings = () => {
                 src={feeling?.image}
                 style={{
                   width: "20px",
-                  height: "20px",
                   maxWidth: "100%",
+                  height: "20px",
                 }}
               />
               <Typography variant="body1" sx={{ fontSize: "14px" }}>

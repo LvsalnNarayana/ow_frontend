@@ -1,19 +1,28 @@
-/* eslint-disable function-paren-newline */
-/* eslint-disable implicit-arrow-linebreak */
-/* eslint-disable arrow-body-style */
+ 
+ 
+ 
+// External
 import { useState } from "react";
 
+
+// MUI
 import {
   Stack,
   Select,
+  Button,
+  Divider,
   MenuItem,
   Typography,
-  Divider,
-  Button,
 } from "@mui/material";
+
+
+// Shared
+import ChangeAudience from "../../../shared/ChangeAudience";
+
+
+// Parent, Sibling, Index
 import type { Gender } from "../../../types/base/gender.types";
 import type { Visibility } from "../../../types/base/visibility.types";
-import ChangeAudience from "../../../shared/ChangeAudience";
 
 const EditGender = ({
   gender,
@@ -69,8 +78,8 @@ const EditGender = ({
             });
           }}
           sx={{
-            my: 0.5,
             width: "200px",
+            my: 0.5,
             "& .MuiSelect-select": {
               p: 0.85,
             },

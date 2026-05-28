@@ -27,51 +27,51 @@ export type Month =
 
 export const MONTH_OPTIONS: { label: string; value: Month }[] = [
   {
-    label: "January",
     value: January,
+    label: "January",
   },
   {
-    label: "February",
     value: February,
+    label: "February",
   },
   {
-    label: "March",
     value: March,
+    label: "March",
   },
   {
-    label: "April",
     value: April,
+    label: "April",
   },
   {
-    label: "May",
     value: May,
+    label: "May",
   },
   {
-    label: "June",
     value: June,
+    label: "June",
   },
   {
-    label: "July",
     value: July,
+    label: "July",
   },
   {
-    label: "August",
     value: August,
+    label: "August",
   },
   {
-    label: "September",
     value: September,
+    label: "September",
   },
   {
-    label: "October",
     value: October,
+    label: "October",
   },
   {
-    label: "November",
     value: November,
+    label: "November",
   },
   {
-    label: "December",
     value: December,
+    label: "December",
   },
 ];

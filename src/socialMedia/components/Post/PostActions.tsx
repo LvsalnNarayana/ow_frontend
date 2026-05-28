@@ -1,8 +1,11 @@
+// MUI
 import { Stack, Button } from "@mui/material";
 import ShareIcon from "@mui/icons-material/Share";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
 
+
+// Shared
 import ReactionsTooltip from "../../../shared/ReactionsTooltip";
 
 const PostActions = ({
@@ -26,9 +29,9 @@ const PostActions = ({
         <Button
           variant="text"
           sx={{
+            width: "100%",
             py: 1,
             gap: 1,
-            width: "100%",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
@@ -42,9 +45,9 @@ const PostActions = ({
         variant="text"
         onClick={enableComment}
         sx={{
+          width: "100%",
           py: 1,
           gap: 1,
-          width: "100%",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
@@ -56,9 +59,9 @@ const PostActions = ({
       <Button
         variant="text"
         sx={{
+          width: "100%",
           py: 1,
           gap: 1,
-          width: "100%",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",

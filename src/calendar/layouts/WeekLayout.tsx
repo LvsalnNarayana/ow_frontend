@@ -1,7 +1,14 @@
-import React, { useEffect, useRef } from "react";
-import { Stack, Box, Typography, Divider } from "@mui/material";
 // import { hours } from "../../types/base/hours.types";
+// External
 import moment from "moment";
+import React, { useRef, useEffect } from "react";
+
+
+// MUI
+import { Box, Stack, Divider, Typography } from "@mui/material";
+
+
+// Parent, Sibling, Index
 import { generateTimeSlots } from "../../types/base/hours.types";
 
 interface WeekLayoutProps {
@@ -14,6 +21,7 @@ const WeekLayout: React.FC<WeekLayoutProps> = ({
   selectedDate = new Date() 
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
+
   const nineAmRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -24,7 +32,8 @@ const WeekLayout: React.FC<WeekLayoutProps> = ({
 
   // Get the start and end of the week
   const startOfWeek = moment(selectedDate).startOf('week');
-  const weekDays = [];
+
+  const weekDays: moment.Moment[] = [];
   
   // Generate 7 days of the week
   for (let i = 0; i < 7; i++) {
@@ -46,12 +55,12 @@ const WeekLayout: React.FC<WeekLayoutProps> = ({
       <Stack
         direction="row"
         sx={{
-          position: "sticky",
           top: 0,
           zIndex: 2,
-          bgcolor: "background.paper",
           borderBottom: 1,
+          position: "sticky",
           borderColor: "divider",
+          bgcolor: "background.paper",
         }}
       >
         {/* Time column header */}
@@ -60,17 +69,17 @@ const WeekLayout: React.FC<WeekLayoutProps> = ({
             width: "80px",
             p: 1,
             borderRight: 1,
-            borderColor: "divider",
             display: "flex",
             alignItems: "center",
+            borderColor: "divider",
             justifyContent: "center",
           }}
         >
           <Typography
             variant="body2"
             sx={{
-              fontSize: "10px",
               fontWeight: 600,
+              fontSize: "10px",
               color: "text.secondary",
             }}
           >
@@ -81,28 +90,29 @@ const WeekLayout: React.FC<WeekLayoutProps> = ({
         {/* Day headers */}
         {weekDays.map((day, index) => {
           const isToday = day.isSame(moment(), 'day');
+
           const isSelected = day.isSame(moment(selectedDate), 'day');
 
           return (
             <Box
               key={day.format('YYYY-MM-DD')}
               sx={{
-                flex: 1,
                 p: 1,
+                flex: 1,
                 textAlign: "center",
-                borderRight: index < 6 ? 1 : 0,
                 borderColor: "divider",
+                borderRight: index < 6 ? 1 : 0,
                 bgcolor: isSelected ? "primary.light" : "transparent",
               }}
             >
               <Typography
                 variant="body2"
                 sx={{
-                  fontSize: "10px",
+                  mb: 0.5,
                   fontWeight: 600,
+                  fontSize: "10px",
                   color: "text.secondary",
                   textTransform: "uppercase",
-                  mb: 0.5,
                 }}
               >
                 {day.format('ddd')}
@@ -110,18 +120,18 @@ const WeekLayout: React.FC<WeekLayoutProps> = ({
               <Typography
                 variant="h6"
                 sx={{
-                  fontWeight: isToday || isSelected ? 700 : 600,
-                  fontSize: "16px",
-                  color: isToday ? "primary.main" : "text.primary",
-                  bgcolor: isToday ? "primary.main" : "transparent",
-                  borderRadius: isToday ? "50%" : 0,
+                  minWidth: "28px",
                   width: isToday ? "28px" : "auto",
-                  height: isToday ? "28px" : "auto",
+                  mx: "auto",
                   display: "flex",
+                  fontSize: "16px",
                   alignItems: "center",
                   justifyContent: "center",
-                  mx: "auto",
-                  minWidth: "28px",
+                  borderRadius: isToday ? "50%" : 0,
+                  height: isToday ? "28px" : "auto",
+                  fontWeight: isToday || isSelected ? 700 : 600,
+                  color: isToday ? "primary.main" : "text.primary",
+                  bgcolor: isToday ? "primary.main" : "transparent",
                 }}
               >
                 {day.format('D')}
@@ -142,8 +152,8 @@ const WeekLayout: React.FC<WeekLayoutProps> = ({
               direction="row"
               ref={isNineAm ? nineAmRef : null}
               sx={{
-                minHeight: "48px",
                 borderBottom: 1,
+                minHeight: "48px",
                 borderColor: "divider",
                 "&:last-child": {
                   borderBottom: 0,
@@ -156,8 +166,8 @@ const WeekLayout: React.FC<WeekLayoutProps> = ({
                   width: "80px",
                   p: 1,
                   borderRight: 1,
-                  borderColor: "divider",
                   display: "flex",
+                  borderColor: "divider",
                   alignItems: "flex-start",
                   justifyContent: "flex-end",
                   bgcolor: "background.default",
@@ -166,10 +176,10 @@ const WeekLayout: React.FC<WeekLayoutProps> = ({
                 <Typography
                   variant="body2"
                   sx={{
-                    fontSize: "10px",
-                    fontWeight: 600,
-                    color: "text.secondary",
                     mt: -0.5,
+                    fontWeight: 600,
+                    fontSize: "10px",
+                    color: "text.secondary",
                   }}
                 >
                   {timeSlot?.label}
@@ -185,7 +195,9 @@ const WeekLayout: React.FC<WeekLayoutProps> = ({
                     key={`${day.format('YYYY-MM-DD')}-${timeSlot?.label}`}
                     onClick={(event) => {
                       const target = event.currentTarget;
+
                       const rect = target.getBoundingClientRect();
+
                       const yPosition = event.clientY - rect.top;
                       let hourInt = parseInt(timeSlot?.label.split(" ")[0], 10);
 
@@ -211,51 +223,51 @@ const WeekLayout: React.FC<WeekLayoutProps> = ({
                     sx={{
                       flex: 1,
                       minHeight: "48px",
-                      borderRight: dayIndex < 6 ? 1 : 0,
-                      borderColor: "divider",
-                      position: "relative",
                       cursor: "pointer",
                       userSelect: "none",
+                      position: "relative",
+                      borderColor: "divider",
+                      borderRight: dayIndex < 6 ? 1 : 0,
                       bgcolor: isToday ? "primary.light" : "transparent",
                       "&:hover": {
-                        bgcolor: isToday ? "primary.main" : "action.hover",
                         opacity: 0.8,
+                        bgcolor: isToday ? "primary.main" : "action.hover",
                       },
                     }}
                   >
                     {/* Half-hour divider */}
                     <Divider
                       sx={{
-                        position: "absolute",
-                        top: "24px",
                         left: 0,
                         right: 0,
-                        borderColor: "divider",
+                        top: "24px",
                         opacity: 0.3,
+                        position: "absolute",
+                        borderColor: "divider",
                       }}
                     />
 
                     {/* Quarter-hour guides (subtle) */}
                     <Box
                       sx={{
-                        position: "absolute",
-                        top: "12px",
                         left: 0,
                         right: 0,
+                        top: "12px",
+                        opacity: 0.1,
                         height: "1px",
                         bgcolor: "divider",
-                        opacity: 0.1,
+                        position: "absolute",
                       }}
                     />
                     <Box
                       sx={{
-                        position: "absolute",
-                        top: "36px",
                         left: 0,
                         right: 0,
+                        top: "36px",
+                        opacity: 0.1,
                         height: "1px",
                         bgcolor: "divider",
-                        opacity: 0.1,
+                        position: "absolute",
                       }}
                     />
                   </Box>
@@ -270,13 +282,13 @@ const WeekLayout: React.FC<WeekLayoutProps> = ({
       {children && (
         <Box
           sx={{
-            position: "absolute",
-            top: "60px", // Account for header height
-            left: "80px", // Account for time column
             right: 0,
             bottom: 0,
-            pointerEvents: "none",
             zIndex: 1,
+            top: "60px", // Account for header height
+            left: "80px", // Account for time column
+            position: "absolute",
+            pointerEvents: "none",
             "& > *": {
               pointerEvents: "auto",
             },

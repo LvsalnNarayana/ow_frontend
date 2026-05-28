@@ -1,8 +1,14 @@
 /* eslint-disable import/no-duplicates */
 
+// MUI
 import { Stack, Button } from "@mui/material";
 
+
+// Shared
 import SearchUser from "../../../shared/SearchUser";
+
+
+// Context
 import { useCreatePostContext } from "../../context/CreatePostContext";
 
 const CreatePostTags = () => {
@@ -18,8 +24,8 @@ const CreatePostTags = () => {
       justifyContent="flex-start"
       alignItems="flex-start"
       sx={{
-        p: 2,
         width: "100%",
+        p: 2,
         height: "65vh",
       }}
     >

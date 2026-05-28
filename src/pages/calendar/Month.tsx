@@ -1,4 +1,5 @@
-import React from 'react'
+
+// Parent, Sibling, Index
 import MonthLayout from '../../calendar/layouts/MonthLayout'
 
 const Month = () => {

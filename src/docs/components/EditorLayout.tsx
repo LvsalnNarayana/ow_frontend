@@ -1,11 +1,21 @@
-import { Divider, Stack } from "@mui/material";
-import EditorToolbar from "./EditorToolbar";
-import PageLayout from "./PageLayout";
-import TableOfContents from "./TableOfContents";
+// External
 import type { JSX } from "react";
-import DocToolbar from "./DocToolbar";
-import DocCommentsContainer from "./DocCommentsContainer";
+
+
+// MUI
+import { Stack, Divider } from "@mui/material";
+
+
+// Context
 import { useDocConfig } from "../context/DocsConfigContext";
+
+
+// Parent, Sibling, Index
+import PageLayout from "./PageLayout";
+import DocToolbar from "./DocToolbar";
+import EditorToolbar from "./EditorToolbar";
+import TableOfContents from "./TableOfContents";
+import DocCommentsContainer from "./DocCommentsContainer";
 
 const EditorLayout: React.ElementType = (): JSX.Element => {
   const { settings } = useDocConfig();
@@ -42,9 +52,9 @@ const EditorLayout: React.ElementType = (): JSX.Element => {
         // gridTemplateColumns={`250px minmax(${settings?.document?.zoom}, auto) 300px`}
         gridTemplateColumns={gridTemplateColumns}
         sx={{
-          position: "relative",
-          overflowY: "hidden",
           overflowX: "auto",
+          overflowY: "hidden",
+          position: "relative",
         }}
       >
         {/* Left Sidebar */}

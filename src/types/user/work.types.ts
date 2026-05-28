@@ -1,6 +1,10 @@
-import { generatePlace, type Place } from "../place/place.types";
-import { VISIBILITY_OPTIONS, type Visibility } from "../base/visibility.types";
+// External
 import { faker } from "@faker-js/faker";
+
+
+// Parent, Sibling, Index
+import { type Place, generatePlace } from "../place/place.types";
+import { type Visibility, VISIBILITY_OPTIONS } from "../base/visibility.types";
 
 export interface Work {
   id: string;
@@ -17,14 +21,14 @@ export interface Work {
 export const generateWork = (): Work => {
   return {
     id: faker.string.uuid(),
-    current: faker.datatype.boolean(),
+    place: generatePlace(),
     company: faker.company.name(),
-    visibility: faker.helpers.arrayElement(VISIBILITY_OPTIONS)
-      ?.value as Visibility,
+    current: faker.datatype.boolean(),
     position: faker.person.jobTitle(),
+    description: faker.lorem.paragraph(),
     endDate: faker.date.past().toISOString(),
     startDate: faker.date.past().toISOString(),
-    description: faker.lorem.paragraph(),
-    place: generatePlace(),
+    visibility: faker.helpers.arrayElement(VISIBILITY_OPTIONS)
+      ?.value as Visibility,
   };
 };

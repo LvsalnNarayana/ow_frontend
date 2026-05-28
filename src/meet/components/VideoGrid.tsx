@@ -1,5 +1,12 @@
+// External
 import React from "react";
+
+
+// MUI
 import { Box, Grid } from "@mui/material";
+
+
+// Parent, Sibling, Index
 import ParticipantVideo from "./ParticipantVideo";
 import type { Participant } from "../../types/meet/meeting.types";
 
@@ -10,8 +17,8 @@ interface VideoGridProps {
 }
 
 const VideoGrid: React.FC<VideoGridProps> = ({
-  participants,
   layout,
+  participants,
   currentUserId,
 }) => {
   const getGridColumns = (participantCount: number) => {
@@ -30,7 +37,7 @@ const VideoGrid: React.FC<VideoGridProps> = ({
     const gridItemSize = getGridItemSize(participants.length);
 
     return (
-      <Grid container spacing={1} sx={{ height: "100%", width: "100%", p: 1 }}>
+      <Grid container spacing={1} sx={{ width: "100%", p: 1, height: "100%" }}>
         {participants.map((participant) => (
           <Grid
             size={gridItemSize}
@@ -55,6 +62,7 @@ const VideoGrid: React.FC<VideoGridProps> = ({
   const renderSpotlightLayout = () => {
     const mainParticipant =
       participants.find((p) => p.isScreenSharing) || participants[0];
+
     const otherParticipants = participants.filter(
       (p) => p.id !== mainParticipant?.id
     );
@@ -70,11 +78,11 @@ const VideoGrid: React.FC<VideoGridProps> = ({
         {/* Main video */}
         <Box
           sx={{
+            mb: 1,
             flexGrow: 1,
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            mb: 1,
           }}
         >
           {mainParticipant && (
@@ -90,11 +98,11 @@ const VideoGrid: React.FC<VideoGridProps> = ({
         {otherParticipants.length > 0 && (
           <Box
             sx={{
+              pb: 1,
+              gap: 1,
               height: 150,
               display: "flex",
-              gap: 1,
               overflowX: "auto",
-              pb: 1,
             }}
           >
             {otherParticipants.map((participant) => (
@@ -115,12 +123,13 @@ const VideoGrid: React.FC<VideoGridProps> = ({
   const renderSidebarLayout = () => {
     const mainParticipant =
       participants.find((p) => p.isScreenSharing) || participants[0];
+
     const otherParticipants = participants.filter(
       (p) => p.id !== mainParticipant?.id
     );
 
     return (
-      <Box sx={{ height: "100%", display: "flex", p: 1, gap: 1 }}>
+      <Box sx={{ p: 1, gap: 1, height: "100%", display: "flex" }}>
         {/* Main video */}
         <Box
           sx={{
@@ -144,10 +153,10 @@ const VideoGrid: React.FC<VideoGridProps> = ({
           <Box
             sx={{
               width: 200,
-              display: "flex",
-              flexDirection: "column",
               gap: 1,
+              display: "flex",
               overflowY: "auto",
+              flexDirection: "column",
             }}
           >
             {otherParticipants.map((participant) => (

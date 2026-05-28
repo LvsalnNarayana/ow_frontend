@@ -1,52 +1,53 @@
+// Parent, Sibling, Index
 import { type ThemeColors } from "./themeInterfaces";
 
 const themeColors: ThemeColors = {
   light: {
+    divider: "#e0e0e0", // very light grey
     primary: {
       main: "#5b84fa",
-      light: "#bdcefd",
       dark: "#3f5caf",
+      light: "#bdcefd",
     },
     secondary: {
       main: "#4A4A4A",
-      light: "#6e6e6e",
       dark: "#333333",
-    },
-    text: {
-      primary: "#212121", // ~87% black on white
-      secondary: "#616161", // ~60% black
-      disabled: "#9e9e9e", // ~38% black
-      hint: "#bdbdbd", // ~23% black
+      light: "#6e6e6e",
     },
     background: {
-      default: "#fafafa", // very light grey
       paper: "#ffffff", // pure white surfaces
+      default: "#fafafa", // very light grey
     },
-    divider: "#e0e0e0", // very light grey
+    text: {
+      hint: "#bdbdbd", // ~23% black
+      primary: "#212121", // ~87% black on white
+      disabled: "#9e9e9e", // ~38% black
+      secondary: "#616161", // ~60% black
+    },
   },
 
   dark: {
+    divider: "#616161", // medium grey for dividers
     primary: {
       main: "#5b84fa",
-      light: "#7b9cfb",
       dark: "#3f5caf",
+      light: "#7b9cfb",
     },
     secondary: {
       main: "#4A4A4A",
-      light: "#6e6e6e",
       dark: "#333333",
-    },
-    text: {
-      primary: "#ffffff", // full white
-      secondary: "#e0e0e0", // ~87% white
-      disabled: "#9e9e9e", // ~62% white
-      hint: "#757575", // ~46% white
+      light: "#6e6e6e",
     },
     background: {
-      default: "#252525", // main dark bg
       paper: "#353535", // slightly lighter surface
+      default: "#252525", // main dark bg
     },
-    divider: "#616161", // medium grey for dividers
+    text: {
+      hint: "#757575", // ~46% white
+      primary: "#ffffff", // full white
+      disabled: "#9e9e9e", // ~62% white
+      secondary: "#e0e0e0", // ~87% white
+    },
   },
 };
 

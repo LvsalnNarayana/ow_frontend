@@ -1,7 +1,17 @@
-import { Divider, Stack, Tab, Tabs, Typography } from "@mui/material";
+// External
 import { useParams } from "react-router";
-import UserAvatar from "../../shared/UserAvatar";
+
+
+// MUI
+import { Tab, Tabs, Stack, Divider, Typography } from "@mui/material";
+
+
+// Shared
 import UserGroup from "../../shared/UserGroup";
+import UserAvatar from "../../shared/UserAvatar";
+
+
+// Parent, Sibling, Index
 import About from "../../profile/About/About";
 
 const ProfileHeader = ({ username }: { username: string }) => (

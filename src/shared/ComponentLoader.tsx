@@ -1,4 +1,8 @@
+// MUI
 import { Box, Stack, Typography } from '@mui/material';
+
+
+// Parent, Sibling, Index
 import './loader.css';
 export const ComponentLoader = () => {
   return (

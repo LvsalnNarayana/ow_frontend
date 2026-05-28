@@ -1,6 +1,10 @@
+// External
 import { faker } from "@faker-js/faker";
-import { generateBaseEntity, type BaseEntity } from "../base/base.types";
+
+
+// Parent, Sibling, Index
 import type { Coordinates } from "../place/place.types";
+import { type BaseEntity, generateBaseEntity } from "../base/base.types";
 
 export interface Sessions extends BaseEntity {
   sessionId: string;
@@ -15,14 +19,14 @@ export const generateSession = (): Sessions => {
   return {
     ...generateBaseEntity(),
     sessionId: faker.string.uuid(),
-    device: faker.internet.userAgent(),
     ipAddress: faker.internet.ip(),
+    device: faker.internet.userAgent(),
+    isCurrent: faker.datatype.boolean(),
     lastActive: faker.date.past().toISOString(),
     location: {
       latitude: faker.location.latitude(),
       longitude: faker.location.longitude(),
       accuracy: faker.number.int({ min: 1, max: 100 }),
     },
-    isCurrent: faker.datatype.boolean(),
   };
 };

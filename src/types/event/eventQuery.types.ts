@@ -1,5 +1,6 @@
+// Parent, Sibling, Index
 import type { UserReference } from "../base/userReference.types";
-import type { EventPriority, EventStatus, EventType } from "./event.types";
+import type { EventType, EventStatus, EventPriority } from "./event.types";
 
 export interface EventSearchCriteria {
   query?: string;

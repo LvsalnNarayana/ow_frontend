@@ -1,6 +1,10 @@
+// External
 import { faker } from "@faker-js/faker";
-import type { VisibilityMixin } from "../base/base.types";
+
+
+// Parent, Sibling, Index
 import type { Gender } from "../base/gender.types";
+import type { VisibilityMixin } from "../base/base.types";
 import type { RelationshipStatus } from "../base/relationShipStatus.types";
 
 export interface Birthdate extends VisibilityMixin {
@@ -32,13 +36,14 @@ export interface UserInfo {
 
 export const generateUserInfo = (): UserInfo => {
   return {
-    gender: faker.person.sex() as Gender,
     bio: faker.lorem.paragraph(),
+    gender: faker.person.sex() as Gender,
     birthdate: {
-      date: faker.date.birthdate().toISOString(),
       visibility: "public",
+      date: faker.date.birthdate().toISOString(),
     },
     relationship: {
+      visibility: "public",
       status: faker.helpers.arrayElement([
         "single",
         "in a relationship",
@@ -46,9 +51,9 @@ export const generateUserInfo = (): UserInfo => {
         "divorced",
         "widowed",
       ]) as RelationshipStatus,
-      visibility: "public",
     },
     hobbies: {
+      visibility: "public",
       values: faker.helpers.arrayElements([
         "Reading",
         "Writing",
@@ -71,9 +76,9 @@ export const generateUserInfo = (): UserInfo => {
         "Fashion",
         "Art",
       ]),
-      visibility: "public",
     },
     languages: {
+      visibility: "public",
       values: faker.helpers.arrayElements([
         "English",
         "Spanish",
@@ -97,9 +102,9 @@ export const generateUserInfo = (): UserInfo => {
         "Hebrew",
         "Polish",
       ]),
-      visibility: "public",
     },
     interests: {
+      visibility: "public",
       values: faker.helpers.arrayElements([
         "Technology",
         "Science",
@@ -146,7 +151,6 @@ export const generateUserInfo = (): UserInfo => {
         "Sports",
         "Gaming",
       ]),
-      visibility: "public",
     },
   };
 };
